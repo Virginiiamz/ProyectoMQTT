@@ -14,15 +14,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.proyectomoviles.dispositivos.Sensores
+import com.proyectomoviles.dispositivos.Dispositivos
+import com.proyectomoviles.dispositivos.Temperatura
+
 
 @Composable
 fun InicioScreen() {
-    val temperatura = Sensores.Temperatura(25.03, 75.05)
-    Text(temperatura.toString())
-    val listaDispositivos: List<Sensores.Temperatura> = listOf(
-
-        temperatura
+    val dispositivos = Dispositivos()
+    dispositivos.listaDispositivos = listOf(
+        Temperatura("Cocina",20.5, 88.9),
+        Temperatura("Salon",17.0, 22.3)
     )
 
     Scaffold(
@@ -33,10 +34,18 @@ fun InicioScreen() {
     ) {
         paddingValue ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(paddingValue)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValue)
         ) {
-            items(listaDispositivos) {
-                dispositivo -> Text(dispositivo.toString())
+            if (dispositivos.listaDispositivos.isEmpty()) {
+                item {
+                    Text("No hay dispositivos vinculados")
+                }
+            } else {
+                items(dispositivos.listaDispositivos) { item ->
+                    Text(item.toString())
+                }
             }
 
         }
