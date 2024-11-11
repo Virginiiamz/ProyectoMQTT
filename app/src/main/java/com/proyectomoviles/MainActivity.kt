@@ -22,8 +22,9 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             ProyectoMovilesTheme {
-                //InicioScreen()
-                ElementosScreen()
+                InicioScreen()
+//                ElementosScreen()
+
             }
         }
     }

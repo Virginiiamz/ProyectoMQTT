@@ -14,17 +14,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.proyectomoviles.dispositivos.Dispositivos
 import com.proyectomoviles.dispositivos.Temperatura
 
 
 @Composable
 fun InicioScreen() {
-    val dispositivos = Dispositivos()
-    dispositivos.listaDispositivos = listOf(
-        Temperatura("Cocina",20.5, 88.9),
-        Temperatura("Salon",17.0, 22.3)
-    )
+    val temperatura = Temperatura("Cocina",20.5, 88.9, "Sensor de temperatura", "Sensor1")
+
 
     Scaffold(
         floatingActionButton = {
@@ -38,17 +34,19 @@ fun InicioScreen() {
                 .fillMaxSize()
                 .padding(paddingValue)
         ) {
-            if (dispositivos.listaDispositivos.isEmpty()) {
-                item {
-                    Text("No hay dispositivos vinculados")
-                }
-            } else {
-                items(dispositivos.listaDispositivos) { item ->
-                    Text(item.toString())
-                }
-            }
+
+//            if (dispositivos.listaDispositivos.isEmpty()) {
+//                item {
+//                    Text("No hay dispositivos vinculados")
+//                }
+//            } else {
+//                items(dispositivos.listaDispositivos) { item ->
+//                    Text(item.toString())
+//                }
+//            }
 
         }
+        Text(temperatura.toString())
     }
 
 

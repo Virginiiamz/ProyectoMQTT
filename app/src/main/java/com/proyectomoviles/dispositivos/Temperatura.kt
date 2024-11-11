@@ -1,7 +1,11 @@
 package com.proyectomoviles.dispositivos
 
-data class Temperatura(
-    val nombre: String,
-    val grados: Double,
-    val humedad: Double,
-)
+class Temperatura(
+    ubicacion: String,
+    grados: Double,
+    humedad: Double,
+    tipo: String,
+    nombre: String
+): Dispositivo(tipo, nombre ) {
+
+}
