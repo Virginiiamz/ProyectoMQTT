@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorMovimiento
@@ -155,7 +156,7 @@ fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
                 .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("${sensorTemp.grados} Cº", color = Color.White)
+            Text("${sensorTemp.grados} Cº", color = Color.White, fontWeight = FontWeight.Medium)
         }
         Column(
             modifier = Modifier
@@ -164,7 +165,7 @@ fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
                 .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("${sensorTemp.humedad} %", color = Color.White)
+            Text("${sensorTemp.humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
         }
     }
 
