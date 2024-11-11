@@ -1,12 +1,22 @@
 package com.proyectomoviles.dispositivos
 
-class Temperatura(
-    ubicacion: String,
-    grados: Double,
-    humedad: Double,
-    tipo: String,
+class SensorTemperatura(
     nombre: String,
+    tipo: String,
+    ubicacion: String,
     imagen: String,
-): Dispositivo(tipo, nombre ) {
+    val grados: Double,
+    val humedad: Double,
+): Dispositivo(nombre, tipo, ubicacion, imagen) {
+
+}
+
+class SensorMovimiento(
+    nombre: String,
+    tipo: String,
+    ubicacion: String,
+    imagen: String,
+    val estado: Boolean
+): Dispositivo(nombre, tipo, ubicacion, imagen) {
 
 }

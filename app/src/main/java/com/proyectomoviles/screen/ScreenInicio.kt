@@ -3,6 +3,7 @@ package com.proyectomoviles.screen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FabPosition
@@ -13,12 +14,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.proyectomoviles.dispositivos.Temperatura
+import androidx.compose.ui.unit.dp
+import com.proyectomoviles.dispositivos.SensorMovimiento
+import com.proyectomoviles.dispositivos.SensorTemperatura
 
 
 @Composable
 fun InicioScreen() {
-    val temperatura = Temperatura("Cocina",20.5, 88.9, "Sensor de temperatura", "Sensor1")
+    val listaDispositivo = listOf(
+        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", "", 20.5, 45.9),
+        SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio", "", false),
+        SensorTemperatura("Sensor temperatura", "Sensor", "Salón", "", 17.0, 22.3)
+    )
 
 
     Scaffold(
@@ -33,21 +40,25 @@ fun InicioScreen() {
                 .fillMaxSize()
                 .padding(paddingValue)
         ) {
-
-//            if (dispositivos.listaDispositivos.isEmpty()) {
-//                item {
-//                    Text("No hay dispositivos vinculados")
-//                }
-//            } else {
-//                items(dispositivos.listaDispositivos) { item ->
-//                    Text(item.toString())
-//                }
-//            }
+            if (listaDispositivo.isEmpty()) {
+                item {
+                    Text("No hay dispositivos vinculados.")
+                }
+            } else {
+                items(listaDispositivo) { dispositivo ->
+                    Text(
+                        text = when (dispositivo) {
+                            is SensorTemperatura -> "Nombre: ${dispositivo.nombre}, Tipo: ${dispositivo.tipo}, Ubicación: ${dispositivo.ubicacion}, Temperatura: ${dispositivo.grados}, Humedad: ${dispositivo.humedad}"
+                            is SensorMovimiento -> "Nombre: ${dispositivo.nombre}, Tipo: ${dispositivo.tipo}, Ubicación: ${dispositivo.ubicacion}, Detecta Movimiento: ${dispositivo.estado}"
+                            else -> "Dispositivo desconocido"
+                        },
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
 
         }
-        Text(temperatura.toString())
     }
-
 
 }
 
