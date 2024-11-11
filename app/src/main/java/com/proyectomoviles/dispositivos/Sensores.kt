@@ -5,7 +5,8 @@ class Temperatura(
     grados: Double,
     humedad: Double,
     tipo: String,
-    nombre: String
+    nombre: String,
+    imagen: String,
 ): Dispositivo(tipo, nombre ) {
 
 }
