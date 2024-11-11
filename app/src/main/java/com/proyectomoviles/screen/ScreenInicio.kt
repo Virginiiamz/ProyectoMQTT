@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Attribution
+import androidx.compose.material.icons.filled.Help
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.proyectomoviles.R
+import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorTemperatura
 
@@ -61,12 +64,12 @@ fun InicioScreen() {
                         modifier = Modifier.padding(8.dp)
                     )
                     if (dispositivo is SensorTemperatura) {
-                        Icon(
-                            imageVector = Icons.Default.AcUnit,
-                            contentDescription = null,
-                            modifier = Modifier.size(200.dp)
-                        )
+                        mostrarIconoByDispositivo("AcUnit")
+                    } else if (dispositivo is SensorMovimiento) {
+                        mostrarIconoByDispositivo("Attribution")
                     }
+
+
 //                    AsyncImage(
 //                        model = "https://images.vexels.com/media/users/3/141334/isolated/lists/8ebf3c1ca1f27e55731bbcfcf209a3ea-icono-de-termometro.png",
 //                        contentDescription = null,
@@ -74,17 +77,6 @@ fun InicioScreen() {
 //                        placeholder = painterResource(R.drawable.placeholder),  // Imagen temporal
 //                        error = painterResource(R.drawable.error),
 //                    )
-//
-//
-//
-//                    if (dispositivo is SensorTemperatura) {
-//                        AsyncImage(
-//                            model = dispositivo.imagen,
-//                            contentDescription = null,
-//                            modifier = Modifier.padding(8.dp)
-//                            )
-//
-//                    }
                 }
             }
 
@@ -101,4 +93,19 @@ fun MyFloatingActionButton() {
     ) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = null)
     }
+}
+
+@Composable
+fun mostrarIconoByDispositivo(icono: String) {
+    val iconoSeleccionado = when(icono) {
+        "AcUnit" -> Icons.Default.AcUnit
+        "Attribution" -> Icons.Default.Attribution
+        else -> Icons.Default.Help
+    }
+
+    Icon(
+        imageVector = iconoSeleccionado,
+        contentDescription = null,
+        modifier = Modifier.size(200.dp)
+    )
 }
