@@ -1,10 +1,13 @@
 package com.proyectomoviles.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -14,7 +17,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorTemperatura
 
@@ -54,6 +60,31 @@ fun InicioScreen() {
                         },
                         modifier = Modifier.padding(8.dp)
                     )
+                    if (dispositivo is SensorTemperatura) {
+                        Icon(
+                            imageVector = Icons.Default.AcUnit,
+                            contentDescription = null,
+                            modifier = Modifier.size(200.dp)
+                        )
+                    }
+//                    AsyncImage(
+//                        model = "https://images.vexels.com/media/users/3/141334/isolated/lists/8ebf3c1ca1f27e55731bbcfcf209a3ea-icono-de-termometro.png",
+//                        contentDescription = null,
+//                        modifier = Modifier.padding(8.dp),
+//                        placeholder = painterResource(R.drawable.placeholder),  // Imagen temporal
+//                        error = painterResource(R.drawable.error),
+//                    )
+//
+//
+//
+//                    if (dispositivo is SensorTemperatura) {
+//                        AsyncImage(
+//                            model = dispositivo.imagen,
+//                            contentDescription = null,
+//                            modifier = Modifier.padding(8.dp)
+//                            )
+//
+//                    }
                 }
             }
 
