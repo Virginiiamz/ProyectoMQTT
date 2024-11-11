@@ -1,11 +1,20 @@
 package com.proyectomoviles.screen
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Add
@@ -18,12 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.proyectomoviles.R
-import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorTemperatura
 
@@ -44,10 +51,13 @@ fun InicioScreen() {
         floatingActionButtonPosition = FabPosition.Start
     ) {
         paddingValue ->
-        LazyColumn(
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValue)
+               .fillMaxSize()
+               .padding(paddingValue),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (listaDispositivo.isEmpty()) {
                 item {
@@ -55,19 +65,34 @@ fun InicioScreen() {
                 }
             } else {
                 items(listaDispositivo) { dispositivo ->
-                    Text(
-                        text = when (dispositivo) {
-                            is SensorTemperatura -> "Nombre: ${dispositivo.nombre}, Tipo: ${dispositivo.tipo}, Ubicación: ${dispositivo.ubicacion}, Temperatura: ${dispositivo.grados}, Humedad: ${dispositivo.humedad}"
-                            is SensorMovimiento -> "Nombre: ${dispositivo.nombre}, Tipo: ${dispositivo.tipo}, Ubicación: ${dispositivo.ubicacion}, Detecta Movimiento: ${dispositivo.estado}"
-                            else -> "Dispositivo desconocido"
-                        },
-                        modifier = Modifier.padding(8.dp)
-                    )
-                    if (dispositivo is SensorTemperatura) {
-                        mostrarIconoByDispositivo("AcUnit")
-                    } else if (dispositivo is SensorMovimiento) {
-                        mostrarIconoByDispositivo("Attribution")
+                    Column(
+                        modifier = Modifier
+                            .width(400.dp)
+                            .border(
+                                border = BorderStroke(2.dp, Color.LightGray),
+                                shape = RoundedCornerShape(8.dp),
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            if (dispositivo is SensorTemperatura) {
+                                mostrarIconoByDispositivo("AcUnit")
+                            } else if (dispositivo is SensorMovimiento) {
+                                mostrarIconoByDispositivo("Attribution")
+                            }
+                        }
+                        Text(
+                            text = when (dispositivo) {
+                                is SensorTemperatura -> "Nombre: ${dispositivo.nombre}, Tipo: ${dispositivo.tipo}, Ubicación: ${dispositivo.ubicacion}, Temperatura: ${dispositivo.grados}, Humedad: ${dispositivo.humedad}"
+                                is SensorMovimiento -> "Nombre: ${dispositivo.nombre}, Tipo: ${dispositivo.tipo}, Ubicación: ${dispositivo.ubicacion}, Detecta Movimiento: ${dispositivo.estado}"
+                                else -> "Dispositivo desconocido"
+                            },
+                            modifier = Modifier.padding(8.dp)
+                        )
                     }
+
 
 
 //                    AsyncImage(
@@ -79,7 +104,6 @@ fun InicioScreen() {
 //                    )
                 }
             }
-
         }
     }
 
@@ -106,6 +130,6 @@ fun mostrarIconoByDispositivo(icono: String) {
     Icon(
         imageVector = iconoSeleccionado,
         contentDescription = null,
-        modifier = Modifier.size(200.dp)
+        modifier = Modifier.size(60.dp)
     )
 }
