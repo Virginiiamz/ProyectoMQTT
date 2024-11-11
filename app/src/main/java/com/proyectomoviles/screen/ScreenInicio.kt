@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorTemperatura
 
@@ -84,7 +85,7 @@ fun InicioScreen() {
                     ) {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.padding(bottom = 6.dp)
+                            modifier = Modifier.padding(6.dp)
                         ) {
                             if (dispositivo is SensorTemperatura) {
                                 mostrarIconoByDispositivo("AcUnit")
@@ -92,59 +93,13 @@ fun InicioScreen() {
                                 mostrarIconoByDispositivo("Attribution")
                             }
                         }
-                        Column(
-
-
-                        )
+                        Column()
                         {
                             if(dispositivo is SensorTemperatura){
-                                Text(dispositivo.nombre, modifier = Modifier.padding(start = 6.dp))
-                                Spacer(
-                                    Modifier.height(1.dp)
-                                )
-                                Text(dispositivo.ubicacion, modifier = Modifier.padding(start = 6.dp))
-                                Spacer(
-                                    Modifier.height(1.dp)
-                                )
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 6.dp),
-                                    horizontalArrangement = Arrangement.SpaceEvenly
-                                ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .background(Color.Blue, shape = RoundedCornerShape(bottomStart = 8.dp))
-                                            .padding(8.dp)
-                                            .weight(1f),
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text("${dispositivo.grados} Cº", color = Color.White)
-                                    }
-                                    Column(
-                                        modifier = Modifier
-                                            .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp))
-                                            .padding(8.dp)
-                                            .weight(1f),
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text("${dispositivo.humedad} %", color = Color.White)
-                                    }
-                                }
-
+                                mostrarSensorTemperatura(dispositivo)
                             }
                         }
                     }
-
-
-
-//                    AsyncImage(
-//                        model = "https://images.vexels.com/media/users/3/141334/isolated/lists/8ebf3c1ca1f27e55731bbcfcf209a3ea-icono-de-termometro.png",
-//                        contentDescription = null,
-//                        modifier = Modifier.padding(8.dp),
-//                        placeholder = painterResource(R.drawable.placeholder),  // Imagen temporal
-//                        error = painterResource(R.drawable.error),
-//                    )
                 }
             }
         }
@@ -175,4 +130,42 @@ fun mostrarIconoByDispositivo(icono: String) {
         contentDescription = null,
         modifier = Modifier.size(60.dp)
     )
+}
+
+@Composable
+fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
+    Text(sensorTemp.nombre, modifier = Modifier.padding(start = 6.dp))
+    Spacer(
+        Modifier.height(1.dp)
+    )
+    Text(sensorTemp.ubicacion, modifier = Modifier.padding(start = 6.dp))
+    Spacer(
+        Modifier.height(1.dp)
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.Blue, shape = RoundedCornerShape(bottomStart = 8.dp))
+                .padding(8.dp)
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("${sensorTemp.grados} Cº", color = Color.White)
+        }
+        Column(
+            modifier = Modifier
+                .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp))
+                .padding(8.dp)
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("${sensorTemp.humedad} %", color = Color.White)
+        }
+    }
+
 }
