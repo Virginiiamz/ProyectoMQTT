@@ -100,6 +100,8 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                                 mostrarImagenByDispositivo("imgmovimiento")
                             } else if (dispositivo is SensorVibracion) {
                                 mostrarImagenByDispositivo("imgvibracion")
+                            } else if (dispositivo is SensorNivelAgua) {
+                                mostrarImagenByDispositivo("imgnivelagua")
                             }
                         }
                         Column()
@@ -132,19 +134,25 @@ fun mostrarImagenByDispositivo(nombreImagen: String) {
         "imgtemperatura" -> {
             Image(
                 painterResource(id = R.drawable.imgtermometro),
-                contentDescription = "Home"
+                contentDescription = "Sensor termometro"
             )
         }
         "imgmovimiento" -> {
             Image(
                 painterResource(id = R.drawable.imgsensormovimiento),
-                contentDescription = "Home"
+                contentDescription = "Sensor movimiento"
             )
         }
         "imgvibracion" -> {
             Image(
                 painterResource(id = R.drawable.imgsensorvibracion),
-                contentDescription = "Home"
+                contentDescription = "Sensor vibracion"
+            )
+        }
+        "imgnivelagua" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensornivelagua),
+                contentDescription = "Sensor nivel de agua"
             )
         }
         else -> ""
@@ -161,17 +169,13 @@ fun mostrarDispositivo(dispositivo: Dispositivo) {
     Spacer(
         Modifier.height(1.dp)
     )
-    if (dispositivo is SensorTemperatura) {
-        mostrarSensorTemperatura(dispositivo)
 
-    } else if (dispositivo is SensorMovimiento){
-        mostrarSensorMovimiento(dispositivo)
-    } else if (dispositivo is SensorVibracion){
-        mostrarSensorVibracion(dispositivo)
-    } else if (dispositivo is SensorNivelAgua){
-        mostrarSensorNivelAgua(dispositivo)
+    when (dispositivo) {
+        is SensorTemperatura -> mostrarSensorTemperatura(dispositivo)
+        is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
+        is SensorVibracion -> mostrarSensorVibracion(dispositivo)
+        is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
     }
-
 }
 
 @Composable
