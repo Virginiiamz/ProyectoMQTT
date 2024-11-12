@@ -1,6 +1,7 @@
 package com.proyectomoviles.screen
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -33,10 +34,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.proyectomoviles.R
+import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorTemperatura
+import com.proyectomoviles.dispositivos.SensorVibracion
 import kotlinx.serialization.Serializable
 
 
@@ -49,7 +54,8 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
     val listaDispositivo = listOf(
         SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", "", 20.5, 45.9),
         SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio", "", false),
-        SensorTemperatura("Sensor temperatura", "Sensor", "Salón", "", 17.0, 22.3)
+        SensorTemperatura("Sensor temperatura", "Sensor", "Salón", "", 17.0, 22.3),
+        SensorVibracion("Sensor movimiento", "Sensor", "Cuarto de baño", "", false)
     )
 
 
@@ -90,9 +96,11 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                             modifier = Modifier.padding(6.dp)
                         ) {
                             if (dispositivo is SensorTemperatura) {
-                                mostrarIconoByDispositivo("AcUnit")
+                                mostrarImagenByDispositivo("imgtemperatura")
                             } else if (dispositivo is SensorMovimiento) {
-                                mostrarIconoByDispositivo("Attribution")
+                                mostrarImagenByDispositivo("imgmovimiento")
+                            } else if (dispositivo is SensorVibracion) {
+                                mostrarImagenByDispositivo("imgvibracion")
                             }
                         }
                         Column()
@@ -121,18 +129,29 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 }
 
 @Composable
-fun mostrarIconoByDispositivo(icono: String) {
-    val iconoSeleccionado = when(icono) {
-        "AcUnit" -> Icons.Default.AcUnit
-        "Attribution" -> Icons.Default.Attribution
-        else -> Icons.Default.Help
-    }
+fun mostrarImagenByDispositivo(nombreImagen: String) {
 
-    Icon(
-        imageVector = iconoSeleccionado,
-        contentDescription = null,
-        modifier = Modifier.size(60.dp)
-    )
+    when(nombreImagen) {
+        "imgtemperatura" -> {
+            Image(
+                painterResource(id = R.drawable.imgtermometro),
+                contentDescription = "Home"
+            )
+        }
+        "imgmovimiento" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensormovimiento),
+                contentDescription = "Home"
+            )
+        }
+        "imgvibracion" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensorvibracion),
+                contentDescription = "Home"
+            )
+        }
+        else -> ""
+    }
 }
 
 @Composable
