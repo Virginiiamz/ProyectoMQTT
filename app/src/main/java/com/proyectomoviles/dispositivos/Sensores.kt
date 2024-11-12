@@ -20,3 +20,13 @@ class SensorMovimiento(
 ): Dispositivo(nombre, tipo, ubicacion, imagen) {
 
 }
+
+class SensorVibracion(
+    nombre: String,
+    tipo: String,
+    ubicacion: String,
+    imagen: String,
+    val estado: Boolean
+): Dispositivo(nombre, tipo, ubicacion, imagen) {
+
+}
