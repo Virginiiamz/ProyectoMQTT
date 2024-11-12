@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AcUnit
@@ -34,17 +32,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorTemperatura
+import kotlinx.serialization.Serializable
 
+
+
+@Serializable
+object Inicio
 
 @Composable
-fun InicioScreen() {
+fun InicioScreen(navigateToElementos: () -> Unit) {
     val listaDispositivo = listOf(
         SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", "", 20.5, 45.9),
         SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio", "", false),
@@ -54,7 +55,7 @@ fun InicioScreen() {
 
     Scaffold(
         floatingActionButton = {
-            MyFloatingActionButton()
+            MyFloatingActionButton(navigateToElementos)
         },
         floatingActionButtonPosition = FabPosition.Start
     ) {
@@ -108,10 +109,11 @@ fun InicioScreen() {
 
 }
 
+
 @Composable
-fun MyFloatingActionButton() {
+fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
     FloatingActionButton(
-        onClick = {},
+        onClick = {navigateToElementos()},
         containerColor = MaterialTheme.colorScheme.secondary
     ) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = null)
