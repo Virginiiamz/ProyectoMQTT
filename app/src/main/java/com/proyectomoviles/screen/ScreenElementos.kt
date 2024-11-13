@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.proyectomoviles.dispositivos.Dispositivo
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,15 +26,9 @@ object Elementos
 
 @Composable
 fun ElementosScreen() {
-    val dispositivos = listOf(
-        "Sensor de temperatura",
-        "Salón",
-        "Cocina",
-        "Dormitorio"
-    )
 
     Scaffold(
-        floatingActionButton = {  },
+        floatingActionButton = { },
     ) { paddingValue ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -44,14 +39,13 @@ fun ElementosScreen() {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (dispositivos.isEmpty()) {
+            if (Dispositivo.dispositivosCreados.isEmpty()) {
                 item {
                     Text("No hay dispositivos vinculados")
                 }
             } else {
-                // Aquí solo se muestra el nombre de cada dispositivo
-                items(dispositivos) { dispositivo ->
-                    DispositivoButton(dispositivo)
+                items(Dispositivo.dispositivosCreados) { dispositivo ->
+                    DispositivoButton(dispositivo.nombre)
                 }
             }
         }
