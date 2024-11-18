@@ -54,7 +54,7 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         SensorTemperatura("Sensor temperatura", "Sensor", "Salón", 17.0, 22.3),
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño", false),
         SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3),
-        SensorLuz("Sensor de luz", "Sensor", "Pasillo", true)
+        SensorLuz("Sensor de luz", "Sensor", "Pasillo", false)
     )
 
 
@@ -326,16 +326,31 @@ fun mostrarSensorLuz(sensorLuz: SensorLuz){
             .fillMaxWidth()
             .padding(top = 6.dp),
     ) {
-        Column(
-            modifier = Modifier
-                .background(Color.Blue, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
-                .padding(8.dp)
-                .weight(1f)
-                .height(50.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text("${if (sensorLuz.estadoEncendido) "Encendido" else "Apagado"} ", color = Color.White, fontWeight = FontWeight.Medium)
+        if (sensorLuz.estadoEncendido){
+            Column(
+                modifier = Modifier
+                    .background(Color.Green, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("Se han detectado luz", color = Color.White, fontWeight = FontWeight.Medium)
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .background(Color.Red, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("No se han detectado luz", color = Color.White, fontWeight = FontWeight.Medium)
+            }
         }
+
     }
 }
