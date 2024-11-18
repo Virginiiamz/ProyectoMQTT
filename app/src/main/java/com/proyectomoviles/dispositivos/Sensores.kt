@@ -1,5 +1,14 @@
 package com.proyectomoviles.dispositivos
 
+class SensorLuz(
+    nombre: String,
+    tipo: String,
+    ubicacion: String,
+    val estadoEncendido: Boolean
+): Dispositivo(nombre, tipo, ubicacion){
+
+}
+
 class SensorTemperatura(
     nombre: String,
     tipo: String,

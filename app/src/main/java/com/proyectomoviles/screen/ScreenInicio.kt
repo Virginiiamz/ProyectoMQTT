@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.SensorLuz
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorTemperatura
@@ -52,7 +53,8 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio", false),
         SensorTemperatura("Sensor temperatura", "Sensor", "Salón", 17.0, 22.3),
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño", false),
-        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3)
+        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3),
+        SensorLuz("Sensor de luz", "Sensor", "Pasillo", true)
     )
 
 
@@ -102,6 +104,8 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                                 mostrarImagenByDispositivo("imgvibracion")
                             } else if (dispositivo is SensorNivelAgua) {
                                 mostrarImagenByDispositivo("imgnivelagua")
+                            } else if (dispositivo is SensorLuz) {
+                                mostrarImagenByDispositivo("imgluz")
                             }
                         }
                         Column()
@@ -155,6 +159,12 @@ fun mostrarImagenByDispositivo(nombreImagen: String) {
                 contentDescription = "Sensor nivel de agua"
             )
         }
+        "imgluz" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensorluz),
+                contentDescription = "Sensor de luz"
+            )
+        }
         else -> ""
     }
 }
@@ -175,6 +185,7 @@ fun mostrarDispositivo(dispositivo: Dispositivo) {
         is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
         is SensorVibracion -> mostrarSensorVibracion(dispositivo)
         is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
+        is SensorLuz -> mostrarSensorLuz(dispositivo)
     }
 }
 
@@ -305,5 +316,26 @@ fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
             Text("${sensorNivAgua.litros} L", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
+    }
+}
+
+@Composable
+fun mostrarSensorLuz(sensorLuz: SensorLuz){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.Blue, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("${if (sensorLuz.estadoEncendido) "Encendido" else "Apagado"} ", color = Color.White, fontWeight = FontWeight.Medium)
+        }
     }
 }
