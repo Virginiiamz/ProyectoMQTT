@@ -101,67 +101,48 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
 
                 ) {
-                item {
-                    if (contadorSensor > 0) {
-                        Text("Sensores", modifier = Modifier.padding(top = 16.dp, bottom = 6.dp), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                if (contadorSensor > 0) {
+                    item {
+                        Text(
+                            "Sensores",
+                            modifier = Modifier.padding(top = 16.dp, bottom = 6.dp),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
                     }
-                }
-
-                items(listaDispositivo) { dispositivo ->
-                    Column(
-                        modifier = Modifier
-                            .width(400.dp)
-                            .border(
-                                border = BorderStroke(2.dp, Color.LightGray),
-                                shape = RoundedCornerShape(8.dp),
-                            ),
-
-
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.padding(6.dp)
-                        ) {
-                            if (dispositivo is SensorTemperatura) {
-                                mostrarImagenByDispositivo("imgtemperatura")
-                            } else if (dispositivo is SensorMovimiento) {
-                                mostrarImagenByDispositivo("imgmovimiento")
-                            } else if (dispositivo is SensorVibracion) {
-                                mostrarImagenByDispositivo("imgvibracion")
-                            } else if (dispositivo is SensorNivelAgua) {
-                                mostrarImagenByDispositivo("imgnivelagua")
-                            } else if (dispositivo is SensorLuz) {
-                                mostrarImagenByDispositivo("imgluz")
-                            } else if (dispositivo is SensorPresion) {
-                                mostrarImagenByDispositivo("imgpresion")
-                            } else if (dispositivo is SensorApertura) {
-                                mostrarImagenByDispositivo("imgapertura")
-                            } else if (dispositivo is SensorCalidadAire) {
-                                mostrarImagenByDispositivo("imgcalidadaire")
-                            }
-                        }
-                        Column()
-                        {
-                            mostrarDispositivo(dispositivo)
-                        }
+                    items(listaDispositivo) { dispositivo ->
+                        CargarSensores(dispositivo)
                     }
-                }
 
-                item {
-                    Spacer(modifier = Modifier.height(60.dp).fillMaxWidth())
+                    item {
+                        Spacer(
+                            modifier = Modifier
+                                .height(60.dp)
+                                .fillMaxWidth()
+                        )
+                    }
                 }
 
                 item {
                     if (contadorActuador > 0) {
-                        Text("Actuadores", modifier = Modifier.padding(top = 16.dp, bottom = 6.dp), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                        Text(
+                            "Actuadores",
+                            modifier = Modifier.padding(top = 16.dp, bottom = 6.dp),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
                     }
                 }
 
                 item {
                     if (contadorMonitoreo > 0) {
                         if (contadorMonitoreo > 0) {
-                            Text("Monitoreo y control complejo", modifier = Modifier.padding(top = 16.dp, bottom = 6.dp), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                            Text(
+                                "Monitoreo y control complejo",
+                                modifier = Modifier.padding(top = 16.dp, bottom = 6.dp),
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 24.sp
+                            )
                         }
                     }
                 }
@@ -180,6 +161,48 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
         containerColor = MaterialTheme.colorScheme.secondary
     ) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+    }
+}
+
+@Composable
+fun CargarSensores(dispositivo: Dispositivo) {
+    Column(
+        modifier = Modifier
+            .width(400.dp)
+            .border(
+                border = BorderStroke(2.dp, Color.LightGray),
+                shape = RoundedCornerShape(8.dp),
+            ),
+
+
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.padding(6.dp)
+        ) {
+            if (dispositivo is SensorTemperatura) {
+                mostrarImagenByDispositivo("imgtemperatura")
+            } else if (dispositivo is SensorMovimiento) {
+                mostrarImagenByDispositivo("imgmovimiento")
+            } else if (dispositivo is SensorVibracion) {
+                mostrarImagenByDispositivo("imgvibracion")
+            } else if (dispositivo is SensorNivelAgua) {
+                mostrarImagenByDispositivo("imgnivelagua")
+            } else if (dispositivo is SensorLuz) {
+                mostrarImagenByDispositivo("imgluz")
+            } else if (dispositivo is SensorPresion) {
+                mostrarImagenByDispositivo("imgpresion")
+            } else if (dispositivo is SensorApertura) {
+                mostrarImagenByDispositivo("imgapertura")
+            } else if (dispositivo is SensorCalidadAire) {
+                mostrarImagenByDispositivo("imgcalidadaire")
+            }
+        }
+        Column()
+        {
+            mostrarDispositivo(dispositivo)
+        }
     }
 }
 
