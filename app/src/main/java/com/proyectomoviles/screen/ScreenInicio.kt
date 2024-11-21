@@ -35,11 +35,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.SensorApertura
+import com.proyectomoviles.dispositivos.SensorCalidadAire
 import com.proyectomoviles.dispositivos.SensorLuz
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorNivelAgua
+import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
+import com.proyectomoviles.ui.theme.Naranja
+import com.proyectomoviles.ui.theme.Purple40
 import kotlinx.serialization.Serializable
 
 
@@ -54,7 +59,10 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         SensorTemperatura("Sensor temperatura", "Sensor", "Salón", 17.0, 22.3),
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño", false),
         SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3),
-        SensorLuz("Sensor de luz", "Sensor", "Pasillo", false)
+        SensorLuz("Sensor de luz", "Sensor", "Pasillo", false),
+        SensorPresion("Sensor de presión", "Sensor","Cocina", 10.3),
+        SensorApertura("Sensor de apertura", "Sensor", "Cocina", false),
+        SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", "Desfavorable")
     )
 
 
@@ -106,6 +114,12 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                                 mostrarImagenByDispositivo("imgnivelagua")
                             } else if (dispositivo is SensorLuz) {
                                 mostrarImagenByDispositivo("imgluz")
+                            } else if (dispositivo is SensorPresion) {
+                                mostrarImagenByDispositivo("imgpresion")
+                            } else if (dispositivo is SensorApertura) {
+                                mostrarImagenByDispositivo("imgapertura")
+                            } else if (dispositivo is SensorCalidadAire) {
+                                mostrarImagenByDispositivo("imgcalidadaire")
                             }
                         }
                         Column()
@@ -165,6 +179,24 @@ fun mostrarImagenByDispositivo(nombreImagen: String) {
                 contentDescription = "Sensor de luz"
             )
         }
+        "imgpresion" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensorpresion),
+                contentDescription = "Sensor de presión"
+            )
+        }
+        "imgapertura" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensorapertura),
+                contentDescription = "Sensor de apertura"
+            )
+        }
+        "imgcalidadaire" -> {
+            Image(
+                painterResource(id = R.drawable.imgsensorcalidadaire),
+                contentDescription = "Sensor de calidad del aire"
+            )
+        }
         else -> ""
     }
 }
@@ -186,6 +218,9 @@ fun mostrarDispositivo(dispositivo: Dispositivo) {
         is SensorVibracion -> mostrarSensorVibracion(dispositivo)
         is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
         is SensorLuz -> mostrarSensorLuz(dispositivo)
+        is SensorPresion -> mostrarSensorPresion(dispositivo)
+        is SensorApertura -> mostrarSensorApertura(dispositivo)
+        is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
     }
 }
 
@@ -352,5 +387,101 @@ fun mostrarSensorLuz(sensorLuz: SensorLuz){
             }
         }
 
+    }
+}
+
+@Composable
+fun mostrarSensorPresion(sensorPresion: SensorPresion) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.Gray, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("${sensorPresion.presion} Pa", color = Color.White, fontWeight = FontWeight.Medium)
+        }
+
+    }
+}
+
+@Composable
+fun mostrarSensorApertura(sensorApertura: SensorApertura) {
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+
+        ){
+        if (sensorApertura.estado) {
+            Column(
+                modifier = Modifier
+                    .background(Color.Green, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("La puerta está abierta", color = Color.White, fontWeight = FontWeight.Medium)
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("La puerta está cerrada", color = Color.White, fontWeight = FontWeight.Medium)
+            }
+        }
+    }
+}
+
+@Composable
+fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+
+        ){
+
+        var colorbackground = when(sensorCalAire.ICA) {
+            "Bueno" -> Color.Green
+            "Moderado" -> Color.Yellow
+            "Desfavorable" -> Naranja
+            "Dañinoso" -> Color.Red
+            "Muy dañino" -> Purple40
+            else -> Color.White
+        }
+
+        Column(
+            modifier = Modifier
+                .background(colorbackground, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            when(sensorCalAire.ICA) {
+                "Bueno" -> Text("La calidad del aire es buena", color = Color.White, fontWeight = FontWeight.Medium)
+                "Moderado" -> Text("La calidad del aire es moderada", color = Color.White, fontWeight = FontWeight.Medium)
+                "Desfavorable" -> Text("La calidad del aire es desfavorable", color = Color.White, fontWeight = FontWeight.Medium)
+                "Dañinoso" -> Text("La calidad del aire es dañina", color = Color.White, fontWeight = FontWeight.Medium)
+                "Muy dañino" -> Text("La calidad del aire es muy dañina", color = Color.White, fontWeight = FontWeight.Medium)
+            }
+        }
     }
 }
