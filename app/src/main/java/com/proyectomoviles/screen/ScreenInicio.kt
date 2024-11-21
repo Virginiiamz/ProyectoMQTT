@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorApertura
@@ -60,10 +61,26 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño", false),
         SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3),
         SensorLuz("Sensor de luz", "Sensor", "Pasillo", false),
-        SensorPresion("Sensor de presión", "Sensor","Cocina", 10.3),
+        SensorPresion("Sensor de presión", "Sensor", "Cocina", 10.3),
         SensorApertura("Sensor de apertura", "Sensor", "Cocina", false),
         SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", "Desfavorable")
     )
+
+    var contadorSensor = 0
+    var contadorActuador = 0
+    var contadorMonitoreo = 0
+
+    listaDispositivo.forEach { dispositivo ->
+        if (dispositivo.tipo == "Sensor") {
+            contadorSensor++
+        }
+        if (dispositivo.tipo == "Actuador") {
+            contadorActuador++
+        }
+        if (dispositivo.tipo == "Monitoreo") {
+            contadorMonitoreo++
+        }
+    }
 
 
     Scaffold(
@@ -71,23 +88,25 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
             MyFloatingActionButton(navigateToElementos)
         },
         floatingActionButtonPosition = FabPosition.Start
-    ) {
-        paddingValue ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier
-               .fillMaxSize()
-               .padding(paddingValue)
-               .padding(6.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) { paddingValue ->
+        if (listaDispositivo.isEmpty()) {
+            Text("No hay dispositivos vinculados.")
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValue)
+                    .padding(6.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
 
-        ) {
-            if (listaDispositivo.isEmpty()) {
+                ) {
                 item {
-                    Text("No hay dispositivos vinculados.")
+                    if (contadorSensor > 0) {
+                        Text("Sensores", modifier = Modifier.padding(top = 16.dp, bottom = 6.dp), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    }
                 }
-            } else {
+
                 items(listaDispositivo) { dispositivo ->
                     Column(
                         modifier = Modifier
@@ -128,8 +147,27 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                         }
                     }
                 }
+
+                item {
+                    Spacer(modifier = Modifier.height(60.dp).fillMaxWidth())
+                }
+
+                item {
+                    if (contadorActuador > 0) {
+                        Text("Actuadores", modifier = Modifier.padding(top = 16.dp, bottom = 6.dp), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    }
+                }
+
+                item {
+                    if (contadorMonitoreo > 0) {
+                        if (contadorMonitoreo > 0) {
+                            Text("Monitoreo y control complejo", modifier = Modifier.padding(top = 16.dp, bottom = 6.dp), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                        }
+                    }
+                }
             }
         }
+
     }
 
 }
@@ -138,7 +176,7 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
 @Composable
 fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
     FloatingActionButton(
-        onClick = {navigateToElementos()},
+        onClick = { navigateToElementos() },
         containerColor = MaterialTheme.colorScheme.secondary
     ) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = null)
@@ -148,55 +186,63 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 @Composable
 fun mostrarImagenByDispositivo(nombreImagen: String) {
 
-    when(nombreImagen) {
+    when (nombreImagen) {
         "imgtemperatura" -> {
             Image(
                 painterResource(id = R.drawable.imgtermometro),
                 contentDescription = "Sensor termometro"
             )
         }
+
         "imgmovimiento" -> {
             Image(
                 painterResource(id = R.drawable.imgsensormovimiento),
                 contentDescription = "Sensor movimiento"
             )
         }
+
         "imgvibracion" -> {
             Image(
                 painterResource(id = R.drawable.imgsensorvibracion),
                 contentDescription = "Sensor vibracion"
             )
         }
+
         "imgnivelagua" -> {
             Image(
                 painterResource(id = R.drawable.imgsensornivelagua),
                 contentDescription = "Sensor nivel de agua"
             )
         }
+
         "imgluz" -> {
             Image(
                 painterResource(id = R.drawable.imgsensorluz),
                 contentDescription = "Sensor de luz"
             )
         }
+
         "imgpresion" -> {
             Image(
                 painterResource(id = R.drawable.imgsensorpresion),
                 contentDescription = "Sensor de presión"
             )
         }
+
         "imgapertura" -> {
             Image(
                 painterResource(id = R.drawable.imgsensorapertura),
                 contentDescription = "Sensor de apertura"
             )
         }
+
         "imgcalidadaire" -> {
             Image(
                 painterResource(id = R.drawable.imgsensorcalidadaire),
                 contentDescription = "Sensor de calidad del aire"
             )
         }
+
         else -> ""
     }
 }
@@ -256,41 +302,54 @@ fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
         }
 
     }
-    }
-
+}
 
 
 @Composable
 fun mostrarSensorMovimiento(sensorMov: SensorMovimiento) {
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
-    ){
+        ) {
         if (sensorMov.estado) {
             Column(
                 modifier = Modifier
-                    .background(Color.Green, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("Se ha detectado movimiento", color = Color.White, fontWeight = FontWeight.Medium)
+                Text(
+                    "Se ha detectado movimiento",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
             }
         } else {
             Column(
                 modifier = Modifier
-                    .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("No se ha detectado movimiento", color = Color.White, fontWeight = FontWeight.Medium)
+                Text(
+                    "No se ha detectado movimiento",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
     }
@@ -298,35 +357,49 @@ fun mostrarSensorMovimiento(sensorMov: SensorMovimiento) {
 
 @Composable
 fun mostrarSensorVibracion(sensorVib: SensorVibracion) {
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
-        ){
+        ) {
         if (sensorVib.estado) {
             Column(
                 modifier = Modifier
-                    .background(Color.Green, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("Se han detectado vibraciones", color = Color.White, fontWeight = FontWeight.Medium)
+                Text(
+                    "Se han detectado vibraciones",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
             }
         } else {
             Column(
                 modifier = Modifier
-                    .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("No se han detectado vibraciones", color = Color.White, fontWeight = FontWeight.Medium)
+                Text(
+                    "No se han detectado vibraciones",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
     }
@@ -341,7 +414,10 @@ fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
     ) {
         Column(
             modifier = Modifier
-                .background(Color.Blue, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                .background(
+                    Color.Blue,
+                    shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+                )
                 .padding(8.dp)
                 .weight(1f)
                 .height(50.dp),
@@ -355,16 +431,19 @@ fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
 }
 
 @Composable
-fun mostrarSensorLuz(sensorLuz: SensorLuz){
+fun mostrarSensorLuz(sensorLuz: SensorLuz) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
     ) {
-        if (sensorLuz.estadoEncendido){
+        if (sensorLuz.estadoEncendido) {
             Column(
                 modifier = Modifier
-                    .background(Color.Green, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
@@ -376,7 +455,10 @@ fun mostrarSensorLuz(sensorLuz: SensorLuz){
         } else {
             Column(
                 modifier = Modifier
-                    .background(Color.Red, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
@@ -399,7 +481,10 @@ fun mostrarSensorPresion(sensorPresion: SensorPresion) {
     ) {
         Column(
             modifier = Modifier
-                .background(Color.Gray, shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+                .background(
+                    Color.Gray,
+                    shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+                )
                 .padding(8.dp)
                 .weight(1f)
                 .height(50.dp),
@@ -414,16 +499,19 @@ fun mostrarSensorPresion(sensorPresion: SensorPresion) {
 
 @Composable
 fun mostrarSensorApertura(sensorApertura: SensorApertura) {
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
-        ){
+        ) {
         if (sensorApertura.estado) {
             Column(
                 modifier = Modifier
-                    .background(Color.Green, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
@@ -435,7 +523,10 @@ fun mostrarSensorApertura(sensorApertura: SensorApertura) {
         } else {
             Column(
                 modifier = Modifier
-                    .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
                     .padding(8.dp)
                     .weight(1f)
                     .height(50.dp),
@@ -450,14 +541,14 @@ fun mostrarSensorApertura(sensorApertura: SensorApertura) {
 
 @Composable
 fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
-        ){
+        ) {
 
-        var colorbackground = when(sensorCalAire.ICA) {
+        var colorbackground = when (sensorCalAire.ICA) {
             "Bueno" -> Color.Green
             "Moderado" -> Color.Yellow
             "Desfavorable" -> Naranja
@@ -468,19 +559,46 @@ fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
 
         Column(
             modifier = Modifier
-                .background(colorbackground, shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp))
+                .background(
+                    colorbackground,
+                    shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                )
                 .padding(8.dp)
                 .weight(1f)
                 .height(50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            when(sensorCalAire.ICA) {
-                "Bueno" -> Text("La calidad del aire es buena", color = Color.White, fontWeight = FontWeight.Medium)
-                "Moderado" -> Text("La calidad del aire es moderada", color = Color.White, fontWeight = FontWeight.Medium)
-                "Desfavorable" -> Text("La calidad del aire es desfavorable", color = Color.White, fontWeight = FontWeight.Medium)
-                "Dañinoso" -> Text("La calidad del aire es dañina", color = Color.White, fontWeight = FontWeight.Medium)
-                "Muy dañino" -> Text("La calidad del aire es muy dañina", color = Color.White, fontWeight = FontWeight.Medium)
+            when (sensorCalAire.ICA) {
+                "Bueno" -> Text(
+                    "La calidad del aire es buena",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+
+                "Moderado" -> Text(
+                    "La calidad del aire es moderada",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+
+                "Desfavorable" -> Text(
+                    "La calidad del aire es desfavorable",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+
+                "Dañinoso" -> Text(
+                    "La calidad del aire es dañina",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+
+                "Muy dañino" -> Text(
+                    "La calidad del aire es muy dañina",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
     }
