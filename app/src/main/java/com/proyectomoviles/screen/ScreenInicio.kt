@@ -5,7 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,6 +45,14 @@ import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.funciones.mostrarDispositivoActuadores
 import com.proyectomoviles.funciones.mostrarDispositivoSensores
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
+import com.proyectomoviles.funciones.mostrarSensorApertura
+import com.proyectomoviles.funciones.mostrarSensorCalidadAire
+import com.proyectomoviles.funciones.mostrarSensorLuz
+import com.proyectomoviles.funciones.mostrarSensorMovimiento
+import com.proyectomoviles.funciones.mostrarSensorNivelAgua
+import com.proyectomoviles.funciones.mostrarSensorPresion
+import com.proyectomoviles.funciones.mostrarSensorTemperatura
+import com.proyectomoviles.funciones.mostrarSensorVibracion
 import kotlinx.serialization.Serializable
 
 
@@ -74,15 +84,15 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
     listaDispositivo.forEach { dispositivo ->
         if (dispositivo.tipo == "Sensor") {
             contadorSensor++
-            listaSensores+=dispositivo
+            listaSensores += dispositivo
         }
         if (dispositivo.tipo == "Actuador") {
             contadorActuador++
-            listaActuadores+=dispositivo
+            listaActuadores += dispositivo
         }
         if (dispositivo.tipo == "Monitoreo") {
             contadorMonitoreo++
-            listaMonitoreo+=dispositivo
+            listaMonitoreo += dispositivo
         }
     }
 
@@ -201,31 +211,61 @@ fun CargarSensores(dispositivo: Dispositivo) {
 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.padding(6.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 6.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            if (dispositivo is SensorTemperatura) {
-                mostrarImagenByDispositivo("imgtemperatura")
-            } else if (dispositivo is SensorMovimiento) {
-                mostrarImagenByDispositivo("imgmovimiento")
-            } else if (dispositivo is SensorVibracion) {
-                mostrarImagenByDispositivo("imgvibracion")
-            } else if (dispositivo is SensorNivelAgua) {
-                mostrarImagenByDispositivo("imgnivelagua")
-            } else if (dispositivo is SensorLuz) {
-                mostrarImagenByDispositivo("imgluz")
-            } else if (dispositivo is SensorPresion) {
-                mostrarImagenByDispositivo("imgpresion")
-            } else if (dispositivo is SensorApertura) {
-                mostrarImagenByDispositivo("imgapertura")
-            } else if (dispositivo is SensorCalidadAire) {
-                mostrarImagenByDispositivo("imgcalidadaire")
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.padding(6.dp)
+                ) {
+                    if (dispositivo is SensorTemperatura) {
+                        mostrarImagenByDispositivo("imgtemperatura")
+                    } else if (dispositivo is SensorMovimiento) {
+                        mostrarImagenByDispositivo("imgmovimiento")
+                    } else if (dispositivo is SensorVibracion) {
+                        mostrarImagenByDispositivo("imgvibracion")
+                    } else if (dispositivo is SensorNivelAgua) {
+                        mostrarImagenByDispositivo("imgnivelagua")
+                    } else if (dispositivo is SensorLuz) {
+                        mostrarImagenByDispositivo("imgluz")
+                    } else if (dispositivo is SensorPresion) {
+                        mostrarImagenByDispositivo("imgpresion")
+                    } else if (dispositivo is SensorApertura) {
+                        mostrarImagenByDispositivo("imgapertura")
+                    } else if (dispositivo is SensorCalidadAire) {
+                        mostrarImagenByDispositivo("imgcalidadaire")
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier.weight(1f).fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                mostrarDispositivoSensores(dispositivo)
             }
         }
+
         Column()
         {
-            mostrarDispositivoSensores(dispositivo)
+            when (dispositivo) {
+                is SensorTemperatura -> mostrarSensorTemperatura(dispositivo)
+                is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
+                is SensorVibracion -> mostrarSensorVibracion(dispositivo)
+                is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
+                is SensorLuz -> mostrarSensorLuz(dispositivo)
+                is SensorPresion -> mostrarSensorPresion(dispositivo)
+                is SensorApertura -> mostrarSensorApertura(dispositivo)
+                is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
+            }
         }
     }
 }

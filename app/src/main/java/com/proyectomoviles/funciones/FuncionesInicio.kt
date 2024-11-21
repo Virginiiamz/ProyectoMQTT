@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.ActuadorValvula
@@ -120,16 +121,7 @@ fun mostrarDispositivoSensores(dispositivo: Dispositivo) {
         Modifier.height(1.dp)
     )
 
-    when (dispositivo) {
-        is SensorTemperatura -> mostrarSensorTemperatura(dispositivo)
-        is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
-        is SensorVibracion -> mostrarSensorVibracion(dispositivo)
-        is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
-        is SensorLuz -> mostrarSensorLuz(dispositivo)
-        is SensorPresion -> mostrarSensorPresion(dispositivo)
-        is SensorApertura -> mostrarSensorApertura(dispositivo)
-        is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
-    }
+
 }
 
 @Composable
