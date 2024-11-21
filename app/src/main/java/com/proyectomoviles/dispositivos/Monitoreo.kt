@@ -11,3 +11,12 @@ class ControladorClima(
         dispositivosCreados.add(this)
     }
 }
+
+class MedidorConsumoAgua(
+    nombre: String,
+    tipo: String,
+    ubicacion: String,
+    val litros: Double
+): Dispositivo(nombre, tipo, ubicacion) {
+
+}
