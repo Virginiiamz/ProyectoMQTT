@@ -47,7 +47,7 @@ import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 import okhttp3.internal.wait
 
 @Composable
-fun ElementosScreen() {
+fun ElementosScreen(onNavigateToConfiguracion: (Dispositivo) -> Unit) {
     val dispositivos = listaElementos()
 
     val dispositivoImagenMap = mapOf(
@@ -77,7 +77,10 @@ fun ElementosScreen() {
             } else {
                 items(dispositivos) { dispositivo ->
                     //val imageRes = dispositivoImagenMap[dispositivo] ?: R.drawable.error
-                    DispositivoCard(dispositivo)
+                    DispositivoCard(dispositivo){
+                        onNavigateToConfiguracion(dispositivo)
+                    }
+
                 }
             }
         }
@@ -86,7 +89,7 @@ fun ElementosScreen() {
 
 
 @Composable
-fun DispositivoCard(dispositivo: Dispositivo) {
+fun DispositivoCard(dispositivo: Dispositivo, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -34,7 +34,6 @@ fun ConfiguracionScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // Configuración según el dispositivo
             when (dispositivo) {
                 is ControladorIluminacion -> ConfiguracionControladorIluminacion(dispositivo)
                 is SensorGas -> ConfiguracionSensorGas(dispositivo)
