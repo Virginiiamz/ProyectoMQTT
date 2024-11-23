@@ -5,7 +5,7 @@ class SensorLuz(
     tipo: String,
     ubicacion: String,
     imagen: Int,
-    val estadoEncendido: Boolean
+    var estadoEncendido: Boolean
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
 
 }
@@ -26,7 +26,7 @@ class SensorMovimiento(
     tipo: String,
     ubicacion: String,
     imagen: Int,
-    val estado: Boolean
+    var estado: Boolean
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
 
 }
@@ -36,7 +36,7 @@ class SensorVibracion(
     tipo: String,
     ubicacion: String,
     imagen: Int,
-    val estado: Boolean
+    var estado: Boolean
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
 
 }
@@ -67,7 +67,7 @@ class SensorApertura(
     tipo: String,
     ubicacion: String,
     imagen: Int,
-    val estado: Boolean
+    var estado: Boolean
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
     init {
         dispositivosCreados.add(this)
