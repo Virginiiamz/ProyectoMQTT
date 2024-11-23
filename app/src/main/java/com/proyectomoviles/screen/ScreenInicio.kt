@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,8 +31,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.ActuadorValvula
+import com.proyectomoviles.dispositivos.CerraduraElectronica
+import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
 import com.proyectomoviles.dispositivos.SensorLuz
@@ -62,16 +65,18 @@ object Inicio
 @Composable
 fun InicioScreen(navigateToElementos: () -> Unit) {
     val listaDispositivo = listOf(
-        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", 20.5, 45.9),
-        SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio", false),
-        SensorTemperatura("Sensor temperatura", "Sensor", "Salón", 17.0, 22.3),
-        SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño", false),
-        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3),
-        SensorLuz("Sensor de luz", "Sensor", "Pasillo", false),
-        SensorPresion("Sensor de presión", "Sensor", "Cocina", 10.3),
-        SensorApertura("Sensor de apertura", "Sensor", "Cocina", false),
-        SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", "Desfavorable"),
-        ActuadorValvula("Actuador valvula", "Actuador", "Cocina", true),
+        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", R.drawable.imgtermometro,20.5, 45.9),
+        SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
+        SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño",R.drawable.imgsensorvibracion, false),
+        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,10.3),
+        SensorLuz("Sensor de luz", "Sensor", "Pasillo", R.drawable.imgsensorluz, false),
+        SensorPresion("Sensor de presión", "Sensor", "Cocina",R.drawable.imgsensorpresion, 10.3),
+        SensorApertura("Sensor de apertura", "Sensor", "Cocina", R.drawable.imgsensorapertura, false),
+        SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", R.drawable.imgsensorcalidadaire,"Desfavorable"),
+        ActuadorValvula("Actuador valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,true),
+        ControladorClima("Controlador clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 20.5, 45.9),
+        MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 10.3),
+        CerraduraElectronica("Cerradura electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false)
     )
 
     var contadorSensor = 0

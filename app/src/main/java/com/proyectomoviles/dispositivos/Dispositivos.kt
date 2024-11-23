@@ -5,6 +5,7 @@ open class Dispositivo(
     val nombre : String,
     val tipo: String,
     val ubicacion: String,
+    var imagen: Int
 ) {
     companion object {
         val dispositivosCreados = mutableListOf<Dispositivo>()
