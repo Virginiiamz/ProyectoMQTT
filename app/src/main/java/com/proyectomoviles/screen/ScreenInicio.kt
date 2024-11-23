@@ -231,23 +231,7 @@ fun CargarSensores(dispositivo: Dispositivo) {
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.padding(6.dp)
                 ) {
-                    if (dispositivo is SensorTemperatura) {
-                        mostrarImagenByDispositivo("imgtemperatura")
-                    } else if (dispositivo is SensorMovimiento) {
-                        mostrarImagenByDispositivo("imgmovimiento")
-                    } else if (dispositivo is SensorVibracion) {
-                        mostrarImagenByDispositivo("imgvibracion")
-                    } else if (dispositivo is SensorNivelAgua) {
-                        mostrarImagenByDispositivo("imgnivelagua")
-                    } else if (dispositivo is SensorLuz) {
-                        mostrarImagenByDispositivo("imgluz")
-                    } else if (dispositivo is SensorPresion) {
-                        mostrarImagenByDispositivo("imgpresion")
-                    } else if (dispositivo is SensorApertura) {
-                        mostrarImagenByDispositivo("imgapertura")
-                    } else if (dispositivo is SensorCalidadAire) {
-                        mostrarImagenByDispositivo("imgcalidadaire")
-                    }
+                    mostrarImagenByDispositivo(dispositivo)
                 }
             }
             Column(
@@ -292,9 +276,7 @@ fun CargarActuadores(dispositivo: Dispositivo) {
             contentAlignment = Alignment.Center,
             modifier = Modifier.padding(6.dp)
         ) {
-            if (dispositivo is ActuadorValvula) {
-                mostrarImagenByDispositivo("imgactuadorvalvula")
-            }
+            mostrarImagenByDispositivo(dispositivo)
         }
         Column()
         {
