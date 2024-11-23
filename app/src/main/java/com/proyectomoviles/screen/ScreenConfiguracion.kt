@@ -20,6 +20,7 @@ import com.proyectomoviles.dispositivos.SensorGas
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
 import com.proyectomoviles.dispositivos.SensorLuz
@@ -28,6 +29,7 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
+import com.proyectomoviles.dispositivos.ActuadorValvula
 
 @Composable
 fun ConfiguracionScreen(
@@ -58,6 +60,8 @@ fun ConfiguracionScreen(
                 is  SensorPresion -> ConfiguracionSensorPresion(dispositivo)
                 is  SensorApertura -> ConfiguracionSensorApertura(dispositivo)
                 is  SensorCalidadAire -> ConfiguracionSensorCalidadAire(dispositivo)
+                is  ActuadorValvula -> ConfiguracionActuadorValvula(dispositivo)
+                is  CerraduraElectronica -> ConfiguracionCerraduraElectronica(dispositivo)
                 else -> Text(text = "Configuración no disponible para este dispositivo")
             }
 
@@ -109,22 +113,6 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
 
 
 
-@Composable
-fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
-    Column {
-        Text(text = "Configuración del Controlador de Iluminación")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !controlador.encendido
-        Button(onClick = {
-            controlador.encendido = nuevoEstado
-        }) {
-            Text(text = if (controlador.encendido) "Apagar" else "Encender")
-        }
-    }
-}
 
 
 @Composable
@@ -167,7 +155,7 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
 }
 
 
-//SENSORES
+//SENSORES:
 
 @Composable
 fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
@@ -288,3 +276,63 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
         Text(text = "Concentración de CH4: ${sensorGas.concentracionCH4} ppm")
     }
 }
+
+//ACTUADORES:
+
+@Composable
+fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
+    Column {
+        Text(text = "Configuración del Actuador de Válvula")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Estado: ${if (actuadorValvula.activo) "Activo" else "Inactivo"}")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val nuevoEstado = !actuadorValvula.activo
+        Button(onClick = {
+            // Cambiar el estado del actuador
+            actuadorValvula.activo = nuevoEstado
+        }) {
+            Text(text = if (actuadorValvula.activo) "Desactivar" else "Activar")
+        }
+    }
+}
+
+@Composable
+fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
+    Column {
+        Text(text = "Configuración de la Cerradura Electrónica")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Estado: ${if (cerradura.cerrado) "Cerrada" else "Abierta"}")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val nuevoEstado = !cerradura.cerrado
+        Button(onClick = {
+            // Cambiar el estado de la cerradura
+            cerradura.cerrado = nuevoEstado
+        }) {
+            Text(text = if (cerradura.cerrado) "Abrir" else "Cerrar")
+        }
+    }
+}
+
+@Composable
+fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
+    Column {
+        Text(text = "Configuración del Controlador de Iluminación")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Estado: ${if (controlador.encendido) "Encendido" else "Apagado"}")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val nuevoEstado = !controlador.encendido
+        Button(onClick = {
+            // Cambiar el estado del controlador
+            controlador.encendido = nuevoEstado
+        }) {
+            Text(text = if (controlador.encendido) "Apagar" else "Encender")
+        }
+    }
+}
+
