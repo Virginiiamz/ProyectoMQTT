@@ -11,6 +11,6 @@ open class Dispositivo(
     }
 
     init {
-        dispositivosCreados.add(this)
+       dispositivosCreados.add(this)
     }
 }

@@ -56,17 +56,6 @@ class SensorPresion(
     }
 }
 
-class ActuadorValvula(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    val activo: Boolean
-): Dispositivo(nombre, tipo, ubicacion) {
-    init {
-        dispositivosCreados.add(this)
-    }
-}
-
 class SensorApertura(
     nombre: String,
     tipo: String,
@@ -82,23 +71,13 @@ class SensorCalidadAire(
     nombre: String,
     tipo: String,
     ubicacion: String,
-    val nivel: Double
+    val ICA: String
 ): Dispositivo(nombre, tipo, ubicacion) {
     init {
         dispositivosCreados.add(this)
     }
 }
 
-class ControladorClima(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    val temperatura: Double,
-    val humedad: Double,
-): Dispositivo(nombre, tipo, ubicacion) {
-    init {
-        dispositivosCreados.add(this)
-    }
-}
+
 
 
