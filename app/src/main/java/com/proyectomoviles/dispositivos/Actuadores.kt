@@ -30,7 +30,7 @@ class ControladorIluminacion(
     ubicacion: String,
     imagen: Int,
     val lx: Double,
-    val encendido: Boolean,
+    var encendido: Boolean,
 ): Dispositivo(nombre, tipo, ubicacion,imagen) {
     init {
         dispositivosCreados.add(this)

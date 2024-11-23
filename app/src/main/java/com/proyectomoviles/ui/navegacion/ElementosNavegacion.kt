@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 object Inicio
 
 @Serializable
+object Configuracion
+
+@Serializable
 object Elementos
