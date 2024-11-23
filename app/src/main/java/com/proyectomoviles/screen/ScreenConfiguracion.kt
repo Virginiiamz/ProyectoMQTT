@@ -2,8 +2,20 @@ package com.proyectomoviles.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.proyectomoviles.dispositivos.ControladorIluminacion
+import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorGas
 
 
@@ -47,18 +59,18 @@ fun ConfiguracionScreen(
 
 @Composable
 fun MyTopAppBar(dispositivo: Dispositivo) {
-    TopAppBar(
-        title = {
-            Row {
-                Text(text = "Configuración de ${dispositivo.nombre}")
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
-    )
+//    TopAppBar(
+//        title = {
+//            Row {
+//                Text(text = "Configuración de ${dispositivo.nombre}")
+//                Spacer(modifier = Modifier.width(8.dp))
+//            }
+//        },
+//        colors = TopAppBarDefaults.topAppBarColors(
+//            containerColor = MaterialTheme.colorScheme.primary,
+//            titleContentColor = MaterialTheme.colorScheme.onPrimary
+//        )
+ //   )
 }
 
 @Composable
@@ -71,11 +83,11 @@ fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
         Spacer(modifier = Modifier.height(8.dp))
 
         val nuevoEstado = !controlador.encendido
-        Button(onClick = {
-            controlador.encendido = nuevoEstado
-        }) {
-            Text(text = if (controlador.encendido) "Apagar" else "Encender")
-        }
+//        Button(onClick = {
+//           controlador.encendido = nuevoEstado
+//        }) {
+//            Text(text = if (controlador.encendido) "Apagar" else "Encender")
+//        }
     }
 }
 
