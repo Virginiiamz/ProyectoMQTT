@@ -7,29 +7,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.proyectomoviles.dispositivos.ActuadorValvula
+import com.proyectomoviles.dispositivos.CerraduraElectronica
+import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
-import com.proyectomoviles.dispositivos.SensorGas
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
-import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
+import com.proyectomoviles.dispositivos.SensorGas
 import com.proyectomoviles.dispositivos.SensorLuz
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
-import com.proyectomoviles.dispositivos.ActuadorValvula
 
 @Composable
 fun ConfiguracionScreen(
@@ -62,6 +64,8 @@ fun ConfiguracionScreen(
                 is  SensorCalidadAire -> ConfiguracionSensorCalidadAire(dispositivo)
                 is  ActuadorValvula -> ConfiguracionActuadorValvula(dispositivo)
                 is  CerraduraElectronica -> ConfiguracionCerraduraElectronica(dispositivo)
+                is ControladorClima -> ConfiguracionControladorClima(dispositivo)
+                is MedidorConsumoAgua -> ConfiguracionMedidorConsumoAgua(dispositivo)
                 else -> Text(text = "Configuración no disponible para este dispositivo")
             }
 
@@ -115,44 +119,6 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
 
 
 
-@Composable
-fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
-    var metrosCubicosInput by remember { mutableStateOf(medidorGas.metroscubicos.toString()) }
-
-    Column {
-        Text(text = "Configuración del Medidor de Gas")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(text = "Consumo actual: ${medidorGas.metroscubicos} m³")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = metrosCubicosInput,
-            onValueChange = { input ->
-                // Para comrpobar q sea un número
-                if (input.toFloatOrNull() != null || input.isEmpty()) {
-                    metrosCubicosInput = input
-                }
-            },
-            label = { Text("Nuevo consumo (m³)") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = {
-                val nuevoValor = metrosCubicosInput.toFloatOrNull()
-                if (nuevoValor != null) {
-                    medidorGas.metroscubicos = nuevoValor.toDouble()
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Actualizar consumo")
-        }
-    }
-}
 
 
 //SENSORES:
@@ -317,6 +283,8 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
     }
 }
 
+//MOnitoreo:
+
 @Composable
 fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
     Column {
@@ -336,3 +304,65 @@ fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
     }
 }
 
+@Composable
+fun ConfiguracionControladorClima(controlador: ControladorClima) {
+    Column {
+        Text(text = "Configuración del Controlador de Clima")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Temperatura actual: ${controlador.temperatura}°C")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Humedad actual: ${controlador.humedad}%")
+    }
+}
+
+@Composable
+fun ConfiguracionMedidorConsumoAgua(medidor: MedidorConsumoAgua) {
+    Column {
+        Text(text = "Configuración del Medidor de Consumo de Agua")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Consumo actual: ${medidor.litros} litros")
+    }
+}
+
+
+@Composable
+fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
+    var metrosCubicosInput by remember { mutableStateOf(medidorGas.metroscubicos.toString()) }
+
+    Column {
+        Text(text = "Configuración del Medidor de Gas")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Consumo actual: ${medidorGas.metroscubicos} m³")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = metrosCubicosInput,
+            onValueChange = { input ->
+                // Para comrpobar q sea un número
+                if (input.toFloatOrNull() != null || input.isEmpty()) {
+                    metrosCubicosInput = input
+                }
+            },
+            label = { Text("Nuevo consumo (m³)") },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                val nuevoValor = metrosCubicosInput.toFloatOrNull()
+                if (nuevoValor != null) {
+                    medidorGas.metroscubicos = nuevoValor.toDouble()
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar consumo")
+        }
+    }
+}
