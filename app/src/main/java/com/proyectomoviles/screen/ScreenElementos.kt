@@ -23,18 +23,22 @@ import androidx.compose.ui.unit.dp
 import com.proyectomoviles.dispositivos.Dispositivo
 import kotlinx.serialization.Serializable
 import com.proyectomoviles.R
+import com.proyectomoviles.dispositivos.ActuadorValvula
+import com.proyectomoviles.dispositivos.SensorApertura
+import com.proyectomoviles.dispositivos.SensorCalidadAire
+import com.proyectomoviles.dispositivos.SensorLuz
+import com.proyectomoviles.dispositivos.SensorMovimiento
+import com.proyectomoviles.dispositivos.SensorNivelAgua
+import com.proyectomoviles.dispositivos.SensorPresion
+import com.proyectomoviles.dispositivos.SensorTemperatura
+import com.proyectomoviles.dispositivos.SensorVibracion
 
 @Serializable
 object Elementos
 
 @Composable
 fun ElementosScreen() {
-    val dispositivos = listOf(
-        "Sensor de temperatura",
-        "Sensor de luz",
-        "Sensor de movimiento",
-        "Sensor de vibracion"
-    )
+    val dispositivos = listaElementos()
 
     val dispositivoImagenMap = mapOf(
         "Sensor de temperatura" to R.drawable.imgtermometro,
@@ -59,19 +63,19 @@ fun ElementosScreen() {
                 item {
                     Text("No hay dispositivos vinculados")
                 }
-            } /*else {
+            } else {
                 items(dispositivos) { dispositivo ->
-                    val imageRes = dispositivoImagenMap[dispositivo] ?: R.drawable.error
-                    DispositivoButton(nombre = dispositivo, imageRes = imageRes)
+                    //val imageRes = dispositivoImagenMap[dispositivo] ?: R.drawable.error
+                    DispositivoButton(nombre = dispositivo.nombre)
                 }
-            }*/
+            }
         }
     }
 }
 
 
 @Composable
-fun DispositivoButton(nombre: String, imageRes: Int) {
+fun DispositivoButton(nombre: String) {
     Button(
         onClick = { },
         modifier = Modifier
@@ -80,13 +84,30 @@ fun DispositivoButton(nombre: String, imageRes: Int) {
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            androidx.compose.foundation.Image(
+            /*androidx.compose.foundation.Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = "Icono de $nombre",
                 modifier = Modifier.size(48.dp)
-            )
+            )*/
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = nombre)
         }
     }
+}
+
+
+fun listaElementos():List<Dispositivo>{
+    val listaDispositivo = listOf(
+        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", 20.5, 45.9),
+        SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio", false),
+        SensorTemperatura("Sensor temperatura", "Sensor", "Salón", 17.0, 22.3),
+        SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño", false),
+        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", 10.3),
+        SensorLuz("Sensor de luz", "Sensor", "Pasillo", false),
+        SensorPresion("Sensor de presión", "Sensor", "Cocina", 10.3),
+        SensorApertura("Sensor de apertura", "Sensor", "Cocina", false),
+        SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", "Desfavorable"),
+        ActuadorValvula("Actuador valvula", "Actuador", "Cocina", true),
+    )
+    return listaDispositivo
 }
