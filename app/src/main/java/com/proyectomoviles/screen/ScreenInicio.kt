@@ -129,12 +129,14 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                         CargarSensores(dispositivo)
                     }
 
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .height(60.dp)
-                                .fillMaxWidth()
-                        )
+                    if (contadorMonitoreo == 0 && contadorActuador == 0) {
+                        item {
+                            Spacer(
+                                modifier = Modifier
+                                    .height(60.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
                     }
                 }
 
@@ -151,12 +153,14 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                         CargarActuadores(dispositivo)
                     }
 
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .height(60.dp)
-                                .fillMaxWidth()
-                        )
+                    if (contadorSensor == 0 && contadorMonitoreo == 0) {
+                        item {
+                            Spacer(
+                                modifier = Modifier
+                                    .height(60.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
                     }
                 }
 
@@ -173,12 +177,14 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                         CargarSensores(dispositivo)
                     }
 
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .height(60.dp)
-                                .fillMaxWidth()
-                        )
+                    if (contadorSensor == 0 && contadorActuador == 0) {
+                        item {
+                            Spacer(
+                                modifier = Modifier
+                                    .height(60.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
                     }
                 }
             }
