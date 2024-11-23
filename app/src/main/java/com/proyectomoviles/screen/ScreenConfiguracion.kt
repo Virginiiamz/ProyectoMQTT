@@ -364,5 +364,6 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
         ) {
             Text("Actualizar consumo")
         }
+
     }
 }
