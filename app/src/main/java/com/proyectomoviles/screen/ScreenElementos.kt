@@ -123,18 +123,18 @@ fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (Dispos
 
 fun listaElementos():List<Dispositivo>{
     val listaDispositivo = listOf(
-        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", R.drawable.imgtermometro,0.00, 0.00),
-        SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
+        SensorTemperatura("Sensor Temperatura", "Sensor", "Cocina", R.drawable.imgtermometro,0.00, 0.00),
+        SensorMovimiento("Sensor Movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño",R.drawable.imgsensorvibracion, false),
-        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,0.00),
+        SensorNivelAgua("Sensor Nivel de Agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,0.00),
         SensorLuz("Sensor de luz", "Sensor", "Pasillo", R.drawable.imgsensorluz, false),
-        SensorPresion("Sensor de presión", "Sensor", "Cocina",R.drawable.imgsensorpresion, 0.00),
-        SensorApertura("Sensor de apertura", "Sensor", "Cocina", R.drawable.imgsensorapertura, false),
-        SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", R.drawable.imgsensorcalidadaire,""),
-        ActuadorValvula("Actuador valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,false),
-        ControladorClima("Controlador clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 0.00, 0.00),
-        MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 0.00),
-        CerraduraElectronica("Cerradura electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
+        SensorPresion("Sensor de Presión", "Sensor", "Cocina",R.drawable.imgsensorpresion, 0.00),
+        SensorApertura("Sensor de Apertura", "Sensor", "Cocina", R.drawable.imgsensorapertura, false),
+        SensorCalidadAire("Sensor de Calidad del Aire", "Sensor", "Baño", R.drawable.imgsensorcalidadaire,""),
+        ActuadorValvula("Actuador Valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,false),
+        ControladorClima("Controlador Clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 0.00, 0.00),
+        MedidorConsumoAgua("Medidor de Consumo de Agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 0.00),
+        CerraduraElectronica("Cerradura Electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
         MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 0.00)
     )
     return listaDispositivo

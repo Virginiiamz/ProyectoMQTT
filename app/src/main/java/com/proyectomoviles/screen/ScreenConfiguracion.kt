@@ -2,6 +2,7 @@ package com.proyectomoviles.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -34,6 +35,7 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
+
 
 @Composable
 fun ConfiguracionScreen(
@@ -79,9 +81,11 @@ fun ConfiguracionScreen(
                         popUpTo("ScreenInicio") { inclusive = true }
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Aceptar")
+                modifier = Modifier.fillMaxWidth(),
+
+                ) {
+                Text(text = "Aceptar", style = MaterialTheme.typography.titleLarge,
+                )
             }
         }
     }
@@ -93,9 +97,10 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(90.dp)
             .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp)
+
     ) {
         Row(
             modifier = Modifier.align(Alignment.CenterStart)
@@ -129,6 +134,8 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Luz")
         Spacer(modifier = Modifier.height(8.dp))
@@ -153,6 +160,8 @@ fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Temperatura")
         Spacer(modifier = Modifier.height(8.dp))
@@ -170,6 +179,8 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Movimiento")
         Spacer(modifier = Modifier.height(8.dp))
@@ -194,6 +205,8 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Vibración")
         Spacer(modifier = Modifier.height(8.dp))
@@ -219,6 +232,8 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Nivel de Agua")
         Spacer(modifier = Modifier.height(8.dp))
@@ -236,6 +251,8 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Presión")
         Spacer(modifier = Modifier.height(8.dp))
@@ -253,6 +270,8 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Apertura")
         Spacer(modifier = Modifier.height(8.dp))
@@ -271,20 +290,56 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
 
 @Composable
 fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
-    Column {
+    var selectedQuality by remember { mutableStateOf(sensorCalidadAire.ICA) }
+
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
         Image(
             painter = painterResource(id = sensorCalidadAire.imagen),
-            contentDescription = "Imagen del medidor de gas",
+            contentDescription = "Imagen del sensor de calidad del aire",
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
         )
+
         Text(text = "Configuración del Sensor de Calidad del Aire")
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Índice de Calidad del Aire:")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Índice de Calidad del Aire: ${sensorCalidadAire.ICA}")
+        // RadioButtons
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = selectedQuality == "Favorable",
+                onClick = { selectedQuality = "Favorable" }
+            )
+            Text(
+                text = "Favorable",
+                modifier = Modifier.padding(start = 6.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(7.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = selectedQuality == "Desfavorable",
+                onClick = { selectedQuality = "Desfavorable" }
+            )
+            Text(
+                text = "Desfavorable",
+                modifier = Modifier.padding(start = 6.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Índice de Calidad del Aire seleccionado: $selectedQuality")
     }
 }
+
 @Composable
 fun ConfiguracionSensorGas(sensorGas: SensorGas) {
     Column {
@@ -294,6 +349,8 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Sensor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
@@ -317,6 +374,8 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
                 modifier = Modifier
                     .size(128.dp)
                     .padding(bottom = 16.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+
             )
             Text(text = "Configuración del Actuador de Válvula")
             Spacer(modifier = Modifier.height(8.dp))
@@ -344,6 +403,8 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración de la Cerradura Electrónica")
         Spacer(modifier = Modifier.height(8.dp))
@@ -374,6 +435,8 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Controlador de Iluminación")
         Spacer(modifier = Modifier.height(8.dp))
@@ -400,6 +463,8 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Controlador de Clima")
         Spacer(modifier = Modifier.height(8.dp))
@@ -420,6 +485,8 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Medidor de Consumo de Agua")
         Spacer(modifier = Modifier.height(8.dp))
@@ -441,6 +508,8 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         Text(text = "Configuración del Medidor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
