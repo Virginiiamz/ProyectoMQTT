@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.proyectomoviles.screen.Elementos
 import com.proyectomoviles.screen.ElementosScreen
 import com.proyectomoviles.screen.InicioScreen
 import com.proyectomoviles.ui.navegacion.Navegacion

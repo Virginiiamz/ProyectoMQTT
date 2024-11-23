@@ -42,9 +42,6 @@ import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 
-@Serializable
-object Elementos
-
 @Composable
 fun ElementosScreen() {
     val dispositivos = listaElementos()
