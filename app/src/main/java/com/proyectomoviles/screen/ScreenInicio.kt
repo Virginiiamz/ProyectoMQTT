@@ -49,6 +49,7 @@ import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.funciones.mostrarActuadorCerradura
 import com.proyectomoviles.funciones.mostrarActuadorValvula
+import com.proyectomoviles.funciones.mostrarControladorClima
 import com.proyectomoviles.funciones.mostrarControladorIluminacion
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 import com.proyectomoviles.funciones.mostrarInformacionDispositivos
@@ -179,7 +180,7 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
                         )
                     }
                     items(listaMonitoreo) { dispositivo ->
-                        CargarSensores(dispositivo)
+                        CargarMonitoreo(dispositivo)
                     }
 
                     if (contadorSensor == 0 && contadorActuador == 0) {
@@ -316,4 +317,55 @@ fun CargarActuadores(dispositivo: Dispositivo) {
         }
     }
 }
+
+@Composable
+fun CargarMonitoreo(dispositivo: Dispositivo) {
+    Column(
+        modifier = Modifier
+            .width(400.dp)
+            .border(
+                border = BorderStroke(2.dp, Color.LightGray),
+                shape = RoundedCornerShape(8.dp),
+            ),
+
+
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 6.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.padding(6.dp)
+                ) {
+                    mostrarImagenByDispositivo(dispositivo)
+                }
+            }
+            Column(
+                modifier = Modifier.weight(1f).height(125.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                mostrarInformacionDispositivos(dispositivo)
+            }
+        }
+
+        Column()
+        {
+            when (dispositivo) {
+                is ControladorClima -> mostrarControladorClima(dispositivo)
+
+            }
+        }
+    }
+}
+
 

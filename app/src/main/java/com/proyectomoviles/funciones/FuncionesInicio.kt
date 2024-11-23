@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
+import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorApertura
@@ -492,6 +494,63 @@ fun mostrarControladorIluminacion(ContIluminacion: ControladorIluminacion) {
                 )
             )
         }
+    }
+}
+
+@Composable
+fun mostrarControladorClima(ContClima: ControladorClima) {
+    var temperatura by remember { mutableStateOf(ContClima.temperatura) }
+    var humedad by remember { mutableStateOf(ContClima.humedad) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.Blue, shape = RoundedCornerShape(bottomStart = 8.dp))
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("${temperatura} Cº", color = Color.White, fontWeight = FontWeight.Medium)
+            Column {
+                Row {
+                    Button(onClick = { temperatura++ }) {
+                        Text("+")
+                    }
+                    Button(onClick = { temperatura-- }) {
+                        Text("-")
+                    }
+                }
+            }
+        }
+        Column(
+            modifier = Modifier
+                .background(Color.Red, shape = RoundedCornerShape(bottomEnd = 8.dp))
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
+            Column {
+                Row {
+                    Button(onClick = { humedad++ }) {
+                        Text("+")
+                    }
+                    Button(onClick = { humedad-- }) {
+                        Text("-")
+                    }
+                }
+            }
+        }
+
     }
 }
 
