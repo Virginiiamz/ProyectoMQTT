@@ -35,6 +35,7 @@ import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
+import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
 import com.proyectomoviles.dispositivos.SensorLuz
@@ -89,13 +90,13 @@ fun ElementosScreen(onNavigateToConfiguracion: (Dispositivo) -> Unit) {
 
 
 @Composable
-fun DispositivoCard(dispositivo: Dispositivo, onClick: () -> Unit) {
+fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (Dispositivo) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
             .padding(16.dp)
-            .clickable { },
+            .clickable { onNavigateToConfiguracion(dispositivo)},
         elevation = CardDefaults.elevatedCardElevation(12.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -133,7 +134,8 @@ fun listaElementos():List<Dispositivo>{
         ActuadorValvula("Actuador valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,false),
         ControladorClima("Controlador clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 0.00, 0.00),
         MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 0.00),
-        CerraduraElectronica("Cerradura electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false)
+        CerraduraElectronica("Cerradura electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
+        MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 0.00)
     )
     return listaDispositivo
 }
