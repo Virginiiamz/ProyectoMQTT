@@ -11,6 +11,7 @@ composeBom = "2024.04.01"
 coil = "2.2.2"
 navigationCompose = "2.8.3"
 kotlinxSerializationJson = "1.6.3"
+uiTestAndroid = "1.7.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ coil = {group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 icon-extended = {group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.3"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
