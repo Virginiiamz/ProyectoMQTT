@@ -1,16 +1,11 @@
 package com.proyectomoviles.screen
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -19,14 +14,16 @@ import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorGas
 
-
 @Composable
 fun ConfiguracionScreen(
     navController: NavController,
     dispositivo: Dispositivo
 ) {
     Scaffold(
-        topBar = { MyTopAppBar(dispositivo) }
+        topBar = {
+            //TopAppBar me da errores así que lo hago así
+            ComoTopAppBarSinTopAppBar(dispositivo, onBackPressed = { navController.navigateUp() })
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -58,20 +55,35 @@ fun ConfiguracionScreen(
 }
 
 @Composable
-fun MyTopAppBar(dispositivo: Dispositivo) {
-//    TopAppBar(
-//        title = {
-//            Row {
-//                Text(text = "Configuración de ${dispositivo.nombre}")
-//                Spacer(modifier = Modifier.width(8.dp))
-//            }
-//        },
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.primary,
-//            titleContentColor = MaterialTheme.colorScheme.onPrimary
-//        )
-//    )
+fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Unit) {
+    // TopAppBar me odia así que lo hago con box y row os vale?
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(16.dp)
+    ) {
+        Row(
+            modifier = Modifier.align(Alignment.CenterStart)
+        ) {
+            IconButton(onClick = onBackPressed) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Atrás",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+            Text(
+                text = "Configuración de ${dispositivo.nombre}",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
+    }
 }
+
+
 
 @Composable
 fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
