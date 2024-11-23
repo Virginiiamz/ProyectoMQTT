@@ -7,7 +7,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.proyectomoviles.screen.Elementos
 import com.proyectomoviles.screen.ElementosScreen
-import com.proyectomoviles.screen.Inicio
 import com.proyectomoviles.screen.InicioScreen
 
 @Composable
