@@ -47,9 +47,9 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
-import com.proyectomoviles.funciones.mostrarDispositivoActuadores
-import com.proyectomoviles.funciones.mostrarDispositivoSensores
+import com.proyectomoviles.funciones.mostrarActuadorValvula
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
+import com.proyectomoviles.funciones.mostrarInformacionDispositivos
 import com.proyectomoviles.funciones.mostrarSensorApertura
 import com.proyectomoviles.funciones.mostrarSensorCalidadAire
 import com.proyectomoviles.funciones.mostrarSensorLuz
@@ -243,7 +243,7 @@ fun CargarSensores(dispositivo: Dispositivo) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                mostrarDispositivoSensores(dispositivo)
+                mostrarInformacionDispositivos(dispositivo)
             }
         }
 
@@ -276,15 +276,38 @@ fun CargarActuadores(dispositivo: Dispositivo) {
 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.padding(6.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 6.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            mostrarImagenByDispositivo(dispositivo)
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.padding(6.dp)
+                ) {
+                    mostrarImagenByDispositivo(dispositivo)
+                }
+            }
+            Column(
+                modifier = Modifier.weight(1f).height(125.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                mostrarInformacionDispositivos(dispositivo)
+            }
         }
+
         Column()
         {
-            mostrarDispositivoActuadores(dispositivo)
+            when (dispositivo) {
+                is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
+            }
         }
     }
 }

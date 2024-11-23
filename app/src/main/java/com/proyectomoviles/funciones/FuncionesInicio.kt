@@ -42,8 +42,8 @@ import com.proyectomoviles.ui.theme.Naranja
 import com.proyectomoviles.ui.theme.Purple40
 
 @Composable
-fun mostrarDispositivoSensores(dispositivo: Dispositivo) {
-    Text(dispositivo.nombre, modifier = Modifier.padding(start = 6.dp))
+fun mostrarInformacionDispositivos(dispositivo: Dispositivo) {
+    Text(dispositivo.nombre, modifier = Modifier.padding(start = 6.dp), textAlign = TextAlign.Center)
     Spacer(
         Modifier.height(1.dp)
     )
@@ -51,24 +51,6 @@ fun mostrarDispositivoSensores(dispositivo: Dispositivo) {
     Spacer(
         Modifier.height(1.dp)
     )
-
-
-}
-
-@Composable
-fun mostrarDispositivoActuadores(dispositivo: Dispositivo) {
-    Text(dispositivo.nombre, modifier = Modifier.padding(start = 6.dp))
-    Spacer(
-        Modifier.height(1.dp)
-    )
-    Text(dispositivo.ubicacion, modifier = Modifier.padding(start = 6.dp))
-    Spacer(
-        Modifier.height(1.dp)
-    )
-
-    when (dispositivo) {
-        is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
-    }
 }
 
 @Composable
