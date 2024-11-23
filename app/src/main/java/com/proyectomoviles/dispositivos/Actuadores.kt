@@ -24,3 +24,16 @@ class CerraduraElectronica(
         dispositivosCreados.add(this)
     }
 }
+class ControladorIluminacion(
+    nombre: String,
+    tipo: String,
+    ubicacion: String,
+    imagen: Int,
+    val lx: Double,
+    val encendido: Boolean,
+): Dispositivo(nombre, tipo, ubicacion,imagen) {
+    init {
+        dispositivosCreados.add(this)
+    }
+}
+

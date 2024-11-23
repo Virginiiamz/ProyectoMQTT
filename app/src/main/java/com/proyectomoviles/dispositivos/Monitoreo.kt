@@ -22,3 +22,15 @@ class MedidorConsumoAgua(
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
 
 }
+
+class MedidorGas(
+    nombre: String,
+    tipo: String,
+    ubicacion: String,
+    imagen: Int,
+    val metroscubicos: Double,
+): Dispositivo(nombre, tipo, ubicacion, imagen) {
+    init {
+        dispositivosCreados.add(this)
+    }
+}
