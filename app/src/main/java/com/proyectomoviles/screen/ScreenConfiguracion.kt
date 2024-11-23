@@ -1,5 +1,6 @@
 package com.proyectomoviles.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -126,6 +128,13 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
 @Composable
 fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
     Column {
+        Image(
+            painter = painterResource(id = sensorLuz.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Luz")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -143,6 +152,13 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
 @Composable
 fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
     Column {
+        Image(
+            painter = painterResource(id = sensorTemperatura.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Temperatura")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -153,6 +169,13 @@ fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
 @Composable
 fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
     Column {
+        Image(
+            painter = painterResource(id = sensorMovimiento.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Movimiento")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -170,6 +193,13 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
 @Composable
 fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
     Column {
+        Image(
+            painter = painterResource(id = sensorVibracion.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Vibración")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -188,6 +218,13 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
 @Composable
 fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
     Column {
+        Image(
+            painter = painterResource(id = sensorNivelAgua.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Nivel de Agua")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -198,6 +235,13 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
 @Composable
 fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
     Column {
+        Image(
+            painter = painterResource(id = sensorPresion.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Presión")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -208,6 +252,13 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
 @Composable
 fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
     Column {
+        Image(
+            painter = painterResource(id = sensorApertura.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Apertura")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -226,6 +277,13 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
 @Composable
 fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
     Column {
+        Image(
+            painter = painterResource(id = sensorCalidadAire.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Calidad del Aire")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -235,6 +293,13 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
 @Composable
 fun ConfiguracionSensorGas(sensorGas: SensorGas) {
     Column {
+        Image(
+            painter = painterResource(id = sensorGas.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Sensor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -248,18 +313,27 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
 @Composable
 fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
     Column {
-        Text(text = "Configuración del Actuador de Válvula")
-        Spacer(modifier = Modifier.height(8.dp))
+        Column {
+            Image(
+                painter = painterResource(id = actuadorValvula.imagen),
+                contentDescription = "Imagen del medidor de gas",
+                modifier = Modifier
+                    .size(128.dp)
+                    .padding(bottom = 16.dp)
+            )
+            Text(text = "Configuración del Actuador de Válvula")
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (actuadorValvula.activo) "Activo" else "Inactivo"}")
-        Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Estado: ${if (actuadorValvula.activo) "Activo" else "Inactivo"}")
+            Spacer(modifier = Modifier.height(8.dp))
 
-        val nuevoEstado = !actuadorValvula.activo
-        Button(onClick = {
-            // Cambiar el estado del actuador
-            actuadorValvula.activo = nuevoEstado
-        }) {
-            Text(text = if (actuadorValvula.activo) "Desactivar" else "Activar")
+            val nuevoEstado = !actuadorValvula.activo
+            Button(onClick = {
+                // Cambiar el estado del actuador
+                actuadorValvula.activo = nuevoEstado
+            }) {
+                Text(text = if (actuadorValvula.activo) "Desactivar" else "Activar")
+            }
         }
     }
 }
@@ -267,6 +341,13 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
 @Composable
 fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
     Column {
+        Image(
+            painter = painterResource(id = cerradura.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración de la Cerradura Electrónica")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -286,20 +367,27 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
 //MOnitoreo:
 
 @Composable
-fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
+fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIluminacion) {
     Column {
+        Image(
+            painter = painterResource(id = ControladorIluminacion.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Controlador de Iluminación")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (controlador.encendido) "Encendido" else "Apagado"}")
+        Text(text = "Estado: ${if (ControladorIluminacion.encendido) "Encendido" else "Apagado"}")
         Spacer(modifier = Modifier.height(8.dp))
 
-        val nuevoEstado = !controlador.encendido
+        val nuevoEstado = !ControladorIluminacion.encendido
         Button(onClick = {
             // Cambiar el estado del controlador
-            controlador.encendido = nuevoEstado
+            ControladorIluminacion.encendido = nuevoEstado
         }) {
-            Text(text = if (controlador.encendido) "Apagar" else "Encender")
+            Text(text = if (ControladorIluminacion.encendido) "Apagar" else "Encender")
         }
     }
 }
@@ -307,6 +395,13 @@ fun ConfiguracionControladorIluminacion(controlador: ControladorIluminacion) {
 @Composable
 fun ConfiguracionControladorClima(controlador: ControladorClima) {
     Column {
+        Image(
+            painter = painterResource(id = controlador.imagen),
+            contentDescription = "Imagen del controlador de clima",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Controlador de Clima")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -318,33 +413,48 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
 }
 
 @Composable
-fun ConfiguracionMedidorConsumoAgua(medidor: MedidorConsumoAgua) {
+fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
     Column {
+        Image(
+            painter = painterResource(id = medidorCAgua.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Medidor de Consumo de Agua")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Consumo actual: ${medidor.litros} litros")
+        Text(text = "Consumo actual: ${medidorCAgua.litros} litros")
     }
 }
 
-
 @Composable
 fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
-    var metrosCubicosInput by remember { mutableStateOf(medidorGas.metroscubicos.toString()) }
+    var m3State by remember { mutableStateOf(medidorGas.metroscubicos) }
+    var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
+
 
     Column {
+        Image(
+            painter = painterResource(id = medidorGas.imagen),
+            contentDescription = "Imagen del medidor de gas",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
         Text(text = "Configuración del Medidor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Consumo actual: ${medidorGas.metroscubicos} m³")
+        Text(text = "Consumo actual: $m3State m³")
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = metrosCubicosInput,
+            value = m3toString,
             onValueChange = { input ->
-                // Para comrpobar q sea un número
+                // Validar que sea un número o si está vacío
                 if (input.toFloatOrNull() != null || input.isEmpty()) {
-                    metrosCubicosInput = input
+                    m3toString = input
                 }
             },
             label = { Text("Nuevo consumo (m³)") },
@@ -355,8 +465,9 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
 
         Button(
             onClick = {
-                val nuevoValor = metrosCubicosInput.toFloatOrNull()
+                val nuevoValor = m3toString.toFloatOrNull()
                 if (nuevoValor != null) {
+                    m3State = nuevoValor.toDouble()
                     medidorGas.metroscubicos = nuevoValor.toDouble()
                 }
             },
@@ -364,6 +475,7 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
         ) {
             Text("Actualizar consumo")
         }
-
     }
 }
+
+
