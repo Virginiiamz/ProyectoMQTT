@@ -118,11 +118,6 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
 }
 
 
-
-
-
-
-
 //SENSORES:
 
 @Composable
@@ -308,6 +303,8 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
     }
 }
 
+
+
 //ACTUADORES:
 
 @Composable
@@ -363,6 +360,8 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
         }
     }
 }
+
+
 
 //MOnitoreo:
 
