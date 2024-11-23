@@ -1,5 +1,7 @@
 package com.proyectomoviles.funciones
 
+import android.graphics.Paint
+import android.graphics.Paint.Align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
