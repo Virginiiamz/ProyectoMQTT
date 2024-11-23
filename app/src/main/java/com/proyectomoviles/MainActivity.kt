@@ -13,6 +13,7 @@ import com.proyectomoviles.screen.Elementos
 import com.proyectomoviles.screen.ElementosScreen
 import com.proyectomoviles.screen.Inicio
 import com.proyectomoviles.screen.InicioScreen
+import com.proyectomoviles.ui.navegacion.Navegacion
 import com.proyectomoviles.ui.theme.ProyectoMovilesTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,23 +35,5 @@ fun llamarNavegacio() {
     Navegacion()
 }
 
-@Composable
-fun Navegacion() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = Inicio
-    ) {
-        composable<Inicio>{
-            InicioScreen{
-                navController.navigate(Elementos)
-            }
-        }
-        composable<Elementos>{
-            backStackEntry ->
-            val elementos = backStackEntry.toRoute<Elementos>()
-            ElementosScreen()
-        }
-    }
-}
+
 

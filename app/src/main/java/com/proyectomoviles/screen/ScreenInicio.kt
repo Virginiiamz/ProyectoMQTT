@@ -58,10 +58,6 @@ import com.proyectomoviles.funciones.mostrarSensorTemperatura
 import com.proyectomoviles.funciones.mostrarSensorVibracion
 import kotlinx.serialization.Serializable
 
-
-@Serializable
-object Inicio
-
 @Composable
 fun InicioScreen(navigateToElementos: () -> Unit) {
     val listaDispositivo = listOf(
