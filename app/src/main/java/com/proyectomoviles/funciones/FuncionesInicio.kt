@@ -1,8 +1,5 @@
 package com.proyectomoviles.funciones
 
-import android.graphics.Paint
-import android.graphics.Paint.Align
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,12 +20,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.ActuadorValvula
+import com.proyectomoviles.dispositivos.CerraduraElectronica
+import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
@@ -423,3 +420,78 @@ fun mostrarActuadorValvula(ActValvula: ActuadorValvula) {
         }
     }
 }
+
+@Composable
+fun mostrarActuadorCerradura(ActCerradura: CerraduraElectronica) {
+    var estadoCerradura by remember { mutableStateOf(ActCerradura.cerrado) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+
+        ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    Color.Black,
+                    shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                )
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+
+
+            ) {
+            Switch(
+                checked = estadoCerradura,
+                onCheckedChange = { estadoCerradura = !estadoCerradura },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Green,
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = Color.Red
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun mostrarControladorIluminacion(ContIluminacion: ControladorIluminacion) {
+    var estadoiluminacion by remember { mutableStateOf(ContIluminacion.encendido) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+
+        ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    Color.Black,
+                    shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                )
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+
+
+            ) {
+            Switch(
+                checked = estadoiluminacion,
+                onCheckedChange = { estadoiluminacion = !estadoiluminacion },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Green,
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = Color.Red
+                )
+            )
+        }
+    }
+}
+

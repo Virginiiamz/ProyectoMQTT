@@ -12,7 +12,6 @@ class ActuadorValvula(
     }
 }
 
-
 class CerraduraElectronica(
     nombre: String,
     tipo: String,
@@ -29,7 +28,6 @@ class ControladorIluminacion(
     tipo: String,
     ubicacion: String,
     imagen: Int,
-    val lx: Double,
     var encendido: Boolean,
 ): Dispositivo(nombre, tipo, ubicacion,imagen) {
     init {

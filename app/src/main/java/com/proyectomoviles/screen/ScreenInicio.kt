@@ -1,14 +1,12 @@
 package com.proyectomoviles.screen
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,8 +35,10 @@ import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
+import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
+import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
 import com.proyectomoviles.dispositivos.SensorLuz
@@ -47,7 +47,9 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
+import com.proyectomoviles.funciones.mostrarActuadorCerradura
 import com.proyectomoviles.funciones.mostrarActuadorValvula
+import com.proyectomoviles.funciones.mostrarControladorIluminacion
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 import com.proyectomoviles.funciones.mostrarInformacionDispositivos
 import com.proyectomoviles.funciones.mostrarSensorApertura
@@ -58,7 +60,6 @@ import com.proyectomoviles.funciones.mostrarSensorNivelAgua
 import com.proyectomoviles.funciones.mostrarSensorPresion
 import com.proyectomoviles.funciones.mostrarSensorTemperatura
 import com.proyectomoviles.funciones.mostrarSensorVibracion
-import kotlinx.serialization.Serializable
 
 @Composable
 fun InicioScreen(navigateToElementos: () -> Unit) {
@@ -74,7 +75,9 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         ActuadorValvula("Actuador valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,true),
         ControladorClima("Controlador clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 20.5, 45.9),
         MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 10.3),
-        CerraduraElectronica("Cerradura electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false)
+        CerraduraElectronica("Cerradura electrónica", "Actuador", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
+        ControladorIluminacion("Controlador de iluminación", "Actuador", "Pasillo", R.drawable.imgcontroladorluz, false),
+        MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 10.3)
     )
 
     var contadorSensor = 0
@@ -307,6 +310,8 @@ fun CargarActuadores(dispositivo: Dispositivo) {
         {
             when (dispositivo) {
                 is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
+                is CerraduraElectronica -> mostrarActuadorCerradura(dispositivo)
+                is ControladorIluminacion -> mostrarControladorIluminacion(dispositivo)
             }
         }
     }
