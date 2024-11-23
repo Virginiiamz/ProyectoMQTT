@@ -28,7 +28,7 @@ class MedidorGas(
     tipo: String,
     ubicacion: String,
     imagen: Int,
-    val metroscubicos: Double,
+    var metroscubicos: Double,
 ): Dispositivo(nombre, tipo, ubicacion, imagen) {
     init {
         dispositivosCreados.add(this)
