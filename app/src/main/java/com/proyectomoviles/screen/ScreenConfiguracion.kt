@@ -77,9 +77,7 @@ fun ConfiguracionScreen(
 
             Button(
                 onClick = {
-                    navController.navigate("ScreenInicio") {
-                        popUpTo("ScreenInicio") { inclusive = true }
-                    }
+                    navController.navigate("Inicio")
                 },
                 modifier = Modifier.fillMaxWidth(),
 
@@ -127,10 +125,14 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
 
 @Composable
 fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
+    var nombre by remember { mutableStateOf(sensorLuz.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorLuz.ubicacion) }
+    var encendido by remember { mutableStateOf(sensorLuz.estadoEncendido) }
+    var sensorNuevo by remember { mutableStateOf(sensorLuz) }
     Column {
         Image(
             painter = painterResource(id = sensorLuz.imagen),
-            contentDescription = "Imagen del medidor de gas",
+            contentDescription = "Imagen del sensor de luz",
             modifier = Modifier
                 .size(128.dp)
                 .padding(bottom = 16.dp)
@@ -140,19 +142,32 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
         Text(text = "Configuración del Sensor de Luz")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (sensorLuz.estadoEncendido) "Encendido" else "Apagado"}")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !sensorLuz.estadoEncendido
-        Button(onClick = {
-            sensorLuz.estadoEncendido = nuevoEstado
-        }) {
-            Text(text = if (sensorLuz.estadoEncendido) "Apagar" else "Encender")
-        }
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Estado de encendido:")
+        Switch(
+            checked = encendido,
+            onCheckedChange = { encendido = !encendido }
+        )
+       sensorNuevo= SensorLuz(nombre, "Sensor de Luz", ubicacion, sensorLuz.imagen, encendido)
     }
 }
 @Composable
 fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
+    var nombre by remember { mutableStateOf(sensorTemperatura.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorTemperatura.ubicacion) }
+    var grados by remember { mutableStateOf(sensorTemperatura.grados) }
+    var humedad by remember { mutableStateOf(sensorTemperatura.humedad) }
+    var sensorNuevo by remember { mutableStateOf(sensorTemperatura) }
+
     Column {
         Image(
             painter = painterResource(id = sensorTemperatura.imagen),
@@ -166,12 +181,36 @@ fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
         Text(text = "Configuración del Sensor de Temperatura")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Temperatura: ${sensorTemperatura.grados}°C")
-        Text(text = "Humedad: ${sensorTemperatura.humedad}%")
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+
+        OutlinedTextField(
+            value = grados.toString(),
+            onValueChange = { grados = it.toDouble() },
+            label = { Text("Grados") }
+        )
+        OutlinedTextField(
+            value = humedad.toString(),
+            onValueChange = { humedad = it.toDouble() },
+            label = { Text("Humedad") }
+        )
+        sensorNuevo= SensorTemperatura(nombre, "Sensor de Temperatura", ubicacion, sensorTemperatura.imagen, grados, humedad)
     }
 }
 @Composable
 fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
+    var nombre by remember { mutableStateOf(sensorMovimiento.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorMovimiento.ubicacion) }
+    var estado by remember { mutableStateOf(sensorMovimiento.estado) }
+    var sensorNuevo by remember { mutableStateOf(sensorMovimiento) }
     Column {
         Image(
             painter = painterResource(id = sensorMovimiento.imagen),
@@ -185,19 +224,30 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
         Text(text = "Configuración del Sensor de Movimiento")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (sensorMovimiento.estado) "Detectando movimiento" else "No detectando movimiento"}")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !sensorMovimiento.estado
-        Button(onClick = {
-            sensorMovimiento.estado = nuevoEstado
-        }) {
-            Text(text = if (sensorMovimiento.estado) "Desactivar" else "Activar")
-        }
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Estado de encendido:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        sensorNuevo= SensorMovimiento(nombre, "Sensor de Movimiento", ubicacion, sensorMovimiento.imagen, estado)
     }
 }
 @Composable
 fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
+    var nombre by remember { mutableStateOf(sensorVibracion.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorVibracion.ubicacion) }
+    var estado by remember { mutableStateOf(sensorVibracion.estado) }
+    var sensorNuevo by remember { mutableStateOf(sensorVibracion) }
     Column {
         Image(
             painter = painterResource(id = sensorVibracion.imagen),
@@ -211,20 +261,32 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
         Text(text = "Configuración del Sensor de Vibración")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (sensorVibracion.estado) "Vibración detectada" else "No detectada"}")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !sensorVibracion.estado
-        Button(onClick = {
-            sensorVibracion.estado = nuevoEstado
-        }) {
-            Text(text = if (sensorVibracion.estado) "Desactivar" else "Activar")
-        }
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Estado de encendido:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        sensorNuevo= SensorVibracion(nombre, "Sensor de Vibracion", ubicacion, sensorVibracion.imagen, estado)
     }
 }
 
 @Composable
 fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
+    var nombre by remember { mutableStateOf(sensorNivelAgua.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorNivelAgua.ubicacion) }
+    var litros by remember { mutableStateOf(sensorNivelAgua.litros) }
+    var sensorNuevo by remember { mutableStateOf(sensorNivelAgua) }
+
     Column {
         Image(
             painter = painterResource(id = sensorNivelAgua.imagen),
@@ -238,12 +300,31 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
         Text(text = "Configuración del Sensor de Nivel de Agua")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Nivel de agua: ${sensorNivelAgua.litros} litros")
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        OutlinedTextField(
+            value = litros.toString(),
+            onValueChange = { litros = it.toDouble() },
+            label = { Text("Litros") }
+        )
+        sensorNuevo= SensorNivelAgua(nombre, "Sensor de Nivel de Agua", ubicacion, sensorNivelAgua.imagen, litros)
     }
 }
 
 @Composable
 fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
+    var nombre by remember { mutableStateOf(sensorPresion.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorPresion.ubicacion) }
+    var presion by remember { mutableStateOf(sensorPresion.presion) }
+    var sensorNuevo by remember { mutableStateOf(sensorPresion) }
     Column {
         Image(
             painter = painterResource(id = sensorPresion.imagen),
@@ -256,13 +337,31 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
         )
         Text(text = "Configuración del Sensor de Presión")
         Spacer(modifier = Modifier.height(8.dp))
-
-        Text(text = "Presión: ${sensorPresion.presion} bar")
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        OutlinedTextField(
+            value = presion.toString(),
+            onValueChange = { presion = it.toDouble() },
+            label = { Text("Litros") }
+        )
+        sensorNuevo= SensorPresion(nombre, "Sensor de Presion", ubicacion, sensorPresion.imagen, presion)
     }
 }
 
 @Composable
 fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
+    var nombre by remember { mutableStateOf(sensorApertura.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorApertura.ubicacion) }
+    var estado by remember { mutableStateOf(sensorApertura.estado) }
+    var sensorNuevo by remember { mutableStateOf(sensorApertura) }
     Column {
         Image(
             painter = painterResource(id = sensorApertura.imagen),
@@ -276,21 +375,32 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
         Text(text = "Configuración del Sensor de Apertura")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (sensorApertura.estado) "Apertura detectada" else "No detectada"}")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !sensorApertura.estado
-        Button(onClick = {
-            sensorApertura.estado = nuevoEstado
-        }) {
-            Text(text = if (sensorApertura.estado) "Cerrar" else "Abrir")
-        }
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Estado:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        sensorNuevo= SensorApertura(nombre, "Sensor de Vibracion", ubicacion, sensorApertura.imagen, estado)
     }
 }
 
 @Composable
 fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
-    var selectedQuality by remember { mutableStateOf(sensorCalidadAire.ICA) }
+    var nombre by remember { mutableStateOf(sensorCalidadAire.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorCalidadAire.ubicacion) }
+    var calidad by remember { mutableStateOf(sensorCalidadAire.ICA) }
+    var sensorNuevo by remember { mutableStateOf(sensorCalidadAire) }
+
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -306,14 +416,24 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
 
         Text(text = "Configuración del Sensor de Calidad del Aire")
         Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
         Text(text = "Índice de Calidad del Aire:")
         Spacer(modifier = Modifier.height(8.dp))
 
         // RadioButtons
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(
-                selected = selectedQuality == "Favorable",
-                onClick = { selectedQuality = "Favorable" }
+                selected = calidad == "Favorable",
+                onClick = { calidad = "Favorable" }
             )
             Text(
                 text = "Favorable",
@@ -325,8 +445,8 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(
-                selected = selectedQuality == "Desfavorable",
-                onClick = { selectedQuality = "Desfavorable" }
+                selected = calidad == "Desfavorable",
+                onClick = { calidad = "Desfavorable" }
             )
             Text(
                 text = "Desfavorable",
@@ -336,12 +456,17 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Índice de Calidad del Aire seleccionado: $selectedQuality")
+        sensorNuevo= SensorCalidadAire(nombre, "Sensor de Calidad del Aire", ubicacion, sensorCalidadAire.imagen, calidad)
     }
 }
 
 @Composable
 fun ConfiguracionSensorGas(sensorGas: SensorGas) {
+    var nombre by remember { mutableStateOf(sensorGas.nombre) }
+    var ubicacion by remember { mutableStateOf(sensorGas.ubicacion) }
+    var co2 by remember { mutableStateOf(sensorGas.concentracionCO2) }
+    var ch4 by remember { mutableStateOf(sensorGas.concentracionCH4) }
+    var sensorNuevo by remember { mutableStateOf(sensorGas) }
     Column {
         Image(
             painter = painterResource(id = sensorGas.imagen),
@@ -355,8 +480,34 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
         Text(text = "Configuración del Sensor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Concentración de CO2: ${sensorGas.concentracionCO2} ppm")
-        Text(text = "Concentración de CH4: ${sensorGas.concentracionCH4} ppm")
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            OutlinedTextField(
+                value = co2.toString(),
+                onValueChange = { co2 = it.toDouble() },
+                label = { Text("Concentracion de CO2") }
+            )
+            OutlinedTextField(
+                value = ch4.toString(),
+                onValueChange = { ch4 = it.toDouble() },
+                label = { Text("Concentracion de CH4") }
+            )
+        }
+
+        sensorNuevo= SensorGas(nombre, "Sensor de Gas", ubicacion, sensorGas.imagen, co2, ch4)
     }
 }
 
@@ -366,6 +517,10 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
 
 @Composable
 fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
+    var nombre by remember { mutableStateOf(actuadorValvula.nombre) }
+    var ubicacion by remember { mutableStateOf(actuadorValvula.ubicacion) }
+    var estado by remember { mutableStateOf(actuadorValvula.activo) }
+    var actuadorNuevo by remember { mutableStateOf(actuadorValvula) }
     Column {
         Column {
             Image(
@@ -380,22 +535,32 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
             Text(text = "Configuración del Actuador de Válvula")
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(text = "Estado: ${if (actuadorValvula.activo) "Activo" else "Inactivo"}")
-            Spacer(modifier = Modifier.height(8.dp))
-
-            val nuevoEstado = !actuadorValvula.activo
-            Button(onClick = {
-                // Cambiar el estado del actuador
-                actuadorValvula.activo = nuevoEstado
-            }) {
-                Text(text = if (actuadorValvula.activo) "Desactivar" else "Activar")
-            }
+            OutlinedTextField(
+                value = nombre,
+                onValueChange = { nombre = it },
+                label = { Text("Nombre") }
+            )
+            TextField(
+                value = ubicacion,
+                onValueChange = { ubicacion = it },
+                label = { Text("Ubicacion") }
+            )
+            Text("Activo:")
+            Switch(
+                checked = estado,
+                onCheckedChange = { estado = !estado }
+            )
+            actuadorNuevo= ActuadorValvula(nombre, "Actuador de Válvula", ubicacion, actuadorValvula.imagen, estado)
         }
     }
 }
 
 @Composable
 fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
+    var nombre by remember { mutableStateOf(cerradura.nombre) }
+    var ubicacion by remember { mutableStateOf(cerradura.ubicacion) }
+    var estado by remember { mutableStateOf(cerradura.cerrado)}
+    var actuadorNuevo by remember { mutableStateOf(cerradura) }
     Column {
         Image(
             painter = painterResource(id = cerradura.imagen),
@@ -409,25 +574,31 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
         Text(text = "Configuración de la Cerradura Electrónica")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (cerradura.cerrado) "Cerrada" else "Abierta"}")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !cerradura.cerrado
-        Button(onClick = {
-            // Cambiar el estado de la cerradura
-            cerradura.cerrado = nuevoEstado
-        }) {
-            Text(text = if (cerradura.cerrado) "Abrir" else "Cerrar")
-        }
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Activo:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        actuadorNuevo= CerraduraElectronica(nombre, "Cerradura Electronica", ubicacion, cerradura.imagen, estado)
     }
 }
 
-
-
-//MOnitoreo:
-
 @Composable
 fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIluminacion) {
+    var nombre by remember { mutableStateOf(ControladorIluminacion.nombre) }
+    var ubicacion by remember { mutableStateOf(ControladorIluminacion.ubicacion) }
+    var estado by remember { mutableStateOf(ControladorIluminacion.encendido)}
+    var actuadorNuevo by remember { mutableStateOf(ControladorIluminacion) }
     Column {
         Image(
             painter = painterResource(id = ControladorIluminacion.imagen),
@@ -441,21 +612,34 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
         Text(text = "Configuración del Controlador de Iluminación")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Estado: ${if (ControladorIluminacion.encendido) "Encendido" else "Apagado"}")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val nuevoEstado = !ControladorIluminacion.encendido
-        Button(onClick = {
-            // Cambiar el estado del controlador
-            ControladorIluminacion.encendido = nuevoEstado
-        }) {
-            Text(text = if (ControladorIluminacion.encendido) "Apagar" else "Encender")
-        }
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Activo:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        actuadorNuevo= ControladorIluminacion(nombre, "Controlador de Iluminación", ubicacion, ControladorIluminacion.imagen, estado)
     }
 }
 
+//MOnitoreo:
+
 @Composable
 fun ConfiguracionControladorClima(controlador: ControladorClima) {
+    var nombre by remember { mutableStateOf(controlador.nombre) }
+    var ubicacion by remember { mutableStateOf(controlador.ubicacion) }
+    var grados by remember { mutableStateOf(controlador.temperatura) }
+    var humedad by remember { mutableStateOf(controlador.humedad) }
+    var monitorNuevo by remember { mutableStateOf(controlador) }
     Column {
         Image(
             painter = painterResource(id = controlador.imagen),
@@ -469,15 +653,37 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
         Text(text = "Configuración del Controlador de Clima")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Temperatura actual: ${controlador.temperatura}°C")
-        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
 
-        Text(text = "Humedad actual: ${controlador.humedad}%")
+        OutlinedTextField(
+            value = grados.toString(),
+            onValueChange = { grados = it.toDouble() },
+            label = { Text("Grados Cº") }
+        )
+        OutlinedTextField(
+            value = humedad.toString(),
+            onValueChange = { humedad = it.toDouble() },
+            label = { Text("Humedad") }
+        )
+        monitorNuevo= ControladorClima(nombre, "Controlador de Clima", ubicacion, controlador.imagen, grados, humedad)
     }
 }
 
 @Composable
 fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
+    var nombre by remember { mutableStateOf(medidorCAgua.nombre) }
+    var ubicacion by remember { mutableStateOf(medidorCAgua.ubicacion) }
+    var litros by remember { mutableStateOf(medidorCAgua.litros) }
+    var monitorNuevo by remember { mutableStateOf(medidorCAgua) }
     Column {
         Image(
             painter = painterResource(id = medidorCAgua.imagen),
@@ -491,7 +697,24 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
         Text(text = "Configuración del Medidor de Consumo de Agua")
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Consumo actual: ${medidorCAgua.litros} litros")
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = litros.toString(),
+            onValueChange = { litros = it.toDouble() },
+            label = { Text("Consumo de Agua (Litros)") }
+        )
+        monitorNuevo= MedidorConsumoAgua(nombre, "Sensor de Nivel de Agua", ubicacion, medidorCAgua.imagen, litros)
     }
 }
 
