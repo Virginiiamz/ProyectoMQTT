@@ -65,7 +65,7 @@ import com.proyectomoviles.funciones.mostrarSensorVibracion
 @Composable
 fun InicioScreen(navigateToElementos: () -> Unit) {
     val listaDispositivo = listOf(
-        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", R.drawable.imgtermometro,20.5, 45.9),
+        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", R.drawable.imgsensortermometro,20.5, 45.9),
         SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño",R.drawable.imgsensorvibracion, false),
         SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,10.3),

@@ -52,7 +52,7 @@ fun ElementosScreen(onNavigateToConfiguracion: (Dispositivo) -> Unit) {
     val dispositivos = listaElementos()
 
     val dispositivoImagenMap = mapOf(
-        "Sensor de temperatura" to R.drawable.imgtermometro,
+        "Sensor de temperatura" to R.drawable.imgsensortermometro,
         "Sensor de luz" to R.drawable.imgsensorluz,
         "Sensor de movimiento" to R.drawable.imgsensormovimiento,
         "Sensor de vibracion" to R.drawable.imgsensorvibracion
@@ -123,7 +123,7 @@ fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (Dispos
 
 fun listaElementos():List<Dispositivo>{
     val listaDispositivo = listOf(
-        SensorTemperatura("Sensor Temperatura", "Sensor", "Cocina", R.drawable.imgtermometro,0.00, 0.00),
+        SensorTemperatura("Sensor Temperatura", "Sensor", "Cocina", R.drawable.imgsensortermometro,0.00, 0.00),
         SensorMovimiento("Sensor Movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
         SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño",R.drawable.imgsensorvibracion, false),
         SensorNivelAgua("Sensor Nivel de Agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,0.00),
