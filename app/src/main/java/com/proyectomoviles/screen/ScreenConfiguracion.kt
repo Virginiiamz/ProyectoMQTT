@@ -27,7 +27,6 @@ import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
-import com.proyectomoviles.dispositivos.SensorGas
 import com.proyectomoviles.dispositivos.SensorLuz
 import com.proyectomoviles.dispositivos.SensorMovimiento
 import com.proyectomoviles.dispositivos.SensorNivelAgua
@@ -36,10 +35,8 @@ import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 
 @Composable
-fun Prueba(tipoDispositivo: String, navigateToInicio: () -> Unit) {
+fun Prueba(navigateToInicio: () -> Unit) {
     Column {
-        Text(tipoDispositivo)
-        ConfiguracionSensorTemperatura2(navigateToInicio)
         Button(
             onClick = {navigateToInicio()}
         ) {
@@ -49,26 +46,17 @@ fun Prueba(tipoDispositivo: String, navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorTemperatura2(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
     var humedad by remember { mutableStateOf(0.00) }
-//    var sensorNuevo by remember { mutableStateOf(emptyCl) }
 
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-//        Image(
-//            painter = painterResource(id = sensorTemperatura.imagen),
-//            contentDescription = "Imagen del medidor de gas",
-//            modifier = Modifier
-//                .size(128.dp)
-//                .padding(bottom = 16.dp)
-//                .align(alignment = Alignment.CenterHorizontally)
-//
-//        )
+
         Text(text = "Configuración del Sensor de Temperatura")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -109,13 +97,14 @@ fun ConfiguracionSensorTemperatura2(navigateToInicio: () -> Unit) {
 
 @Composable
 fun ConfiguracionScreen(
-    navController: NavController,
-    dispositivo: Dispositivo
+    tipoDispositivo: String,
+    dispositivo: Dispositivo,
+    navigateToInicio: () -> Unit
 ) {
     Scaffold(
         topBar = {
             //TopAppBar me da errores así que lo hago así
-            ComoTopAppBarSinTopAppBar(dispositivo, onBackPressed = { navController.navigateUp() })
+            ComoTopAppBarSinTopAppBar(dispositivo, onBackPressed = {  })
         }
     ) { paddingValues ->
         Column(
@@ -124,37 +113,52 @@ fun ConfiguracionScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            when (dispositivo) {
-                is ControladorIluminacion -> ConfiguracionControladorIluminacion(dispositivo)
-                is SensorGas -> ConfiguracionSensorGas(dispositivo)
-                is MedidorGas -> ConfiguracionMedidorGas(dispositivo)
-                is  SensorLuz -> ConfiguracionSensorLuz(dispositivo)
-                is  SensorTemperatura -> ConfiguracionSensorTemperatura(dispositivo)
-                is  SensorMovimiento -> ConfiguracionSensorMovimiento(dispositivo)
-                is  SensorVibracion -> ConfiguracionSensorVibracion(dispositivo)
-                is  SensorNivelAgua -> ConfiguracionSensorNivelAgua(dispositivo)
-                is  SensorPresion -> ConfiguracionSensorPresion(dispositivo)
-                is  SensorApertura -> ConfiguracionSensorApertura(dispositivo)
-                is  SensorCalidadAire -> ConfiguracionSensorCalidadAire(dispositivo)
-                is  ActuadorValvula -> ConfiguracionActuadorValvula(dispositivo)
-                is  CerraduraElectronica -> ConfiguracionCerraduraElectronica(dispositivo)
-                is ControladorClima -> ConfiguracionControladorClima(dispositivo)
-                is MedidorConsumoAgua -> ConfiguracionMedidorConsumoAgua(dispositivo)
-                else -> Text(text = "Configuración no disponible para este dispositivo")
+
+            if (tipoDispositivo == "Sensor Temperatura"){
+                ConfiguracionSensorTemperatura(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor de luz"){
+                ConfiguracionSensorLuz(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor Movimiento"){
+                ConfiguracionSensorMovimiento(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor Vibración"){
+                ConfiguracionSensorVibracion(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor Nivel de Agua"){
+                ConfiguracionSensorNivelAgua(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor de Presión"){
+                ConfiguracionSensorPresion(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor de Apertura"){
+                ConfiguracionSensorApertura(navigateToInicio)
+            } else if (tipoDispositivo == "Sensor de Calidad del Aire"){
+                ConfiguracionSensorCalidadAire(navigateToInicio)
+            } else if (tipoDispositivo == "Actuador Valvula"){
+                ConfiguracionActuadorValvula(navigateToInicio)
+            } else if(tipoDispositivo=="Cerradura Electrónica"){
+                ConfiguracionCerraduraElectronica(navigateToInicio)
+            } else if (tipoDispositivo == "Control Iluminacion") {
+                ConfiguracionControladorIluminacion(navigateToInicio)
+            }else if (tipoDispositivo == "Controlador Clima"){
+                ConfiguracionControladorClima(navigateToInicio)
+            } else if (tipoDispositivo == "Medidor de Consumo Agua"){
+                ConfiguracionMedidorConsumoAgua(navigateToInicio)
+            } else if (tipoDispositivo == "Medidor de Gas"){
+                ConfiguracionMedidorGas(navigateToInicio)
+            } else {
+                Text(text = "Configuración no disponible para este dispositivo")
+
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = {
-                    navController.navigate("Inicio")
-                },
-                modifier = Modifier.fillMaxWidth(),
-
-                ) {
-                Text(text = "Aceptar", style = MaterialTheme.typography.titleLarge,
-                )
-            }
+//            Button(
+//                onClick = {
+//                    navController.navigate("Inicio")
+//                },
+//                modifier = Modifier.fillMaxWidth(),
+//
+//                ) {
+//                Text(text = "Aceptar", style = MaterialTheme.typography.titleLarge,
+//                )
+//            }
         }
     }
 }
@@ -194,24 +198,14 @@ fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Uni
 //SENSORES:
 
 @Composable
-fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
-    var nombre by remember { mutableStateOf(sensorLuz.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorLuz.ubicacion) }
-    var encendido by remember { mutableStateOf(sensorLuz.estadoEncendido) }
-    var sensorNuevo by remember { mutableStateOf(sensorLuz) }
+fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var encendido by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = sensorLuz.imagen),
-            contentDescription = "Imagen del sensor de luz",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Sensor de Luz")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -232,92 +226,24 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
             checked = encendido,
             onCheckedChange = { encendido = !encendido }
         )
-       sensorNuevo= SensorLuz(nombre, "Sensor de Luz", ubicacion, sensorLuz.imagen, encendido)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
         }
     }
 }
+
 @Composable
-fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
-    var nombre by remember { mutableStateOf(sensorTemperatura.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorTemperatura.ubicacion) }
-    var grados by remember { mutableStateOf(sensorTemperatura.grados) }
-    var humedad by remember { mutableStateOf(sensorTemperatura.humedad) }
-    var sensorNuevo by remember { mutableStateOf(sensorTemperatura) }
-
-    Column (
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = sensorTemperatura.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
-        Text(text = "Configuración del Sensor de Temperatura")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = ubicacion,
-            onValueChange = { ubicacion = it },
-            label = { Text("Ubicacion") }
-        )
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = grados.toString(),
-            onValueChange = { grados = it.toDouble() },
-            label = { Text("Grados") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = humedad.toString(),
-            onValueChange = { humedad = it.toDouble() },
-            label = { Text("Humedad") }
-        )
-        sensorNuevo= SensorTemperatura(nombre, "Sensor de Temperatura", ubicacion, sensorTemperatura.imagen, grados, humedad)
-        Button(
-            onClick = {},
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Actualizar")
-        }
-    }
-}
-@Composable
-fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
-    var nombre by remember { mutableStateOf(sensorMovimiento.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorMovimiento.ubicacion) }
-    var estado by remember { mutableStateOf(sensorMovimiento.estado) }
-    var sensorNuevo by remember { mutableStateOf(sensorMovimiento) }
+fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = sensorMovimiento.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Sensor de Movimiento")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -338,9 +264,8 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
-        sensorNuevo= SensorMovimiento(nombre, "Sensor de Movimiento", ubicacion, sensorMovimiento.imagen, estado)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -348,24 +273,14 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
     }
 }
 @Composable
-fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
-    var nombre by remember { mutableStateOf(sensorVibracion.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorVibracion.ubicacion) }
-    var estado by remember { mutableStateOf(sensorVibracion.estado) }
-    var sensorNuevo by remember { mutableStateOf(sensorVibracion) }
+fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = sensorVibracion.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Sensor de Vibración")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -386,9 +301,8 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
-        sensorNuevo= SensorVibracion(nombre, "Sensor de Vibracion", ubicacion, sensorVibracion.imagen, estado)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -397,25 +311,15 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
 }
 
 @Composable
-fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
-    var nombre by remember { mutableStateOf(sensorNivelAgua.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorNivelAgua.ubicacion) }
-    var litros by remember { mutableStateOf(sensorNivelAgua.litros) }
-    var sensorNuevo by remember { mutableStateOf(sensorNivelAgua) }
+fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var litros by remember { mutableStateOf(0.00) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = sensorNivelAgua.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Sensor de Nivel de Agua")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -437,9 +341,8 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
             onValueChange = { litros = it.toDouble() },
             label = { Text("Litros") }
         )
-        sensorNuevo= SensorNivelAgua(nombre, "Sensor de Nivel de Agua", ubicacion, sensorNivelAgua.imagen, litros)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -448,24 +351,15 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
 }
 
 @Composable
-fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
-    var nombre by remember { mutableStateOf(sensorPresion.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorPresion.ubicacion) }
-    var presion by remember { mutableStateOf(sensorPresion.presion) }
-    var sensorNuevo by remember { mutableStateOf(sensorPresion) }
+fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var presion by remember { mutableStateOf(0.00) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = sensorPresion.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Sensor de Presión")
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
@@ -486,9 +380,8 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
             onValueChange = { presion = it.toDouble() },
             label = { Text("Litros") }
         )
-        sensorNuevo= SensorPresion(nombre, "Sensor de Presion", ubicacion, sensorPresion.imagen, presion)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -497,24 +390,15 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
 }
 
 @Composable
-fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
-    var nombre by remember { mutableStateOf(sensorApertura.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorApertura.ubicacion) }
-    var estado by remember { mutableStateOf(sensorApertura.estado) }
-    var sensorNuevo by remember { mutableStateOf(sensorApertura) }
+fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = sensorApertura.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Sensor de Apertura")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -535,9 +419,8 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
-        sensorNuevo= SensorApertura(nombre, "Sensor de Vibracion", ubicacion, sensorApertura.imagen, estado)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -546,25 +429,16 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
 }
 
 @Composable
-fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
-    var nombre by remember { mutableStateOf(sensorCalidadAire.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorCalidadAire.ubicacion) }
-    var calidad by remember { mutableStateOf(sensorCalidadAire.ICA) }
-    var sensorNuevo by remember { mutableStateOf(sensorCalidadAire) }
+fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var calidad by remember { mutableStateOf("") }
 
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = sensorCalidadAire.imagen),
-            contentDescription = "Imagen del sensor de calidad del aire",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-        )
 
         Text(text = "Configuración del Sensor de Calidad del Aire")
         Spacer(modifier = Modifier.height(16.dp))
@@ -610,101 +484,81 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        sensorNuevo= SensorCalidadAire(nombre, "Sensor de Calidad del Aire", ubicacion, sensorCalidadAire.imagen, calidad)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
         }
     }
 }
-
-@Composable
-fun ConfiguracionSensorGas(sensorGas: SensorGas) {
-    var nombre by remember { mutableStateOf(sensorGas.nombre) }
-    var ubicacion by remember { mutableStateOf(sensorGas.ubicacion) }
-    var co2 by remember { mutableStateOf(sensorGas.concentracionCO2) }
-    var ch4 by remember { mutableStateOf(sensorGas.concentracionCH4) }
-    var sensorNuevo by remember { mutableStateOf(sensorGas) }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    )  {
-        Image(
-            painter = painterResource(id = sensorGas.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
-        Text(text = "Configuración del Sensor de Gas")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre") }
-        )
-        OutlinedTextField(
-            value = ubicacion,
-            modifier = Modifier.fillMaxWidth(),
-            onValueChange = { ubicacion = it },
-            label = { Text("Ubicacion") }
-        )
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            OutlinedTextField(
-                value = co2.toString(),
-                onValueChange = { co2 = it.toDouble() },
-                label = { Text("Concentracion de CO2") }
-            )
-            OutlinedTextField(
-                value = ch4.toString(),
-                onValueChange = { ch4 = it.toDouble() },
-                label = { Text("Concentracion de CH4") }
-            )
-        }
-
-        sensorNuevo= SensorGas(nombre, "Sensor de Gas", ubicacion, sensorGas.imagen, co2, ch4)
-        Button(
-            onClick = {},
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Actualizar")
-        }
-    }
-}
+//
+//@Composable
+//fun ConfiguracionSensorGas(navigateToInicio: () -> Unit) {
+//    var nombre by remember { mutableStateOf("") }
+//    var ubicacion by remember { mutableStateOf("") }
+//    var co2 by remember { mutableStateOf(0.00) }
+//    var ch4 by remember { mutableStateOf(0.00) }
+//
+//    Column(
+//        modifier = Modifier.fillMaxSize(),
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    )  {
+//        Text(text = "Configuración del Sensor de Gas")
+//        Spacer(modifier = Modifier.height(8.dp))
+//
+//        OutlinedTextField(
+//            modifier = Modifier.fillMaxWidth(),
+//            value = nombre,
+//            onValueChange = { nombre = it },
+//            label = { Text("Nombre") }
+//        )
+//        OutlinedTextField(
+//            value = ubicacion,
+//            modifier = Modifier.fillMaxWidth(),
+//            onValueChange = { ubicacion = it },
+//            label = { Text("Ubicacion") }
+//        )
+//        Row(
+//            modifier = Modifier.fillMaxSize(),
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.Center
+//        ) {
+//            OutlinedTextField(
+//                value = co2.toString(),
+//                onValueChange = { co2 = it.toDouble() },
+//                label = { Text("Concentracion de CO2") }
+//            )
+//            OutlinedTextField(
+//                value = ch4.toString(),
+//                onValueChange = { ch4 = it.toDouble() },
+//                label = { Text("Concentracion de CH4") }
+//            )
+//        }
+//
+//        Button(
+//            onClick = {navigateToInicio()},
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Text("Actualizar")
+//        }
+//    }
+//}
 
 
 
 //ACTUADORES:
 
 @Composable
-fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
-    var nombre by remember { mutableStateOf(actuadorValvula.nombre) }
-    var ubicacion by remember { mutableStateOf(actuadorValvula.ubicacion) }
-    var estado by remember { mutableStateOf(actuadorValvula.activo) }
-    var actuadorNuevo by remember { mutableStateOf(actuadorValvula) }
+fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
+
         Column (
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = actuadorValvula.imagen),
-                contentDescription = "Imagen del medidor de gas",
-                modifier = Modifier
-                    .size(128.dp)
-                    .padding(bottom = 16.dp)
-                    .align(alignment = Alignment.CenterHorizontally)
-
-            )
             Text(text = "Configuración del Actuador de Válvula")
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -725,10 +579,9 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
                 checked = estado,
                 onCheckedChange = { estado = !estado }
             )
-            actuadorNuevo= ActuadorValvula(nombre, "Actuador de Válvula", ubicacion, actuadorValvula.imagen, estado)
 
             Button(
-                onClick = {},
+                onClick = {navigateToInicio()},
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Actualizar")
@@ -737,24 +590,15 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
 }
 
 @Composable
-fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
-    var nombre by remember { mutableStateOf(cerradura.nombre) }
-    var ubicacion by remember { mutableStateOf(cerradura.ubicacion) }
-    var estado by remember { mutableStateOf(cerradura.cerrado)}
-    var actuadorNuevo by remember { mutableStateOf(cerradura) }
+fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
+
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = cerradura.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración de la Cerradura Electrónica")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -775,9 +619,9 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
-        actuadorNuevo= CerraduraElectronica(nombre, "Cerradura Electronica", ubicacion, cerradura.imagen, estado)
+
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -786,24 +630,14 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
 }
 
 @Composable
-fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIluminacion) {
-    var nombre by remember { mutableStateOf(ControladorIluminacion.nombre) }
-    var ubicacion by remember { mutableStateOf(ControladorIluminacion.ubicacion) }
-    var estado by remember { mutableStateOf(ControladorIluminacion.encendido)}
-    var actuadorNuevo by remember { mutableStateOf(ControladorIluminacion) }
+fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = ControladorIluminacion.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Controlador de Iluminación")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -824,9 +658,8 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
-        actuadorNuevo= ControladorIluminacion(nombre, "Controlador de Iluminación", ubicacion, ControladorIluminacion.imagen, estado)
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -837,25 +670,16 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
 //MOnitoreo:
 
 @Composable
-fun ConfiguracionControladorClima(controlador: ControladorClima) {
-    var nombre by remember { mutableStateOf(controlador.nombre) }
-    var ubicacion by remember { mutableStateOf(controlador.ubicacion) }
-    var grados by remember { mutableStateOf(controlador.temperatura) }
-    var humedad by remember { mutableStateOf(controlador.humedad) }
-    var monitorNuevo by remember { mutableStateOf(controlador) }
+fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var grados by remember { mutableStateOf(0.00) }
+    var humedad by remember { mutableStateOf(0.00) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = controlador.imagen),
-            contentDescription = "Imagen del controlador de clima",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Controlador de Clima")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -884,9 +708,9 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
             onValueChange = { humedad = it.toDouble() },
             label = { Text("Humedad") }
         )
-        monitorNuevo= ControladorClima(nombre, "Controlador de Clima", ubicacion, controlador.imagen, grados, humedad)
+
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -895,24 +719,14 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
 }
 
 @Composable
-fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
-    var nombre by remember { mutableStateOf(medidorCAgua.nombre) }
-    var ubicacion by remember { mutableStateOf(medidorCAgua.ubicacion) }
-    var litros by remember { mutableStateOf(medidorCAgua.litros) }
-    var monitorNuevo by remember { mutableStateOf(medidorCAgua) }
+fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var litros by remember { mutableStateOf(0.00) }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = medidorCAgua.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-
-        )
         Text(text = "Configuración del Medidor de Consumo de Agua")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -942,10 +756,9 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
             label = { Text("Consumo de Agua (Litros)") }
 
         )
-        monitorNuevo= MedidorConsumoAgua(nombre, "Sensor de Nivel de Agua", ubicacion, medidorCAgua.imagen, litros)
 
         Button(
-            onClick = {},
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -954,10 +767,10 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
 }
 
 @Composable
-fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
-    var nombre by remember { mutableStateOf(medidorGas.nombre) }
-    var ubicacion by remember { mutableStateOf(medidorGas.ubicacion) }
-    var m3State by remember { mutableStateOf(medidorGas.metroscubicos) }
+fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var m3State by remember { mutableStateOf(0.00) }
     var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
 
 
@@ -965,15 +778,7 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Image(
-            painter = painterResource(id = medidorGas.imagen),
-            contentDescription = "Imagen del medidor de gas",
-            modifier = Modifier
-                .size(128.dp)
-                .padding(bottom = 16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
 
-        )
         Text(text = "Configuración del Medidor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -990,10 +795,6 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
-
-        Text(text = "Consumo actual: $m3State m³")
-        Spacer(modifier = Modifier.height(8.dp))
-
         OutlinedTextField(
             value = m3toString,
             onValueChange = { input ->
@@ -1002,23 +803,17 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
                     m3toString = input
                 }
             },
-            label = { Text("Nuevo consumo (m³)") },
+            label = { Text("Consumo (m³)") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {
-                val nuevoValor = m3toString.toFloatOrNull()
-                if (nuevoValor != null) {
-                    m3State = nuevoValor.toDouble()
-                    medidorGas.metroscubicos = nuevoValor.toDouble()
-                }
-            },
+            onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Actualizar consumo")
+            Text("Actualizar")
         }
     }
 }
