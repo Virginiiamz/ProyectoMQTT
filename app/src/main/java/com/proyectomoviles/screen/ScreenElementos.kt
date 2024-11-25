@@ -34,6 +34,7 @@ import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
+import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorApertura
@@ -135,7 +136,8 @@ fun listaElementos():List<Dispositivo>{
         ControladorClima("Controlador Clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 0.00, 0.00),
         MedidorConsumoAgua("Medidor de Consumo de Agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 0.00),
         CerraduraElectronica("Cerradura Electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
-        MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 0.00)
+        MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 0.00),
+        ControladorIluminacion("Controlador Iluminación", "Actuador", "", R.drawable.imgcontroladorluz, false),
     )
     return listaDispositivo
 }
