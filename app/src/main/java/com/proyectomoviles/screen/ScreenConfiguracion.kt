@@ -163,6 +163,12 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
             onCheckedChange = { encendido = !encendido }
         )
        sensorNuevo= SensorLuz(nombre, "Sensor de Luz", ubicacion, sensorLuz.imagen, encendido)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 @Composable
@@ -215,6 +221,12 @@ fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
             label = { Text("Humedad") }
         )
         sensorNuevo= SensorTemperatura(nombre, "Sensor de Temperatura", ubicacion, sensorTemperatura.imagen, grados, humedad)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 @Composable
@@ -257,6 +269,12 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
             onCheckedChange = { estado = !estado }
         )
         sensorNuevo= SensorMovimiento(nombre, "Sensor de Movimiento", ubicacion, sensorMovimiento.imagen, estado)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 @Composable
@@ -299,6 +317,12 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
             onCheckedChange = { estado = !estado }
         )
         sensorNuevo= SensorVibracion(nombre, "Sensor de Vibracion", ubicacion, sensorVibracion.imagen, estado)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -344,6 +368,12 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
             label = { Text("Litros") }
         )
         sensorNuevo= SensorNivelAgua(nombre, "Sensor de Nivel de Agua", ubicacion, sensorNivelAgua.imagen, litros)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -387,6 +417,12 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
             label = { Text("Litros") }
         )
         sensorNuevo= SensorPresion(nombre, "Sensor de Presion", ubicacion, sensorPresion.imagen, presion)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -430,6 +466,12 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
             onCheckedChange = { estado = !estado }
         )
         sensorNuevo= SensorApertura(nombre, "Sensor de Vibracion", ubicacion, sensorApertura.imagen, estado)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -499,6 +541,12 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
         Spacer(modifier = Modifier.height(16.dp))
 
         sensorNuevo= SensorCalidadAire(nombre, "Sensor de Calidad del Aire", ubicacion, sensorCalidadAire.imagen, calidad)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -555,6 +603,12 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
         }
 
         sensorNuevo= SensorGas(nombre, "Sensor de Gas", ubicacion, sensorGas.imagen, co2, ch4)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -602,6 +656,13 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
                 onCheckedChange = { estado = !estado }
             )
             actuadorNuevo= ActuadorValvula(nombre, "Actuador de Válvula", ubicacion, actuadorValvula.imagen, estado)
+
+            Button(
+                onClick = {},
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Actualizar")
+            }
         }
 }
 
@@ -645,6 +706,12 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
             onCheckedChange = { estado = !estado }
         )
         actuadorNuevo= CerraduraElectronica(nombre, "Cerradura Electronica", ubicacion, cerradura.imagen, estado)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -688,6 +755,12 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
             onCheckedChange = { estado = !estado }
         )
         actuadorNuevo= ControladorIluminacion(nombre, "Controlador de Iluminación", ubicacion, ControladorIluminacion.imagen, estado)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -742,6 +815,12 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
             label = { Text("Humedad") }
         )
         monitorNuevo= ControladorClima(nombre, "Controlador de Clima", ubicacion, controlador.imagen, grados, humedad)
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
@@ -781,6 +860,11 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
             label = { Text("Ubicacion") }
         )
         Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Consumo actual: $litros L")
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = litros.toString(),
@@ -789,11 +873,20 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
 
         )
         monitorNuevo= MedidorConsumoAgua(nombre, "Sensor de Nivel de Agua", ubicacion, medidorCAgua.imagen, litros)
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
     }
 }
 
 @Composable
 fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
+    var nombre by remember { mutableStateOf(medidorGas.nombre) }
+    var ubicacion by remember { mutableStateOf(medidorGas.ubicacion) }
     var m3State by remember { mutableStateOf(medidorGas.metroscubicos) }
     var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
 
@@ -813,6 +906,20 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
         )
         Text(text = "Configuración del Medidor de Gas")
         Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
 
         Text(text = "Consumo actual: $m3State m³")
         Spacer(modifier = Modifier.height(8.dp))
