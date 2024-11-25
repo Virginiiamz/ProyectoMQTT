@@ -86,17 +86,17 @@ class SensorCalidadAire(
     }
 }
 
-class SensorGas(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    val concentracionCO2: Double,
-    val concentracionCH4: Double,
-): Dispositivo(nombre, tipo, ubicacion, imagen) {
-    init {
-        dispositivosCreados.add(this)
-    }
-}
-
+//class SensorGas(
+//    nombre: String,
+//    tipo: String,
+//    ubicacion: String,
+//    imagen: Int,
+//    val concentracionCO2: Double,
+//    val concentracionCH4: Double,
+//): Dispositivo(nombre, tipo, ubicacion, imagen) {
+//    init {
+//        dispositivosCreados.add(this)
+//    }
+//}
+//
 
