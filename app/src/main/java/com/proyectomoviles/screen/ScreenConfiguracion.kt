@@ -2,7 +2,6 @@ package com.proyectomoviles.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -36,6 +35,77 @@ import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 
+@Composable
+fun Prueba(tipoDispositivo: String, navigateToInicio: () -> Unit) {
+    Column {
+        Text(tipoDispositivo)
+        ConfiguracionSensorTemperatura2(navigateToInicio)
+        Button(
+            onClick = {navigateToInicio()}
+        ) {
+            Text("Inicio")
+        }
+    }
+}
+
+@Composable
+fun ConfiguracionSensorTemperatura2(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var grados by remember { mutableStateOf(0.00) }
+    var humedad by remember { mutableStateOf(0.00) }
+//    var sensorNuevo by remember { mutableStateOf(emptyCl) }
+
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+//        Image(
+//            painter = painterResource(id = sensorTemperatura.imagen),
+//            contentDescription = "Imagen del medidor de gas",
+//            modifier = Modifier
+//                .size(128.dp)
+//                .padding(bottom = 16.dp)
+//                .align(alignment = Alignment.CenterHorizontally)
+//
+//        )
+        Text(text = "Configuración del Sensor de Temperatura")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = grados.toString(),
+            onValueChange = { grados = it.toDouble() },
+            label = { Text("Grados") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = humedad.toString(),
+            onValueChange = { humedad = it.toDouble() },
+            label = { Text("Humedad") }
+        )
+        val sensorNuevo= SensorTemperatura(nombre, "Sensor de Temperatura", ubicacion, 0, grados, humedad)
+        Button(
+            onClick = {navigateToInicio()},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 
 @Composable
 fun ConfiguracionScreen(

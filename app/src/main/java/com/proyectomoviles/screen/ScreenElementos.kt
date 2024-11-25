@@ -90,13 +90,13 @@ fun ElementosScreen(onNavigateToConfiguracion: (Dispositivo) -> Unit) {
 
 
 @Composable
-fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (Dispositivo) -> Unit) {
+fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
             .padding(16.dp)
-            .clickable { onNavigateToConfiguracion(dispositivo)},
+            .clickable { onNavigateToConfiguracion(dispositivo.nombre)},
         elevation = CardDefaults.elevatedCardElevation(12.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(

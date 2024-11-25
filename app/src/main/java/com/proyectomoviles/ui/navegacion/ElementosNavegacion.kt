@@ -1,12 +1,13 @@
 package com.proyectomoviles.ui.navegacion
 
+import com.proyectomoviles.dispositivos.Dispositivo
 import kotlinx.serialization.Serializable
 
 @Serializable
 object Inicio
 
 @Serializable
-object Configuracion
+object Elementos
 
 @Serializable
-object Elementos
+data class ConfigurarDispositivos(val tipo: String)
