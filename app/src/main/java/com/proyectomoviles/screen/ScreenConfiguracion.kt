@@ -129,7 +129,10 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
     var ubicacion by remember { mutableStateOf(sensorLuz.ubicacion) }
     var encendido by remember { mutableStateOf(sensorLuz.estadoEncendido) }
     var sensorNuevo by remember { mutableStateOf(sensorLuz) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
             painter = painterResource(id = sensorLuz.imagen),
             contentDescription = "Imagen del sensor de luz",
@@ -143,11 +146,13 @@ fun ConfiguracionSensorLuz(sensorLuz: SensorLuz) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -168,7 +173,10 @@ fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
     var humedad by remember { mutableStateOf(sensorTemperatura.humedad) }
     var sensorNuevo by remember { mutableStateOf(sensorTemperatura) }
 
-    Column {
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
             painter = painterResource(id = sensorTemperatura.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -182,22 +190,26 @@ fun ConfiguracionSensorTemperatura(sensorTemperatura: SensorTemperatura) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = grados.toString(),
             onValueChange = { grados = it.toDouble() },
             label = { Text("Grados") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = humedad.toString(),
             onValueChange = { humedad = it.toDouble() },
             label = { Text("Humedad") }
@@ -211,7 +223,10 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
     var ubicacion by remember { mutableStateOf(sensorMovimiento.ubicacion) }
     var estado by remember { mutableStateOf(sensorMovimiento.estado) }
     var sensorNuevo by remember { mutableStateOf(sensorMovimiento) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = sensorMovimiento.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -225,11 +240,13 @@ fun ConfiguracionSensorMovimiento(sensorMovimiento: SensorMovimiento) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -248,7 +265,10 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
     var ubicacion by remember { mutableStateOf(sensorVibracion.ubicacion) }
     var estado by remember { mutableStateOf(sensorVibracion.estado) }
     var sensorNuevo by remember { mutableStateOf(sensorVibracion) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = sensorVibracion.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -262,11 +282,13 @@ fun ConfiguracionSensorVibracion(sensorVibracion: SensorVibracion) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -287,7 +309,10 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
     var litros by remember { mutableStateOf(sensorNivelAgua.litros) }
     var sensorNuevo by remember { mutableStateOf(sensorNivelAgua) }
 
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = sensorNivelAgua.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -301,16 +326,19 @@ fun ConfiguracionSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = litros.toString(),
             onValueChange = { litros = it.toDouble() },
             label = { Text("Litros") }
@@ -325,7 +353,10 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
     var ubicacion by remember { mutableStateOf(sensorPresion.ubicacion) }
     var presion by remember { mutableStateOf(sensorPresion.presion) }
     var sensorNuevo by remember { mutableStateOf(sensorPresion) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = sensorPresion.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -338,16 +369,19 @@ fun ConfiguracionSensorPresion(sensorPresion: SensorPresion) {
         Text(text = "Configuración del Sensor de Presión")
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = presion.toString(),
             onValueChange = { presion = it.toDouble() },
             label = { Text("Litros") }
@@ -362,7 +396,10 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
     var ubicacion by remember { mutableStateOf(sensorApertura.ubicacion) }
     var estado by remember { mutableStateOf(sensorApertura.estado) }
     var sensorNuevo by remember { mutableStateOf(sensorApertura) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = sensorApertura.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -376,11 +413,13 @@ fun ConfiguracionSensorApertura(sensorApertura: SensorApertura) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -403,7 +442,8 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
 
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = sensorCalidadAire.imagen),
@@ -417,11 +457,13 @@ fun ConfiguracionSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
         Text(text = "Configuración del Sensor de Calidad del Aire")
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -467,7 +509,10 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
     var co2 by remember { mutableStateOf(sensorGas.concentracionCO2) }
     var ch4 by remember { mutableStateOf(sensorGas.concentracionCH4) }
     var sensorNuevo by remember { mutableStateOf(sensorGas) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = sensorGas.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -481,12 +526,14 @@ fun ConfiguracionSensorGas(sensorGas: SensorGas) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
             value = ubicacion,
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
@@ -521,8 +568,10 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
     var ubicacion by remember { mutableStateOf(actuadorValvula.ubicacion) }
     var estado by remember { mutableStateOf(actuadorValvula.activo) }
     var actuadorNuevo by remember { mutableStateOf(actuadorValvula) }
-    Column {
-        Column {
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Image(
                 painter = painterResource(id = actuadorValvula.imagen),
                 contentDescription = "Imagen del medidor de gas",
@@ -536,11 +585,13 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = nombre,
                 onValueChange = { nombre = it },
                 label = { Text("Nombre") }
             )
-            TextField(
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = ubicacion,
                 onValueChange = { ubicacion = it },
                 label = { Text("Ubicacion") }
@@ -552,7 +603,6 @@ fun ConfiguracionActuadorValvula(actuadorValvula: ActuadorValvula) {
             )
             actuadorNuevo= ActuadorValvula(nombre, "Actuador de Válvula", ubicacion, actuadorValvula.imagen, estado)
         }
-    }
 }
 
 @Composable
@@ -561,7 +611,10 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
     var ubicacion by remember { mutableStateOf(cerradura.ubicacion) }
     var estado by remember { mutableStateOf(cerradura.cerrado)}
     var actuadorNuevo by remember { mutableStateOf(cerradura) }
-    Column {
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
             painter = painterResource(id = cerradura.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -575,11 +628,13 @@ fun ConfiguracionCerraduraElectronica(cerradura: CerraduraElectronica) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -599,7 +654,10 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
     var ubicacion by remember { mutableStateOf(ControladorIluminacion.ubicacion) }
     var estado by remember { mutableStateOf(ControladorIluminacion.encendido)}
     var actuadorNuevo by remember { mutableStateOf(ControladorIluminacion) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = ControladorIluminacion.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -613,11 +671,13 @@ fun ConfiguracionControladorIluminacion(ControladorIluminacion: ControladorIlumi
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -640,7 +700,10 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
     var grados by remember { mutableStateOf(controlador.temperatura) }
     var humedad by remember { mutableStateOf(controlador.humedad) }
     var monitorNuevo by remember { mutableStateOf(controlador) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = controlador.imagen),
             contentDescription = "Imagen del controlador de clima",
@@ -654,22 +717,26 @@ fun ConfiguracionControladorClima(controlador: ControladorClima) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = grados.toString(),
             onValueChange = { grados = it.toDouble() },
             label = { Text("Grados Cº") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = humedad.toString(),
             onValueChange = { humedad = it.toDouble() },
             label = { Text("Humedad") }
@@ -684,7 +751,10 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
     var ubicacion by remember { mutableStateOf(medidorCAgua.ubicacion) }
     var litros by remember { mutableStateOf(medidorCAgua.litros) }
     var monitorNuevo by remember { mutableStateOf(medidorCAgua) }
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = medidorCAgua.imagen),
             contentDescription = "Imagen del medidor de gas",
@@ -698,21 +768,25 @@ fun ConfiguracionMedidorConsumoAgua(medidorCAgua: MedidorConsumoAgua) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = litros.toString(),
             onValueChange = { litros = it.toDouble() },
             label = { Text("Consumo de Agua (Litros)") }
+
         )
         monitorNuevo= MedidorConsumoAgua(nombre, "Sensor de Nivel de Agua", ubicacion, medidorCAgua.imagen, litros)
     }
@@ -724,7 +798,10 @@ fun ConfiguracionMedidorGas(medidorGas: MedidorGas) {
     var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
 
 
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
         Image(
             painter = painterResource(id = medidorGas.imagen),
             contentDescription = "Imagen del medidor de gas",
