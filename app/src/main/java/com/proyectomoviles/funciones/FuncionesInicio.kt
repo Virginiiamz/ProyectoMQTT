@@ -1,15 +1,20 @@
 package com.proyectomoviles.funciones
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -29,6 +34,8 @@ import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.MedidorConsumoAgua
+import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorApertura
 import com.proyectomoviles.dispositivos.SensorCalidadAire
 import com.proyectomoviles.dispositivos.SensorLuz
@@ -50,6 +57,18 @@ fun mostrarInformacionDispositivos(dispositivo: Dispositivo) {
     Spacer(
         Modifier.height(1.dp)
     )
+}
+
+@Composable
+fun agregarDispositivo(dispositivo: Dispositivo, listaDispositivos: MutableList<Dispositivo>): MutableList<Dispositivo> {
+    listaDispositivos.add(dispositivo)
+    return listaDispositivos
+}
+
+@Composable
+fun borrarDispositivo(dispositivo: Dispositivo, listaDispositivos: MutableList<Dispositivo>): MutableList<Dispositivo> {
+    listaDispositivos.remove(dispositivo)
+    return listaDispositivos
 }
 
 @Composable
@@ -517,15 +536,33 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${temperatura} Cº", color = Color.White, fontWeight = FontWeight.Medium)
-            Column {
-                Row {
-                    Button(onClick = { temperatura++ }) {
-                        Text("+")
-                    }
-                    Button(onClick = { temperatura-- }) {
-                        Text("-")
-                    }
+            Row (
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text("${temperatura} Cº", color = Color.White, fontWeight = FontWeight.Medium)
+                }
+                Column {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowUp,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier
+                            .clickable {
+                                temperatura++
+                            }
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier
+                            .clickable {
+                                temperatura--
+                            }
+                    )
                 }
             }
         }
@@ -538,19 +575,89 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
-            Column {
-                Row {
-                    Button(onClick = { humedad++ }) {
-                        Text("+")
-                    }
-                    Button(onClick = { humedad-- }) {
-                        Text("-")
-                    }
+            Row (
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Column {
+                    Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
+                }
+                Column {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowUp,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier
+                        .clickable {
+                            humedad++
+                        }
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier
+                            .clickable {
+                                humedad--
+                            }
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun mostrarConsumoAgua(MedAgua: MedidorConsumoAgua) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    Color.Blue,
+                    shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+                )
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("${MedAgua.litros} L", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
     }
 }
+
+@Composable
+fun mostrarConsumoGas(ConsGas: MedidorGas) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    Color.Gray,
+                    shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+                )
+                .padding(8.dp)
+                .weight(1f)
+                .height(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("${ConsGas.metroscubicos} m3", color = Color.White, fontWeight = FontWeight.Medium)
+        }
+
+    }
+}
+
+
+
 

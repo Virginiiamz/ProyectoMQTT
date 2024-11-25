@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.proyectomoviles.R
@@ -49,6 +52,8 @@ import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.funciones.mostrarActuadorCerradura
 import com.proyectomoviles.funciones.mostrarActuadorValvula
+import com.proyectomoviles.funciones.mostrarConsumoAgua
+import com.proyectomoviles.funciones.mostrarConsumoGas
 import com.proyectomoviles.funciones.mostrarControladorClima
 import com.proyectomoviles.funciones.mostrarControladorIluminacion
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
@@ -63,7 +68,7 @@ import com.proyectomoviles.funciones.mostrarSensorTemperatura
 import com.proyectomoviles.funciones.mostrarSensorVibracion
 
 @Composable
-fun InicioScreen(navigateToElementos: () -> Unit) {
+fun InicioScreen(navigateToElementos: () -> Unit, ) {
     val listaDispositivo = listOf(
         SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", R.drawable.imgsensortermometro,20.5, 45.9),
         SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
@@ -75,7 +80,7 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", R.drawable.imgsensorcalidadaire,"Desfavorable"),
         ActuadorValvula("Actuador valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,true),
         ControladorClima("Controlador clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 20.5, 45.9),
-        MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 10.3),
+        MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 20.3),
         CerraduraElectronica("Cerradura electrónica", "Actuador", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
         ControladorIluminacion("Controlador de iluminación", "Actuador", "Pasillo", R.drawable.imgcontroladorluz, false),
         MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 10.3)
@@ -111,7 +116,27 @@ fun InicioScreen(navigateToElementos: () -> Unit) {
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValue ->
         if (listaDispositivo.isEmpty()) {
-            Text("No hay dispositivos vinculados.")
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .padding(16.dp)
+                ,
+                elevation = CardDefaults.elevatedCardElevation(12.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.Black),
+                ){
+                Row (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically){
+                    Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
+                }
+
+            }
+
         } else {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
@@ -362,6 +387,8 @@ fun CargarMonitoreo(dispositivo: Dispositivo) {
         {
             when (dispositivo) {
                 is ControladorClima -> mostrarControladorClima(dispositivo)
+                is MedidorConsumoAgua -> mostrarConsumoAgua(dispositivo)
+                is MedidorGas -> mostrarConsumoGas(dispositivo)
 
             }
         }
