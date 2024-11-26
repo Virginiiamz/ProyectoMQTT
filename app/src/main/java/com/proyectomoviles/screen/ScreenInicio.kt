@@ -75,7 +75,7 @@ import com.proyectomoviles.funciones.mostrarSensorTemperatura
 import com.proyectomoviles.funciones.mostrarSensorVibracion
 
 @Composable
-fun InicioScreen(navigateToElementos: () -> Unit, ) {
+fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) {
     val listaDispositivo = RepositoryList.listaDispositivos as List<Dispositivo>
 
     var contadorSensor = 0
@@ -149,7 +149,7 @@ fun InicioScreen(navigateToElementos: () -> Unit, ) {
                         )
                     }
                     items(listaSensores) { dispositivo ->
-                        CargarSensores(dispositivo)
+                        CargarSensores(dispositivo, navigateToInicio)
                     }
 
                     if (contadorMonitoreo == 0 && contadorActuador == 0) {
@@ -229,7 +229,7 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 }
 
 @Composable
-fun CargarSensores(dispositivo: Dispositivo) {
+fun CargarSensores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
     val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
@@ -314,6 +314,7 @@ fun CargarSensores(dispositivo: Dispositivo) {
                     modifier = Modifier.clickable {
                         RepositoryList.removeDispositivos(dispositivo)
                         showDialog.value = false
+                        navigateToInicio()
                     },
                     color = MaterialTheme.colorScheme.primary
                 )

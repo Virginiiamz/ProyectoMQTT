@@ -19,9 +19,11 @@ fun Navegacion() {
     ) {
         composable<Inicio> { backStatEntry ->
             val dispositivo = backStatEntry.toRoute<Inicio>()
-            InicioScreen {
-                navController.navigate(Elementos)
-            }
+            InicioScreen({navController.navigate(Elementos)}, {navController.navigate(Inicio)})
+//                navController.navigate(Elementos)
+//                {navController.navigate(Inicio)}
+
+//            }
         }
         composable<Elementos> { backStackEntry ->
 //            Navegacion a la pantalla Elementos
