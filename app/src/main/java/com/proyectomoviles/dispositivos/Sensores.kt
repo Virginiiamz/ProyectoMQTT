@@ -57,9 +57,6 @@ class SensorPresion(
     imagen: Int,
     val presion: Double
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
-    init {
-        dispositivosCreados.add(this)
-    }
 }
 
 class SensorApertura(
@@ -69,9 +66,6 @@ class SensorApertura(
     imagen: Int,
     var estado: Boolean
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
-    init {
-        dispositivosCreados.add(this)
-    }
 }
 
 class SensorCalidadAire(
@@ -81,22 +75,5 @@ class SensorCalidadAire(
     imagen: Int,
     val ICA: String
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
-    init {
-        dispositivosCreados.add(this)
-    }
 }
-
-//class SensorGas(
-//    nombre: String,
-//    tipo: String,
-//    ubicacion: String,
-//    imagen: Int,
-//    val concentracionCO2: Double,
-//    val concentracionCH4: Double,
-//): Dispositivo(nombre, tipo, ubicacion, imagen) {
-//    init {
-//        dispositivosCreados.add(this)
-//    }
-//}
-//
 

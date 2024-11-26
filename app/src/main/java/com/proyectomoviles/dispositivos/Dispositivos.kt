@@ -9,11 +9,4 @@ open class Dispositivo(
     val ubicacion: String,
     var imagen: Int
 ) {
-    companion object {
-        val dispositivosCreados = mutableListOf<Dispositivo>()
-    }
-
-    init {
-       dispositivosCreados.add(this)
-    }
 }

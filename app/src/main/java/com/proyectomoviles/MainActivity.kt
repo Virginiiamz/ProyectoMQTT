@@ -27,11 +27,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview
-@Composable
-fun llamarNavegacio() {
-    Navegacion()
-}
-
 
 

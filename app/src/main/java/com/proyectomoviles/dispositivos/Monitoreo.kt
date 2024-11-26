@@ -8,9 +8,6 @@ class ControladorClima(
     val temperatura: Double,
     val humedad: Double,
 ): Dispositivo(nombre, tipo, ubicacion, imagen){
-    init {
-        dispositivosCreados.add(this)
-    }
 }
 
 class MedidorConsumoAgua(
@@ -30,7 +27,4 @@ class MedidorGas(
     imagen: Int,
     var metroscubicos: Double,
 ): Dispositivo(nombre, tipo, ubicacion, imagen) {
-    init {
-        dispositivosCreados.add(this)
-    }
 }
