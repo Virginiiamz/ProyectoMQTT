@@ -9,7 +9,6 @@ import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.screen.ConfiguracionScreen
 import com.proyectomoviles.screen.ElementosScreen
 import com.proyectomoviles.screen.InicioScreen
-import com.proyectomoviles.screen.Prueba
 
 @Composable
 fun Navegacion() {

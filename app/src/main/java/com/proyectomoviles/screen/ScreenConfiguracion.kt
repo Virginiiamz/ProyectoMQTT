@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
+import com.proyectomoviles.R
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.proyectomoviles.data.RepositoryList
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
@@ -33,17 +35,6 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
-
-@Composable
-fun Prueba(tipoDispositivo: String, navigateToInicio: () -> Unit) {
-    Column {
-        Button(
-            onClick = {navigateToInicio()}
-        ) {
-            Text("Inicio")
-        }
-    }
-}
 
 @Composable
 fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
@@ -85,13 +76,15 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
             onValueChange = { humedad = it.toDouble() },
             label = { Text("Humedad") }
         )
-        val sensorNuevo= SensorTemperatura(nombre, "Sensor de Temperatura", ubicacion, 0, grados, humedad)
+        val sensorNuevo= SensorTemperatura(nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad)
         Button(
             onClick = {navigateToInicio()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
         }
+
+        RepositoryList.addDispositivos(sensorNuevo)
     }
 }
 

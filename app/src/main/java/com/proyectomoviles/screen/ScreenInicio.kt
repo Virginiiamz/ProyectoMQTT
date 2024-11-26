@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.proyectomoviles.R
+import com.proyectomoviles.data.RepositoryList
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
@@ -72,22 +73,7 @@ import com.proyectomoviles.funciones.mostrarSensorVibracion
 
 @Composable
 fun InicioScreen(navigateToElementos: () -> Unit, ) {
-    val listaDispositivo = listOf(
-        SensorTemperatura("Sensor temperatura", "Sensor", "Cocina", R.drawable.imgsensortermometro,20.5, 45.9),
-        SensorMovimiento("Sensor movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
-        SensorVibracion("Sensor Vibración", "Sensor", "Cuarto de baño",R.drawable.imgsensorvibracion, false),
-        SensorNivelAgua("Sensor nivel de agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,10.3),
-        SensorLuz("Sensor de luz", "Sensor", "Pasillo", R.drawable.imgsensorluz, false),
-        SensorPresion("Sensor de presión", "Sensor", "Cocina",R.drawable.imgsensorpresion, 10.3),
-        SensorApertura("Sensor de apertura", "Sensor", "Cocina", R.drawable.imgsensorapertura, false),
-        SensorCalidadAire("Sensor de calidad del aire", "Sensor", "Baño", R.drawable.imgsensorcalidadaire,"Desfavorable"),
-        ActuadorValvula("Actuador valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,true),
-        ControladorClima("Controlador clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 20.5, 45.9),
-        MedidorConsumoAgua("Medidor de consumo de agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 20.3),
-        CerraduraElectronica("Cerradura electrónica", "Actuador", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
-        ControladorIluminacion("Controlador de iluminación", "Actuador", "Pasillo", R.drawable.imgcontroladorluz, false),
-        MedidorGas("Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 10.3)
-    )
+    val listaDispositivo = RepositoryList.listaDispositivos as List<Dispositivo>
 
     var contadorSensor = 0
     var contadorActuador = 0
