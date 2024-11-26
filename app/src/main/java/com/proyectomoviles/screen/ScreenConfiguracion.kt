@@ -37,58 +37,6 @@ import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
-    var nombre by remember { mutableStateOf("") }
-    var ubicacion by remember { mutableStateOf("") }
-    var grados by remember { mutableStateOf(0.00) }
-    var humedad by remember { mutableStateOf(0.00) }
-
-    Column (
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(text = "Configuración del Sensor de Temperatura")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = ubicacion,
-            onValueChange = { ubicacion = it },
-            label = { Text("Ubicacion") }
-        )
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = grados.toString(),
-            onValueChange = { grados = it.toDouble() },
-            label = { Text("Grados") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = humedad.toString(),
-            onValueChange = { humedad = it.toDouble() },
-            label = { Text("Humedad") }
-        )
-        val sensorNuevo= SensorTemperatura(nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad)
-        Button(
-            onClick = {navigateToInicio()},
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Actualizar")
-        }
-
-        RepositoryList.addDispositivos(sensorNuevo)
-    }
-}
-
-@Composable
 fun ConfiguracionScreen(
     tipoDispositivo: String,
     dispositivo: Dispositivo?,
@@ -176,6 +124,57 @@ fun ConfiguracionScreen(
 
 
 //SENSORES:
+@Composable
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var grados by remember { mutableStateOf(0.00) }
+    var humedad by remember { mutableStateOf(0.00) }
+
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(text = "Configuración del Sensor de Temperatura")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = grados.toString(),
+            onValueChange = { grados = it.toDouble() },
+            label = { Text("Grados") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = humedad.toString(),
+            onValueChange = { humedad = it.toDouble() },
+            label = { Text("Humedad") }
+        )
+        val sensor= SensorTemperatura(nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad)
+        Button(
+            onClick = {
+                navigateToInicio()
+                RepositoryList.addDispositivos(sensor)},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 
 @Composable
 fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit) {
@@ -206,8 +205,10 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit) {
             checked = encendido,
             onCheckedChange = { encendido = !encendido }
         )
+        val sensor= SensorLuz(nombre, "Sensor", ubicacion, R.drawable.imgsensorluz, encendido)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -244,8 +245,10 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
+        val sensor= SensorMovimiento(nombre, "Sensor", ubicacion, R.drawable.imgsensormovimiento, estado)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -281,8 +284,10 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
+        val sensor= SensorVibracion(nombre, "Sensor", ubicacion, R.drawable.imgsensorvibracion, estado)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -321,8 +326,10 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
             onValueChange = { litros = it.toDouble() },
             label = { Text("Litros") }
         )
+        val sensor= SensorNivelAgua(nombre, "Sensor", ubicacion, R.drawable.imgsensornivelagua, litros)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -360,8 +367,10 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
             onValueChange = { presion = it.toDouble() },
             label = { Text("Litros") }
         )
+        val sensor= SensorPresion(nombre, "Sensor", ubicacion, R.drawable.imgsensorpresion, presion)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -399,8 +408,10 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
+        val sensor= SensorApertura(nombre, "Sensor", ubicacion, R.drawable.imgsensorapertura, estado)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -463,69 +474,16 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
+        val sensor= SensorCalidadAire(nombre, "Sensor", ubicacion, R.drawable.imgsensorcalidadaire, calidad)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(sensor)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
         }
     }
 }
-//
-//@Composable
-//fun ConfiguracionSensorGas(navigateToInicio: () -> Unit) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var co2 by remember { mutableStateOf(0.00) }
-//    var ch4 by remember { mutableStateOf(0.00) }
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    )  {
-//        Text(text = "Configuración del Sensor de Gas")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            value = ubicacion,
-//            modifier = Modifier.fillMaxWidth(),
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Row(
-//            modifier = Modifier.fillMaxSize(),
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.Center
-//        ) {
-//            OutlinedTextField(
-//                value = co2.toString(),
-//                onValueChange = { co2 = it.toDouble() },
-//                label = { Text("Concentracion de CO2") }
-//            )
-//            OutlinedTextField(
-//                value = ch4.toString(),
-//                onValueChange = { ch4 = it.toDouble() },
-//                label = { Text("Concentracion de CH4") }
-//            )
-//        }
-//
-//        Button(
-//            onClick = {navigateToInicio()},
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-
-
 
 //ACTUADORES:
 
@@ -559,9 +517,10 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit) {
                 checked = estado,
                 onCheckedChange = { estado = !estado }
             )
-
+            val actuador= ActuadorValvula(nombre, "Actuador", ubicacion, R.drawable.imgactuadorvalvula, estado)
             Button(
-                onClick = {navigateToInicio()},
+                onClick = {navigateToInicio()
+                           RepositoryList.addDispositivos(actuador)},
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Actualizar")
@@ -599,9 +558,10 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
-
+        val actuador= CerraduraElectronica(nombre, "Actuador", ubicacion, R.drawable.imgcerraduraelectronica, estado)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(actuador)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -638,8 +598,10 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit) {
             checked = estado,
             onCheckedChange = { estado = !estado }
         )
+        val actuador= ControladorIluminacion(nombre, "Actuador", ubicacion, R.drawable.imgcontroladorluz, estado)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(actuador)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -647,7 +609,7 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit) {
     }
 }
 
-//MOnitoreo:
+//Monitoreo:
 
 @Composable
 fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
@@ -688,9 +650,10 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
             onValueChange = { humedad = it.toDouble() },
             label = { Text("Humedad") }
         )
-
+        val monitoreo= ControladorClima(nombre, "Monitoreo", ubicacion, R.drawable.imgcontroladorclima, grados, humedad)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(monitoreo)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -736,9 +699,10 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
             label = { Text("Consumo de Agua (Litros)") }
 
         )
-
+        val monitoreo= MedidorConsumoAgua(nombre, "Monitoreo", ubicacion, R.drawable.imgconsumoagua, litros)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(monitoreo)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
@@ -788,9 +752,10 @@ fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(16.dp))
-
+        val monitoreo= MedidorGas(nombre, "Monitoreo", ubicacion, R.drawable.imgconsumogas, m3State)
         Button(
-            onClick = {navigateToInicio()},
+            onClick = {navigateToInicio()
+                       RepositoryList.addDispositivos(monitoreo)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Actualizar")
