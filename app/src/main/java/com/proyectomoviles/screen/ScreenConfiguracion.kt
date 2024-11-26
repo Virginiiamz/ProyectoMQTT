@@ -43,10 +43,6 @@ fun ConfiguracionScreen(
     navigateToInicio: () -> Unit
 ) {
     Scaffold(
-        topBar = {
-            //TopAppBar me da errores así que lo hago así
-//            ComoTopAppBarSinTopAppBar(dispositivo, onBackPressed = {  })
-        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -90,38 +86,6 @@ fun ConfiguracionScreen(
         }
     }
 }
-
-//@Composable
-//fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Unit) {
-//    // TopAppBar me odia así que lo hago con box y row os vale?
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(90.dp)
-//            .background(MaterialTheme.colorScheme.primary)
-//            .padding(16.dp)
-//
-//    ) {
-//        Row(
-//            modifier = Modifier.align(Alignment.CenterStart)
-//        ) {
-//            IconButton(onClick = onBackPressed) {
-//                Icon(
-//                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-//                    contentDescription = "Atrás",
-//                    tint = MaterialTheme.colorScheme.onPrimary
-//                )
-//            }
-//            Text(
-//                text = "Configuración de ${dispositivo.nombre}",
-//                style = MaterialTheme.typography.titleLarge,
-//                color = MaterialTheme.colorScheme.onPrimary,
-//                modifier = Modifier.align(Alignment.CenterVertically)
-//            )
-//        }
-//    }
-//}
-
 
 //SENSORES:
 @Composable

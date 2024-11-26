@@ -35,21 +35,5 @@ fun Navegacion() {
             val tipoDispositivo = backStatEntry.toRoute<ConfigurarDispositivos>()
             ConfiguracionScreen(tipoDispositivo.tipo, null) { navController.navigate(Inicio) }
         }
-//        composable<Elementos> { backStackEntry ->
-//            val elementos = backStackEntry.toRoute<Elementos>()
-//            ElementosScreen { dispositivo ->
-//                navController.navigate("Configuracion/${dispositivo.nombre}")
-//            }
-//        }
-//        composable(
-//            route = "Configuracion/{nombreDispositivo}",
-//            arguments = listOf(navArgument("nombreDispositivo") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val nombreDispositivo = backStackEntry.arguments?.getString("nombreDispositivo") ?: ""
-//            val dispositivo = listaElementos().find { it.nombre == nombreDispositivo }
-//            dispositivo?.let {
-//                ConfiguracionScreen(navController, it)
-//            }
-//        }
     }
 }
