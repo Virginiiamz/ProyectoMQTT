@@ -716,7 +716,7 @@ fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        val monitoreo= MedidorGas(nombre, "Monitoreo", ubicacion, R.drawable.imgconsumogas, m3State)
+        val monitoreo= MedidorGas(nombre, "Monitoreo", ubicacion, R.drawable.imgconsumogas, m3toString.toDouble())
         Button(
             onClick = {navigateToInicio()
                        RepositoryList.addDispositivos(monitoreo)},

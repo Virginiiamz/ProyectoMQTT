@@ -173,7 +173,7 @@ fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) 
                         )
                     }
                     items(listaActuadores) { dispositivo ->
-                        CargarActuadores(dispositivo)
+                        CargarActuadores(dispositivo, navigateToInicio)
                     }
 
                     if (contadorSensor == 0 && contadorMonitoreo == 0) {
@@ -197,7 +197,7 @@ fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) 
                         )
                     }
                     items(listaMonitoreo) { dispositivo ->
-                        CargarMonitoreo(dispositivo)
+                        CargarMonitoreo(dispositivo, navigateToInicio)
                     }
 
                     if (contadorSensor == 0 && contadorActuador == 0) {
