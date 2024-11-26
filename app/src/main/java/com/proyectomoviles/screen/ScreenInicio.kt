@@ -333,7 +333,7 @@ fun CargarSensores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
 
 
 @Composable
-fun CargarActuadores(dispositivo: Dispositivo) {
+fun CargarActuadores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
     val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
@@ -413,6 +413,7 @@ fun CargarActuadores(dispositivo: Dispositivo) {
                     modifier = Modifier.clickable {
                         RepositoryList.removeDispositivos(dispositivo)
                         showDialog.value = false
+                        navigateToInicio()
                     },
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -430,7 +431,7 @@ fun CargarActuadores(dispositivo: Dispositivo) {
 
 
 @Composable
-fun CargarMonitoreo(dispositivo: Dispositivo) {
+fun CargarMonitoreo(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
     val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
@@ -510,6 +511,7 @@ fun CargarMonitoreo(dispositivo: Dispositivo) {
                     modifier = Modifier.clickable {
                         RepositoryList.removeDispositivos(dispositivo)
                         showDialog.value = false
+                        navigateToInicio()
                     },
                     color = MaterialTheme.colorScheme.primary
                 )
