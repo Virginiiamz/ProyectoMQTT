@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FabPosition
@@ -30,6 +31,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -227,6 +230,7 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 
 @Composable
 fun CargarSensores(dispositivo: Dispositivo) {
+    val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .width(400.dp)
@@ -246,7 +250,9 @@ fun CargarSensores(dispositivo: Dispositivo) {
                 contentDescription = "Cerrar",
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
-                    .clickable {  }
+                    .clickable {
+                        showDialog.value = true
+                    }
             )
         }
 
@@ -297,11 +303,37 @@ fun CargarSensores(dispositivo: Dispositivo) {
             }
         }
     }
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = { Text("Eliminar dispositivo") },
+            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo.nombre}'?") },
+            confirmButton = {
+                Text(
+                    "Confirmar",
+                    modifier = Modifier.clickable {
+                        RepositoryList.removeDispositivos(dispositivo)
+                        showDialog.value = false
+                    },
+                    color = MaterialTheme.colorScheme.primary
+                )
+            },
+            dismissButton = {
+                Text(
+                    "Cancelar",
+                    modifier = Modifier.clickable { showDialog.value = false },
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        )
+    }
+
 }
 
 
 @Composable
 fun CargarActuadores(dispositivo: Dispositivo) {
+    val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .width(400.dp)
@@ -321,7 +353,9 @@ fun CargarActuadores(dispositivo: Dispositivo) {
                 contentDescription = "Cerrar",
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
-                    .clickable {  }
+                    .clickable {
+                        showDialog.value = true
+                    }
             )
         }
 
@@ -367,11 +401,36 @@ fun CargarActuadores(dispositivo: Dispositivo) {
             }
         }
     }
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = { Text("Eliminar dispositivo") },
+            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo.nombre}'?") },
+            confirmButton = {
+                Text(
+                    "Confirmar",
+                    modifier = Modifier.clickable {
+                        RepositoryList.removeDispositivos(dispositivo)
+                        showDialog.value = false
+                    },
+                    color = MaterialTheme.colorScheme.primary
+                )
+            },
+            dismissButton = {
+                Text(
+                    "Cancelar",
+                    modifier = Modifier.clickable { showDialog.value = false },
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        )
+    }
 }
 
 
 @Composable
 fun CargarMonitoreo(dispositivo: Dispositivo) {
+    val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .width(400.dp)
@@ -391,7 +450,9 @@ fun CargarMonitoreo(dispositivo: Dispositivo) {
                 contentDescription = "Cerrar",
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
-                    .clickable {  }
+                    .clickable {
+                        showDialog.value = true
+                    }
             )
         }
 
@@ -436,6 +497,30 @@ fun CargarMonitoreo(dispositivo: Dispositivo) {
                 }
             }
         }
+    }
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = { Text("Eliminar dispositivo") },
+            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo.nombre}'?") },
+            confirmButton = {
+                Text(
+                    "Confirmar",
+                    modifier = Modifier.clickable {
+                        RepositoryList.removeDispositivos(dispositivo)
+                        showDialog.value = false
+                    },
+                    color = MaterialTheme.colorScheme.primary
+                )
+            },
+            dismissButton = {
+                Text(
+                    "Cancelar",
+                    modifier = Modifier.clickable { showDialog.value = false },
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        )
     }
 }
 
