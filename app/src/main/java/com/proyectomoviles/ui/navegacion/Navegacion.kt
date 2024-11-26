@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.screen.ConfiguracionScreen
 import com.proyectomoviles.screen.ElementosScreen
 import com.proyectomoviles.screen.InicioScreen
 import com.proyectomoviles.screen.Prueba
@@ -33,7 +34,7 @@ fun Navegacion() {
 
         composable<ConfigurarDispositivos> { backStatEntry ->
             val tipoDispositivo = backStatEntry.toRoute<ConfigurarDispositivos>()
-            Prueba(tipoDispositivo.tipo, {navController.navigate(Inicio)})
+            ConfiguracionScreen(tipoDispositivo.tipo, null) { navController.navigate(Inicio) }
         }
 //        composable<Elementos> { backStackEntry ->
 //            val elementos = backStackEntry.toRoute<Elementos>()

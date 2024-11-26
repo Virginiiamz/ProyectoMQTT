@@ -2,6 +2,7 @@ package com.proyectomoviles.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FabPosition
@@ -238,161 +241,217 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 
 @Composable
 fun CargarSensores(dispositivo: Dispositivo) {
-    Column(
+    Box(
         modifier = Modifier
             .width(400.dp)
             .border(
                 border = BorderStroke(2.dp, Color.LightGray),
                 shape = RoundedCornerShape(8.dp),
-            ),
-
-
-        horizontalAlignment = Alignment.CenterHorizontally
+            )
     ) {
-        Row(
+        // Icono de cruz gris
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 6.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.padding(6.dp)
-                ) {
-                    mostrarImagenByDispositivo(dispositivo)
-                }
-            }
-            Column(
-                modifier = Modifier.weight(1f).height(125.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                mostrarInformacionDispositivos(dispositivo)
-            }
+            Icon(
+                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
+                contentDescription = "Cerrar",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+                    .clickable {  }
+            )
         }
 
-        Column()
-        {
-            when (dispositivo) {
-                is SensorTemperatura -> mostrarSensorTemperatura(dispositivo)
-                is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
-                is SensorVibracion -> mostrarSensorVibracion(dispositivo)
-                is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
-                is SensorLuz -> mostrarSensorLuz(dispositivo)
-                is SensorPresion -> mostrarSensorPresion(dispositivo)
-                is SensorApertura -> mostrarSensorApertura(dispositivo)
-                is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.padding(6.dp)
+                    ) {
+                        mostrarImagenByDispositivo(dispositivo)
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(125.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    mostrarInformacionDispositivos(dispositivo)
+                }
+            }
+
+            Column {
+                when (dispositivo) {
+                    is SensorTemperatura -> mostrarSensorTemperatura(dispositivo)
+                    is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
+                    is SensorVibracion -> mostrarSensorVibracion(dispositivo)
+                    is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
+                    is SensorLuz -> mostrarSensorLuz(dispositivo)
+                    is SensorPresion -> mostrarSensorPresion(dispositivo)
+                    is SensorApertura -> mostrarSensorApertura(dispositivo)
+                    is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun CargarActuadores(dispositivo: Dispositivo) {
-    Column(
+    Box(
         modifier = Modifier
             .width(400.dp)
             .border(
                 border = BorderStroke(2.dp, Color.LightGray),
                 shape = RoundedCornerShape(8.dp),
-            ),
-
-
-        horizontalAlignment = Alignment.CenterHorizontally
+            )
     ) {
-        Row(
+        // Icono de cruz gris
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 6.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.padding(6.dp)
-                ) {
-                    mostrarImagenByDispositivo(dispositivo)
-                }
-            }
-            Column(
-                modifier = Modifier.weight(1f).height(125.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                mostrarInformacionDispositivos(dispositivo)
-            }
+            Icon(
+                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
+                contentDescription = "Cerrar",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+                    .clickable {  }
+            )
         }
 
-        Column()
-        {
-            when (dispositivo) {
-                is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
-                is CerraduraElectronica -> mostrarActuadorCerradura(dispositivo)
-                is ControladorIluminacion -> mostrarControladorIluminacion(dispositivo)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.padding(6.dp)
+                    ) {
+                        mostrarImagenByDispositivo(dispositivo)
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(125.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    mostrarInformacionDispositivos(dispositivo)
+                }
+            }
+
+            Column {
+                when (dispositivo) {
+                    is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
+                    is CerraduraElectronica -> mostrarActuadorCerradura(dispositivo)
+                    is ControladorIluminacion -> mostrarControladorIluminacion(dispositivo)
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun CargarMonitoreo(dispositivo: Dispositivo) {
-    Column(
+    Box(
         modifier = Modifier
             .width(400.dp)
             .border(
                 border = BorderStroke(2.dp, Color.LightGray),
                 shape = RoundedCornerShape(8.dp),
-            ),
-
-
-        horizontalAlignment = Alignment.CenterHorizontally
+            )
     ) {
-        Row(
+        // Icono de cruz gris
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 6.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.padding(6.dp)
-                ) {
-                    mostrarImagenByDispositivo(dispositivo)
-                }
-            }
-            Column(
-                modifier = Modifier.weight(1f).height(125.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                mostrarInformacionDispositivos(dispositivo)
-            }
+            Icon(
+                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
+                contentDescription = "Cerrar",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+                    .clickable {  }
+            )
         }
 
-        Column()
-        {
-            when (dispositivo) {
-                is ControladorClima -> mostrarControladorClima(dispositivo)
-                is MedidorConsumoAgua -> mostrarConsumoAgua(dispositivo)
-                is MedidorGas -> mostrarConsumoGas(dispositivo)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.padding(6.dp)
+                    ) {
+                        mostrarImagenByDispositivo(dispositivo)
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(125.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    mostrarInformacionDispositivos(dispositivo)
+                }
+            }
 
+            Column {
+                when (dispositivo) {
+                    is ControladorClima -> mostrarControladorClima(dispositivo)
+                    is MedidorConsumoAgua -> mostrarConsumoAgua(dispositivo)
+                    is MedidorGas -> mostrarConsumoGas(dispositivo)
+                }
             }
         }
     }
 }
+
 
 

@@ -35,7 +35,7 @@ import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 
 @Composable
-fun Prueba(navigateToInicio: () -> Unit) {
+fun Prueba(tipoDispositivo: String, navigateToInicio: () -> Unit) {
     Column {
         Button(
             onClick = {navigateToInicio()}
@@ -98,13 +98,13 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
 @Composable
 fun ConfiguracionScreen(
     tipoDispositivo: String,
-    dispositivo: Dispositivo,
+    dispositivo: Dispositivo?,
     navigateToInicio: () -> Unit
 ) {
     Scaffold(
         topBar = {
             //TopAppBar me da errores así que lo hago así
-            ComoTopAppBarSinTopAppBar(dispositivo, onBackPressed = {  })
+//            ComoTopAppBarSinTopAppBar(dispositivo, onBackPressed = {  })
         }
     ) { paddingValues ->
         Column(
@@ -134,65 +134,52 @@ fun ConfiguracionScreen(
                 ConfiguracionActuadorValvula(navigateToInicio)
             } else if(tipoDispositivo=="Cerradura Electrónica"){
                 ConfiguracionCerraduraElectronica(navigateToInicio)
-            } else if (tipoDispositivo == "Control Iluminacion") {
+            } else if (tipoDispositivo == "Controlador Iluminación") {
                 ConfiguracionControladorIluminacion(navigateToInicio)
             }else if (tipoDispositivo == "Controlador Clima"){
                 ConfiguracionControladorClima(navigateToInicio)
-            } else if (tipoDispositivo == "Medidor de Consumo Agua"){
+            } else if (tipoDispositivo == "Medidor de Consumo de Agua"){
                 ConfiguracionMedidorConsumoAgua(navigateToInicio)
-            } else if (tipoDispositivo == "Medidor de Gas"){
+            } else if (tipoDispositivo == "Medidor de gas"){
                 ConfiguracionMedidorGas(navigateToInicio)
             } else {
                 Text(text = "Configuración no disponible para este dispositivo")
 
             }
+        }
+    }
+}
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-//            Button(
-//                onClick = {
-//                    navController.navigate("Inicio")
-//                },
-//                modifier = Modifier.fillMaxWidth(),
+//@Composable
+//fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Unit) {
+//    // TopAppBar me odia así que lo hago con box y row os vale?
+//    Box(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .height(90.dp)
+//            .background(MaterialTheme.colorScheme.primary)
+//            .padding(16.dp)
 //
-//                ) {
-//                Text(text = "Aceptar", style = MaterialTheme.typography.titleLarge,
+//    ) {
+//        Row(
+//            modifier = Modifier.align(Alignment.CenterStart)
+//        ) {
+//            IconButton(onClick = onBackPressed) {
+//                Icon(
+//                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                    contentDescription = "Atrás",
+//                    tint = MaterialTheme.colorScheme.onPrimary
 //                )
 //            }
-        }
-    }
-}
-
-@Composable
-fun ComoTopAppBarSinTopAppBar(dispositivo: Dispositivo, onBackPressed: () -> Unit) {
-    // TopAppBar me odia así que lo hago con box y row os vale?
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(90.dp)
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(16.dp)
-
-    ) {
-        Row(
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            IconButton(onClick = onBackPressed) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Atrás",
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-            Text(
-                text = "Configuración de ${dispositivo.nombre}",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
-        }
-    }
-}
+//            Text(
+//                text = "Configuración de ${dispositivo.nombre}",
+//                style = MaterialTheme.typography.titleLarge,
+//                color = MaterialTheme.colorScheme.onPrimary,
+//                modifier = Modifier.align(Alignment.CenterVertically)
+//            )
+//        }
+//    }
+//}
 
 
 //SENSORES:
