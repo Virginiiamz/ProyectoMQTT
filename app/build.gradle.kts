@@ -1,5 +1,3 @@
-
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -81,8 +79,7 @@ dependencies {
     implementation(libs.play.services) //Implementacion de google
 
     implementation (libs.org.eclipse.paho.client.mqttv3)
-    implementation(libs.support.v4)
-    implementation(libs.localbroadcastmanager)
+    implementation (libs.androidx.localbroadcastmanager)
 
     implementation (libs.org.eclipse.paho.android.service) {
         exclude("com.android.support")

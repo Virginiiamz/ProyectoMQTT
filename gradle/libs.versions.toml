@@ -9,17 +9,17 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 coil = "2.2.2"
+localbroadcastmanagerVersion = "1.1.0"
 navigationCompose = "2.8.3"
 kotlinxSerializationJson = "1.6.3"
 uiTestAndroid = "1.7.2"
 firebaseBom = "33.8.0"
-localbroadcastmanager = "28.0.0"
 orgEclipsePahoAndroidService = "1.1.1"
 orgEclipsePahoClientMqttv3 = "1.2.4"
-supportV4 = "28.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanagerVersion" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -42,10 +42,8 @@ androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-andr
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 play-services = {group = "com.google.android.gms", name = "play-services-auth", version = "21.3.0"}
-localbroadcastmanager = { module = "com.android.support:localbroadcastmanager", version.ref = "localbroadcastmanager" }
 org-eclipse-paho-android-service = { module = "org.eclipse.paho:org.eclipse.paho.android.service", version.ref = "orgEclipsePahoAndroidService" }
 org-eclipse-paho-client-mqttv3 = { module = "org.eclipse.paho:org.eclipse.paho.client.mqttv3", version.ref = "orgEclipsePahoClientMqttv3" }
-support-v4 = { module = "com.android.support:support-v4", version.ref = "supportV4" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
