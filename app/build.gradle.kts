@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -72,4 +73,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(platform(libs.firebase.bom)) //Implementacion de google
+    implementation(libs.firebase.auth.ktx) //Implementacion de google
+    implementation(libs.play.services) //Implementacion de google
+
 }
