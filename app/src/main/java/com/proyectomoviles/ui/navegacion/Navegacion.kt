@@ -1,22 +1,56 @@
 package com.proyectomoviles.ui.navegacion
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.proyectomoviles.data.AuthManager
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.screen.ConfiguracionScreen
 import com.proyectomoviles.screen.ElementosScreen
 import com.proyectomoviles.screen.InicioScreen
+import com.proyectomoviles.screen.ScreenLogin
 
 @Composable
-fun Navegacion() {
+fun Navegacion(auth: AuthManager) {
     val navController = rememberNavController()
+    val context = LocalContext.current
+
     NavHost(
         navController = navController,
-        startDestination = Inicio
+        startDestination = Login
     ) {
+        composable<Login> {
+            ScreenLogin (
+                auth,
+                { navController.navigate(SignUp) },
+                {
+                    navController.navigate(Inicio) {
+                        popUpTo(Login) { inclusive = true }
+                    }
+                },
+                { navController.navigate(ForgotPassword) }
+            )
+        }
+
+        composable<SignUp> {
+//            SignUpScreen(
+//                auth
+//            ) { navController.popBackStack() }
+        }
+
+        composable<ForgotPassword> {
+//            ForgotPasswordScreen(
+//                auth
+//            ) {
+//                navController.navigate(login) {
+//                    popUpTo(login) { inclusive = true }
+//                }
+//            }
+        }
+
         composable<Inicio> { backStatEntry ->
             val dispositivo = backStatEntry.toRoute<Inicio>()
             InicioScreen({navController.navigate(Elementos)}, {navController.navigate(Inicio)})

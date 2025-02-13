@@ -1,4 +1,4 @@
-package com.example.pokeapi.ui
+package com.proyectomoviles.data
 
 import android.content.Context
 import android.content.Intent

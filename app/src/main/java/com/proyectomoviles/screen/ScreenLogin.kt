@@ -23,11 +23,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pokeapi.ui.AuthManager
-import com.example.pokeapi.ui.AuthRes
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.GoogleAuthProvider
 import com.proyectomoviles.R
+import com.proyectomoviles.data.AuthManager
+import com.proyectomoviles.data.AuthRes
 import com.proyectomoviles.ui.theme.Purple40
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
