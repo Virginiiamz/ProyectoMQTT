@@ -72,7 +72,7 @@ fun borrarDispositivo(dispositivo: Dispositivo, listaDispositivos: MutableList<D
 }
 
 @Composable
-fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
+fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura, grados: String, humedad: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -88,7 +88,7 @@ fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${sensorTemp.grados} Cº", color = Color.White, fontWeight = FontWeight.Medium)
+            Text("${grados} Cº", color = Color.White, fontWeight = FontWeight.Medium)
         }
         Column(
             modifier = Modifier
@@ -99,7 +99,7 @@ fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${sensorTemp.humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
+            Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
     }

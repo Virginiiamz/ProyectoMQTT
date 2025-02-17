@@ -31,8 +31,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,8 +43,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.proyectomoviles.R
 import com.proyectomoviles.data.RepositoryList
+import com.proyectomoviles.data.TipoDispositivoCreado
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
@@ -73,9 +76,14 @@ import com.proyectomoviles.funciones.mostrarSensorNivelAgua
 import com.proyectomoviles.funciones.mostrarSensorPresion
 import com.proyectomoviles.funciones.mostrarSensorTemperatura
 import com.proyectomoviles.funciones.mostrarSensorVibracion
+import com.proyectomoviles.services.MqttService
 
 @Composable
-fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) {
+fun InicioScreen(
+    navigateToElementos: () -> Unit,
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService
+) {
     val listaDispositivo = RepositoryList.listaDispositivos as List<Dispositivo>
 
     var contadorSensor = 0
@@ -84,6 +92,10 @@ fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) 
     var listaSensores: List<Dispositivo> = mutableListOf()
     var listaActuadores: List<Dispositivo> = mutableListOf()
     var listaMonitoreo: List<Dispositivo> = mutableListOf()
+
+    var valor1 by rememberSaveable { mutableStateOf("") }
+    var valor2 by rememberSaveable { mutableStateOf("") }
+
 
     listaDispositivo.forEach { dispositivo ->
         if (dispositivo.tipo == "Sensor") {
@@ -112,18 +124,19 @@ fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) 
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .padding(16.dp)
-                ,
+                    .padding(16.dp),
                 elevation = CardDefaults.elevatedCardElevation(12.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color.LightGray,
-                    contentColor = Color.Black),
-                ){
-                Row (
+                    contentColor = Color.Black
+                ),
+            ) {
+                Row(
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically){
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
                 }
 
@@ -148,8 +161,22 @@ fun InicioScreen(navigateToElementos: () -> Unit, navigateToInicio: () -> Unit) 
                             fontSize = 24.sp
                         )
                     }
+
+                    when (TipoDispositivoCreado.tipoDispositivoCreado) {
+                        "sensortemperatura" -> {
+                            mqttService.subscribe("grados") {
+                                valor1 = it
+                            }
+
+                            mqttService.subscribe("humedad") {
+                                valor2 = it
+                            }
+                        }
+                    }
+
                     items(listaSensores) { dispositivo ->
-                        CargarSensores(dispositivo, navigateToInicio)
+
+                        CargarSensores(dispositivo, navigateToInicio, valor1, valor2)
                     }
 
                     if (contadorMonitoreo == 0 && contadorActuador == 0) {
@@ -229,7 +256,12 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 }
 
 @Composable
-fun CargarSensores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
+fun CargarSensores(
+    dispositivo: Dispositivo,
+    navigateToInicio: () -> Unit,
+    valor1: String,
+    valor2: String
+) {
     val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
@@ -249,7 +281,8 @@ fun CargarSensores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                 imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
                 contentDescription = "Cerrar",
                 tint = Color.Gray,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(24.dp)
                     .clickable {
                         showDialog.value = true
                     }
@@ -291,7 +324,7 @@ fun CargarSensores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
 
             Column {
                 when (dispositivo) {
-                    is SensorTemperatura -> mostrarSensorTemperatura(dispositivo)
+                    is SensorTemperatura -> mostrarSensorTemperatura(dispositivo, valor1, valor2)
                     is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
                     is SensorVibracion -> mostrarSensorVibracion(dispositivo)
                     is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
@@ -353,7 +386,8 @@ fun CargarActuadores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                 imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
                 contentDescription = "Cerrar",
                 tint = Color.Gray,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(24.dp)
                     .clickable {
                         showDialog.value = true
                     }
@@ -451,7 +485,8 @@ fun CargarMonitoreo(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                 imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
                 contentDescription = "Cerrar",
                 tint = Color.Gray,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(24.dp)
                     .clickable {
                         showDialog.value = true
                     }

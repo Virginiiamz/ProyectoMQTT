@@ -12,9 +12,10 @@ import com.proyectomoviles.screen.ConfiguracionScreen
 import com.proyectomoviles.screen.ElementosScreen
 import com.proyectomoviles.screen.InicioScreen
 import com.proyectomoviles.screen.ScreenLogin
+import com.proyectomoviles.services.MqttService
 
 @Composable
-fun Navegacion(auth: AuthManager) {
+fun Navegacion(auth: AuthManager, mqttService: MqttService) {
     val navController = rememberNavController()
     val context = LocalContext.current
 
@@ -53,7 +54,7 @@ fun Navegacion(auth: AuthManager) {
 
         composable<Inicio> { backStatEntry ->
             val dispositivo = backStatEntry.toRoute<Inicio>()
-            InicioScreen({navController.navigate(Elementos)}, {navController.navigate(Inicio)})
+            InicioScreen({navController.navigate(Elementos)}, {navController.navigate(Inicio)}, mqttService)
 //                navController.navigate(Elementos)
 //                {navController.navigate(Inicio)}
 
@@ -69,7 +70,7 @@ fun Navegacion(auth: AuthManager) {
 
         composable<ConfigurarDispositivos> { backStatEntry ->
             val tipoDispositivo = backStatEntry.toRoute<ConfigurarDispositivos>()
-            ConfiguracionScreen(tipoDispositivo.tipo, null) { navController.navigate(Inicio) }
+            ConfiguracionScreen(tipoDispositivo.tipo, null, { navController.navigate(Inicio) }, mqttService)
         }
     }
 }
