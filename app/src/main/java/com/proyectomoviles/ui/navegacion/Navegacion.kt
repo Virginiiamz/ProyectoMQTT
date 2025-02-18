@@ -70,7 +70,7 @@ fun Navegacion(auth: AuthManager, mqttService: MqttService) {
 
         composable<ConfigurarDispositivos> { backStatEntry ->
             val tipoDispositivo = backStatEntry.toRoute<ConfigurarDispositivos>()
-            ConfiguracionScreen(tipoDispositivo.tipo, null, { navController.navigate(Inicio) }, mqttService)
+            ConfiguracionScreen(tipoDispositivo.tipo, null, { navController.navigate(Inicio) }, mqttService, auth)
         }
     }
 }

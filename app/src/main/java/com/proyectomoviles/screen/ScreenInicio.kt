@@ -402,7 +402,7 @@ fun CargarSensores(
                 }
             }
 
-            Column {
+            /*Column {
                 when (dispositivo) {
                     is SensorTemperatura -> mostrarSensorTemperatura(dispositivo, valor1, valor2)
                     is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
@@ -413,7 +413,7 @@ fun CargarSensores(
                     is SensorApertura -> mostrarSensorApertura(dispositivo)
                     is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
                 }
-            }
+            }*/
         }
     }
     if (showDialog.value) {

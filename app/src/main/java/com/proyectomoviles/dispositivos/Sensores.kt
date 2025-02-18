@@ -1,79 +1,82 @@
 package com.proyectomoviles.dispositivos
 
-class SensorLuz(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    var estadoEncendido: Boolean
-): Dispositivo(nombre, tipo, ubicacion, imagen){
+data class SensorLuz(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    var estadoEncendido: Boolean?
+)
 
-}
+ data class SensorTemperatura(
+     var id: String ?= null,
+     val userId: String?,
+     val nombre: String?,
+     val tipo: String?,
+     val ubicacion: String?,
+     val imagen: Int?,
+    val grados: Double?,
+    val humedad: Double?,
+)
 
-class SensorTemperatura(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    val grados: Double,
-    val humedad: Double,
-): Dispositivo(nombre, tipo, ubicacion, imagen) {
+data class SensorMovimiento(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    var estado: Boolean?
+)
 
-}
+data class SensorVibracion(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    var estado: Boolean?
+)
 
-class SensorMovimiento(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    var estado: Boolean
-): Dispositivo(nombre, tipo, ubicacion, imagen){
+data class SensorNivelAgua(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    val litros: Double?
+)
+data class SensorPresion(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    val presion: Double?
+)
 
-}
+data class SensorApertura(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    var estado: Boolean?
+)
 
-class SensorVibracion(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    var estado: Boolean
-): Dispositivo(nombre, tipo, ubicacion, imagen){
-
-}
-
-class SensorNivelAgua(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    val litros: Double
-): Dispositivo(nombre, tipo, ubicacion, imagen){
-
-}
-class SensorPresion(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    val presion: Double
-): Dispositivo(nombre, tipo, ubicacion, imagen){
-}
-
-class SensorApertura(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    var estado: Boolean
-): Dispositivo(nombre, tipo, ubicacion, imagen){
-}
-
-class SensorCalidadAire(
-    nombre: String,
-    tipo: String,
-    ubicacion: String,
-    imagen: Int,
-    val ICA: String
-): Dispositivo(nombre, tipo, ubicacion, imagen){
-}
+data class SensorCalidadAire(
+    var id: String ?= null,
+    val userId: String?,
+    val nombre: String?,
+    val tipo: String?,
+    val ubicacion: String?,
+    val imagen: Int?,
+    val ICA: String?
+)
 

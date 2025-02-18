@@ -1,7 +1,6 @@
 package com.proyectomoviles.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import com.proyectomoviles.R
 import androidx.compose.runtime.Composable
@@ -12,8 +11,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.proyectomoviles.data.AuthManager
 import com.proyectomoviles.data.RepositoryList
 import com.proyectomoviles.data.TipoDispositivoCreado
 import com.proyectomoviles.dispositivos.ActuadorValvula
@@ -38,7 +37,8 @@ fun ConfiguracionScreen(
     tipoDispositivo: String,
     dispositivo: Dispositivo?,
     navigateToInicio: () -> Unit,
-    mqttService: MqttService
+    mqttService: MqttService,
+    auth: AuthManager
 ) {
     Scaffold(
     ) { paddingValues ->
@@ -50,21 +50,21 @@ fun ConfiguracionScreen(
         ) {
 
             if (tipoDispositivo == "Sensor Temperatura") {
-                ConfiguracionSensorTemperatura(navigateToInicio)
+                ConfiguracionSensorTemperatura(navigateToInicio, auth)
             } else if (tipoDispositivo == "Sensor de luz") {
-                ConfiguracionSensorLuz(navigateToInicio, mqttService)
+                ConfiguracionSensorLuz(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Sensor Movimiento") {
-                ConfiguracionSensorMovimiento(navigateToInicio)
+                ConfiguracionSensorMovimiento(navigateToInicio, auth)
             } else if (tipoDispositivo == "Sensor Vibración") {
-                ConfiguracionSensorVibracion(navigateToInicio)
+                ConfiguracionSensorVibracion(navigateToInicio, auth)
             } else if (tipoDispositivo == "Sensor Nivel de Agua") {
-                ConfiguracionSensorNivelAgua(navigateToInicio)
+                ConfiguracionSensorNivelAgua(navigateToInicio, auth)
             } else if (tipoDispositivo == "Sensor de Presión") {
-                ConfiguracionSensorPresion(navigateToInicio)
+                ConfiguracionSensorPresion(navigateToInicio, auth)
             } else if (tipoDispositivo == "Sensor de Apertura") {
-                ConfiguracionSensorApertura(navigateToInicio, mqttService)
+                ConfiguracionSensorApertura(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Sensor de Calidad del Aire") {
-                ConfiguracionSensorCalidadAire(navigateToInicio)
+                ConfiguracionSensorCalidadAire(navigateToInicio, auth)
             } else if (tipoDispositivo == "Actuador Valvula") {
                 ConfiguracionActuadorValvula(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Cerradura Electrónica") {
@@ -87,7 +87,7 @@ fun ConfiguracionScreen(
 
 //SENSORES:
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
@@ -117,6 +117,8 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
         )
 
         val sensor = SensorTemperatura(
+            "",
+            userId = auth.getCurrentUser()?.uid,
             nombre,
             "Sensor",
             ubicacion,
@@ -127,7 +129,7 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -137,7 +139,7 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttService) {
+fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var encendido by rememberSaveable { mutableStateOf(false) }
@@ -168,11 +170,19 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
             checked = encendido,
             onCheckedChange = { encendido = !encendido }
         )
-        val sensor = SensorLuz(nombre, "Sensor", ubicacion, R.drawable.imgsensorluz, encendido)
+        val sensor = SensorLuz(
+            "",
+            userId = auth.getCurrentUser()?.uid,
+            nombre,
+            "Sensor",
+            ubicacion,
+            R.drawable.imgsensorluz,
+            encendido
+        )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
                 mqttService.publish("sensorluz", encendido.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -183,7 +193,7 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
 }
 
 @Composable
-fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
@@ -209,11 +219,19 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
             label = { Text("Ubicacion") }
         )
         val sensor =
-            SensorMovimiento(nombre, "Sensor", ubicacion, R.drawable.imgsensormovimiento, estado)
+            SensorMovimiento(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensormovimiento,
+                estado
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -223,7 +241,7 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
@@ -249,11 +267,19 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
             label = { Text("Ubicacion") }
         )
         val sensor =
-            SensorVibracion(nombre, "Sensor", ubicacion, R.drawable.imgsensorvibracion, estado)
+            SensorVibracion(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorvibracion,
+                estado
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -263,7 +289,7 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by remember { mutableStateOf(0.00) }
@@ -290,11 +316,19 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
             label = { Text("Ubicacion") }
         )
         val sensor =
-            SensorNivelAgua(nombre, "Sensor", ubicacion, R.drawable.imgsensornivelagua, litros)
+            SensorNivelAgua(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensornivelagua,
+                litros
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -304,7 +338,7 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var presion by remember { mutableStateOf(0.00) }
@@ -330,11 +364,19 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
             label = { Text("Ubicacion") }
         )
         val sensor =
-            SensorPresion(nombre, "Sensor", ubicacion, R.drawable.imgsensorpresion, presion)
+            SensorPresion(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorpresion,
+                presion
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -344,7 +386,7 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttService) {
+fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -376,11 +418,19 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttS
             onCheckedChange = { estado = !estado }
         )
         val sensor =
-            SensorApertura(nombre, "Sensor", ubicacion, R.drawable.imgsensorapertura, estado)
+            SensorApertura(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorapertura,
+                estado
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
                 mqttService.publish("sensorapertura", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -391,7 +441,7 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttS
 }
 
 @Composable
-fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var calidad by remember { mutableStateOf("") }
@@ -419,11 +469,19 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         val sensor =
-            SensorCalidadAire(nombre, "Sensor", ubicacion, R.drawable.imgsensorcalidadaire, calidad)
+            SensorCalidadAire(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorcalidadaire,
+                calidad
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(sensor)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
