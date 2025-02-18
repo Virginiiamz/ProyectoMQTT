@@ -50,7 +50,7 @@ fun ConfiguracionScreen(
         ) {
 
             if (tipoDispositivo == "Sensor Temperatura") {
-                ConfiguracionSensorTemperatura(navigateToInicio, mqttService)
+                ConfiguracionSensorTemperatura(navigateToInicio)
             } else if (tipoDispositivo == "Sensor de luz") {
                 ConfiguracionSensorLuz(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Sensor Movimiento") {
@@ -62,15 +62,15 @@ fun ConfiguracionScreen(
             } else if (tipoDispositivo == "Sensor de Presión") {
                 ConfiguracionSensorPresion(navigateToInicio)
             } else if (tipoDispositivo == "Sensor de Apertura") {
-                ConfiguracionSensorApertura(navigateToInicio)
+                ConfiguracionSensorApertura(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Sensor de Calidad del Aire") {
                 ConfiguracionSensorCalidadAire(navigateToInicio)
             } else if (tipoDispositivo == "Actuador Valvula") {
-                ConfiguracionActuadorValvula(navigateToInicio)
+                ConfiguracionActuadorValvula(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Cerradura Electrónica") {
-                ConfiguracionCerraduraElectronica(navigateToInicio)
+                ConfiguracionCerraduraElectronica(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Controlador Iluminación") {
-                ConfiguracionControladorIluminacion(navigateToInicio)
+                ConfiguracionControladorIluminacion(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Controlador Clima") {
                 ConfiguracionControladorClima(navigateToInicio)
             } else if (tipoDispositivo == "Medidor de Consumo de Agua") {
@@ -87,7 +87,7 @@ fun ConfiguracionScreen(
 
 //SENSORES:
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, mqttService: MqttService) {
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
@@ -116,18 +116,6 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, mqttService: Mq
             label = { Text("Ubicacion") }
         )
 
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = grados.toString(),
-            onValueChange = { grados = it.toDouble() },
-            label = { Text("Grados") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = humedad.toString(),
-            onValueChange = { humedad = it.toDouble() },
-            label = { Text("Humedad") }
-        )
         val sensor = SensorTemperatura(
             nombre,
             "Sensor",
@@ -140,8 +128,6 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, mqttService: Mq
             onClick = {
                 navigateToInicio()
                 RepositoryList.addDispositivos(sensor)
-                mqttService.publish("grados", grados.toString())
-                mqttService.publish("humedad", humedad.toString())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -201,6 +187,8 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensormovimiento"
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -219,11 +207,6 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit) {
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
-        )
-        Text("Estado de encendido:")
-        Switch(
-            checked = estado,
-            onCheckedChange = { estado = !estado }
         )
         val sensor =
             SensorMovimiento(nombre, "Sensor", ubicacion, R.drawable.imgsensormovimiento, estado)
@@ -244,6 +227,8 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensorvibracion"
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -262,11 +247,6 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit) {
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
-        )
-        Text("Estado de encendido:")
-        Switch(
-            checked = estado,
-            onCheckedChange = { estado = !estado }
         )
         val sensor =
             SensorVibracion(nombre, "Sensor", ubicacion, R.drawable.imgsensorvibracion, estado)
@@ -288,6 +268,8 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
     var ubicacion by remember { mutableStateOf("") }
     var litros by remember { mutableStateOf(0.00) }
 
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensornivelagua"
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -306,12 +288,6 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit) {
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = litros.toString(),
-            onValueChange = { litros = it.toDouble() },
-            label = { Text("Litros") }
         )
         val sensor =
             SensorNivelAgua(nombre, "Sensor", ubicacion, R.drawable.imgsensornivelagua, litros)
@@ -333,6 +309,8 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
     var ubicacion by remember { mutableStateOf("") }
     var presion by remember { mutableStateOf(0.00) }
 
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensorpresion"
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -351,12 +329,6 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = presion.toString(),
-            onValueChange = { presion = it.toDouble() },
-            label = { Text("Litros") }
-        )
         val sensor =
             SensorPresion(nombre, "Sensor", ubicacion, R.drawable.imgsensorpresion, presion)
         Button(
@@ -372,10 +344,12 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttService) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
-    var estado by remember { mutableStateOf(false) }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensorapertura"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -407,6 +381,7 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit) {
             onClick = {
                 navigateToInicio()
                 RepositoryList.addDispositivos(sensor)
+                mqttService.publish("sensorapertura", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -421,6 +396,7 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
     var ubicacion by remember { mutableStateOf("") }
     var calidad by remember { mutableStateOf("") }
 
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensorcalidadaire"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -441,34 +417,6 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
-        Text(text = "Índice de Calidad del Aire:")
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // RadioButtons
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(
-                selected = calidad == "Favorable",
-                onClick = { calidad = "Favorable" }
-            )
-            Text(
-                text = "Favorable",
-                modifier = Modifier.padding(start = 6.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(7.dp))
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(
-                selected = calidad == "Desfavorable",
-                onClick = { calidad = "Desfavorable" }
-            )
-            Text(
-                text = "Desfavorable",
-                modifier = Modifier.padding(start = 6.dp)
-            )
-        }
-
         Spacer(modifier = Modifier.height(16.dp))
         val sensor =
             SensorCalidadAire(nombre, "Sensor", ubicacion, R.drawable.imgsensorcalidadaire, calidad)
@@ -487,10 +435,12 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit) {
 //ACTUADORES:
 
 @Composable
-fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit) {
+fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: MqttService) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
-    var estado by remember { mutableStateOf(false) }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "actuadorvalvula"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -522,6 +472,7 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit) {
             onClick = {
                 navigateToInicio()
                 RepositoryList.addDispositivos(actuador)
+                mqttService.publish("actuadorvalvula", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -531,10 +482,12 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit) {
+fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService: MqttService) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
-    var estado by remember { mutableStateOf(false) }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "cerraduraelectronica"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -571,6 +524,7 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit) {
             onClick = {
                 navigateToInicio()
                 RepositoryList.addDispositivos(actuador)
+                mqttService.publish("cerraduraelectronica", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -580,10 +534,12 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit) {
+fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttService: MqttService) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
-    var estado by remember { mutableStateOf(false) }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "controladoriluminacion"
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -619,6 +575,7 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit) {
             onClick = {
                 navigateToInicio()
                 RepositoryList.addDispositivos(actuador)
+                mqttService.publish("controladoriluminacion", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -635,6 +592,8 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
     var humedad by remember { mutableStateOf(0.00) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "controladorclima"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -654,19 +613,6 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
-        )
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = grados.toString(),
-            onValueChange = { grados = it.toDouble() },
-            label = { Text("Grados Cº") }
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = humedad.toString(),
-            onValueChange = { humedad = it.toDouble() },
-            label = { Text("Humedad") }
         )
         val monitoreo = ControladorClima(
             nombre,
@@ -692,7 +638,10 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
 fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
-    var litros by remember { mutableStateOf(0.00) }
+    var litros by rememberSaveable { mutableStateOf(0.00) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "consumoagua"
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -715,17 +664,6 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = "Consumo actual: $litros L")
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = litros.toString(),
-            onValueChange = { litros = it.toDouble() },
-            label = { Text("Consumo de Agua (Litros)") }
-
-        )
         val monitoreo =
             MedidorConsumoAgua(nombre, "Monitoreo", ubicacion, R.drawable.imgconsumoagua, litros)
         Button(
@@ -747,6 +685,7 @@ fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
     var m3State by remember { mutableStateOf(0.00) }
     var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
 
+    TipoDispositivoCreado.tipoDispositivoCreado = "medidorgas"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -768,18 +707,6 @@ fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
-        )
-        OutlinedTextField(
-            value = m3toString,
-            onValueChange = { input ->
-                // Validar que sea un número o si está vacío
-                if (input.toFloatOrNull() != null || input.isEmpty()) {
-                    m3toString = input
-                }
-            },
-            label = { Text("Consumo (m³)") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(16.dp))
         val monitoreo = MedidorGas(

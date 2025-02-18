@@ -164,16 +164,90 @@ fun InicioScreen(
 
                     when (TipoDispositivoCreado.tipoDispositivoCreado) {
                         "sensortemperatura" -> {
-                            mqttService.subscribe("grados") {
+                            mqttService.subscribe("") {
                                 valor1 = it
                             }
 
-                            mqttService.subscribe("humedad") {
+                            mqttService.subscribe("") {
                                 valor2 = it
                             }
                         }
                         "sensorluz" -> {
-                            mqttService.subscribe("sensorluz") {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "sensormovimiento" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "sensorvibracion" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "sensornivelagua" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "sensorpresion" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "sensorapertura" -> {
+                            mqttService.subscribe("sensorapertura") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "sensorcalidadaire" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "actuadorvalvula" -> {
+                            mqttService.subscribe("actuadorvalvula") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "cerraduraelectronica" -> {
+                            mqttService.subscribe("cerraduraelectronica") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "controladoriluminacion" -> {
+                            mqttService.subscribe("controladoriluminacion") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "controladorclima" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            mqttService.subscribe("") {
+                                valor2 = it
+                            }
+                        }
+                        "consumoagua" -> {
+                            mqttService.subscribe("") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
+                        "medidorgas" -> {
+                            mqttService.subscribe("") {
                                 valor1 = it
                             }
                             valor2 = null.toString()
