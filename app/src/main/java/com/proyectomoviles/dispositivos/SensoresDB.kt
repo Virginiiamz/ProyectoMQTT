@@ -1,7 +1,7 @@
 package com.proyectomoviles.dispositivos
 
 data class SensorLuzDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -10,7 +10,7 @@ data class SensorLuzDB(
 )// Añadir cuando adri haga DispositivosDB
 
 data class SensorTemperaturaDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -20,7 +20,7 @@ data class SensorTemperaturaDB(
 )
 
 data class SensorMovimientoDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -29,7 +29,7 @@ data class SensorMovimientoDB(
 )
 
 data class SensorVibracionDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -38,7 +38,7 @@ data class SensorVibracionDB(
 )
 
 data class SensorNivelAguaDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -46,7 +46,7 @@ data class SensorNivelAguaDB(
     val litros: Double = 0.00
 )
 data class SensorPresionDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -55,7 +55,7 @@ data class SensorPresionDB(
 )
 
 data class SensorAperturaDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
@@ -64,7 +64,7 @@ data class SensorAperturaDB(
 )
 
 data class SensorCalidadAireDB(
-    var idDispositivo: String = "",
+    var userId: String = "",
     val nombre: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
