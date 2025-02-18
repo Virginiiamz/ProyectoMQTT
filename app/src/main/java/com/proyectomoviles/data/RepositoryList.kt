@@ -7,7 +7,9 @@ object RepositoryList {
     var listaDispositivos: MutableList<Dispositivo> = mutableListOf()
 
     fun addDispositivos(dispositivo: Dispositivo?) {
-        listaDispositivos.add(dispositivo)
+        if (dispositivo != null) {
+            listaDispositivos.add(dispositivo)
+        }
     }
 
     fun removeDispositivos(dispositivo: Dispositivo) {
