@@ -52,7 +52,7 @@ fun ConfiguracionScreen(
             if (tipoDispositivo == "Sensor Temperatura") {
                 ConfiguracionSensorTemperatura(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Sensor de luz") {
-                ConfiguracionSensorLuz(navigateToInicio)
+                ConfiguracionSensorLuz(navigateToInicio, mqttService)
             } else if (tipoDispositivo == "Sensor Movimiento") {
                 ConfiguracionSensorMovimiento(navigateToInicio)
             } else if (tipoDispositivo == "Sensor Vibración") {
@@ -151,10 +151,13 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, mqttService: Mq
 }
 
 @Composable
-fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit) {
+fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttService) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
-    var encendido by remember { mutableStateOf(false) }
+    var encendido by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "sensorluz"
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -184,6 +187,7 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit) {
             onClick = {
                 navigateToInicio()
                 RepositoryList.addDispositivos(sensor)
+                mqttService.publish("sensorluz", encendido.toString())
             },
             modifier = Modifier.fillMaxWidth()
         ) {

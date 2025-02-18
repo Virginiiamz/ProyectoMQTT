@@ -172,6 +172,12 @@ fun InicioScreen(
                                 valor2 = it
                             }
                         }
+                        "sensorluz" -> {
+                            mqttService.subscribe("sensorluz") {
+                                valor1 = it
+                            }
+                            valor2 = null.toString()
+                        }
                     }
 
                     items(listaSensores) { dispositivo ->
@@ -328,7 +334,7 @@ fun CargarSensores(
                     is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
                     is SensorVibracion -> mostrarSensorVibracion(dispositivo)
                     is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
-                    is SensorLuz -> mostrarSensorLuz(dispositivo)
+                    is SensorLuz -> mostrarSensorLuz(dispositivo, valor1)
                     is SensorPresion -> mostrarSensorPresion(dispositivo)
                     is SensorApertura -> mostrarSensorApertura(dispositivo)
                     is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)

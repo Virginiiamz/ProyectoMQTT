@@ -232,13 +232,13 @@ fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
 }
 
 @Composable
-fun mostrarSensorLuz(sensorLuz: SensorLuz) {
+fun mostrarSensorLuz(sensorLuz: SensorLuz, encendido: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
     ) {
-        if (sensorLuz.estadoEncendido) {
+        if (encendido.toBoolean()) {
             Column(
                 modifier = Modifier
                     .background(
