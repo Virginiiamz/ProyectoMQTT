@@ -6,10 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.proyectomoviles.dispositivos.Dispositivo
 
 @Composable
-fun mostrarImagenByDispositivo(dispositivo: Dispositivo) {
+fun mostrarImagenByDispositivo(dispositivo: Any) {
     Image(
         painterResource(id = dispositivo.imagen),
         contentDescription = dispositivo.nombre,

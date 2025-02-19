@@ -1,6 +1,5 @@
 package com.proyectomoviles.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
@@ -25,11 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.proyectomoviles.dispositivos.Dispositivo
-import kotlinx.serialization.Serializable
 import com.proyectomoviles.R
 import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
@@ -46,10 +41,9 @@ import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
-import okhttp3.internal.wait
 
 @Composable
-fun ElementosScreen(onNavigateToConfiguracion: (Dispositivo) -> Unit) {
+fun ElementosScreen(onNavigateToConfiguracion: (Any) -> Unit) {
     val dispositivos = listaElementos()
 
     val dispositivoImagenMap = mapOf(
@@ -91,13 +85,13 @@ fun ElementosScreen(onNavigateToConfiguracion: (Dispositivo) -> Unit) {
 
 
 @Composable
-fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (String) -> Unit) {
+fun DispositivoCard(dispositivo: Any, onNavigateToConfiguracion: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
             .padding(16.dp)
-            .clickable { onNavigateToConfiguracion(dispositivo.nombre)},
+            .clickable { onNavigateToConfiguracion(dispositivo.toString())},
         elevation = CardDefaults.elevatedCardElevation(12.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -114,7 +108,7 @@ fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (String
         ) {
             mostrarImagenByDispositivo(dispositivo)
             Spacer(modifier = Modifier.size(8.dp))
-            Text(dispositivo.nombre, textAlign = TextAlign.Center)
+            Text(dispositivo.toString(), textAlign = TextAlign.Center)
         }
     }
 }
@@ -122,7 +116,7 @@ fun DispositivoCard(dispositivo: Dispositivo, onNavigateToConfiguracion: (String
 
 
 
-fun listaElementos():List<Dispositivo>{
+fun listaElementos(): List<Any> {
     val listaDispositivo = listOf(
         SensorTemperatura(null ,null,"Sensor Temperatura", "Sensor", "Cocina", R.drawable.imgsensortermometro,0.00, 0.00),
         SensorMovimiento(null ,null,"Sensor Movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),

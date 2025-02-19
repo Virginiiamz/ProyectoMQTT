@@ -52,14 +52,6 @@ import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
-import com.proyectomoviles.dispositivos.SensorApertura
-import com.proyectomoviles.dispositivos.SensorCalidadAire
-import com.proyectomoviles.dispositivos.SensorLuz
-import com.proyectomoviles.dispositivos.SensorMovimiento
-import com.proyectomoviles.dispositivos.SensorNivelAgua
-import com.proyectomoviles.dispositivos.SensorPresion
-import com.proyectomoviles.dispositivos.SensorTemperatura
-import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.funciones.mostrarActuadorCerradura
 import com.proyectomoviles.funciones.mostrarActuadorValvula
 import com.proyectomoviles.funciones.mostrarConsumoAgua
@@ -68,14 +60,6 @@ import com.proyectomoviles.funciones.mostrarControladorClima
 import com.proyectomoviles.funciones.mostrarControladorIluminacion
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 import com.proyectomoviles.funciones.mostrarInformacionDispositivos
-import com.proyectomoviles.funciones.mostrarSensorApertura
-import com.proyectomoviles.funciones.mostrarSensorCalidadAire
-import com.proyectomoviles.funciones.mostrarSensorLuz
-import com.proyectomoviles.funciones.mostrarSensorMovimiento
-import com.proyectomoviles.funciones.mostrarSensorNivelAgua
-import com.proyectomoviles.funciones.mostrarSensorPresion
-import com.proyectomoviles.funciones.mostrarSensorTemperatura
-import com.proyectomoviles.funciones.mostrarSensorVibracion
 import com.proyectomoviles.services.MqttService
 
 @Composable

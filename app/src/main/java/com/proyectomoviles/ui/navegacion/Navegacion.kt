@@ -64,7 +64,7 @@ fun Navegacion(auth: AuthManager, mqttService: MqttService) {
 //            Navegacion a la pantalla Elementos
             val elementos = backStackEntry.toRoute<Elementos>()
             ElementosScreen { tipoDispositivo ->
-                (navController.navigate(ConfigurarDispositivos(tipoDispositivo.nombre)))
+                (navController.navigate(ConfigurarDispositivos(tipoDispositivo.toString())))
             }
         }
 

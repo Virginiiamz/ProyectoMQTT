@@ -66,17 +66,17 @@ fun ConfiguracionScreen(
             } else if (tipoDispositivo == "Sensor de Calidad del Aire") {
                 ConfiguracionSensorCalidadAire(navigateToInicio, auth)
             } else if (tipoDispositivo == "Actuador Valvula") {
-                ConfiguracionActuadorValvula(navigateToInicio, mqttService)
+                ConfiguracionActuadorValvula(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Cerradura Electrónica") {
-                ConfiguracionCerraduraElectronica(navigateToInicio, mqttService)
+                ConfiguracionCerraduraElectronica(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Controlador Iluminación") {
-                ConfiguracionControladorIluminacion(navigateToInicio, mqttService)
+                ConfiguracionControladorIluminacion(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Controlador Clima") {
-                ConfiguracionControladorClima(navigateToInicio)
+                ConfiguracionControladorClima(navigateToInicio, auth)
             } else if (tipoDispositivo == "Medidor de Consumo de Agua") {
-                ConfiguracionMedidorConsumoAgua(navigateToInicio)
+                ConfiguracionMedidorConsumoAgua(navigateToInicio, auth)
             } else if (tipoDispositivo == "Medidor de gas") {
-                ConfiguracionMedidorGas(navigateToInicio)
+                ConfiguracionMedidorGas(navigateToInicio, auth)
             } else {
                 Text(text = "Configuración no disponible para este dispositivo")
 
@@ -493,7 +493,7 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManag
 //ACTUADORES:
 
 @Composable
-fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: MqttService) {
+fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -525,11 +525,19 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: Mqtt
             onCheckedChange = { estado = !estado }
         )
         val actuador =
-            ActuadorValvula(nombre, "Actuador", ubicacion, R.drawable.imgactuadorvalvula, estado)
+            ActuadorValvula(
+                "",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Actuador",
+                ubicacion,
+                R.drawable.imgactuadorvalvula,
+                estado
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(actuador)
+                RepositoryList.addDispositivos(null)
                 mqttService.publish("actuadorvalvula", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -540,7 +548,7 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: Mqtt
 }
 
 @Composable
-fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService: MqttService) {
+fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -572,6 +580,8 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
             onCheckedChange = { estado = !estado }
         )
         val actuador = CerraduraElectronica(
+            "",
+            userId = auth.getCurrentUser()?.uid,
             nombre,
             "Actuador",
             ubicacion,
@@ -581,7 +591,7 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(actuador)
+                RepositoryList.addDispositivos(null)
                 mqttService.publish("cerraduraelectronica", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -592,7 +602,7 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
 }
 
 @Composable
-fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttService: MqttService) {
+fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -623,6 +633,8 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
             onCheckedChange = { estado = !estado }
         )
         val actuador = ControladorIluminacion(
+            "",
+            userId = auth.getCurrentUser()?.uid,
             nombre,
             "Actuador",
             ubicacion,
@@ -632,7 +644,7 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(actuador)
+                RepositoryList.addDispositivos(null)
                 mqttService.publish("controladoriluminacion", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -645,7 +657,7 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
 //Monitoreo:
 
 @Composable
-fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
+fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
@@ -673,6 +685,8 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
             label = { Text("Ubicacion") }
         )
         val monitoreo = ControladorClima(
+            "",
+            userId = auth.getCurrentUser()?.uid,
             nombre,
             "Monitoreo",
             ubicacion,
@@ -683,7 +697,7 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(monitoreo)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -693,7 +707,7 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
+fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by rememberSaveable { mutableStateOf(0.00) }
@@ -723,11 +737,18 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         val monitoreo =
-            MedidorConsumoAgua(nombre, "Monitoreo", ubicacion, R.drawable.imgconsumoagua, litros)
+            MedidorConsumoAgua("",
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Monitoreo",
+                ubicacion,
+                R.drawable.imgconsumoagua,
+                litros
+            )
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(monitoreo)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -737,7 +758,7 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit) {
 }
 
 @Composable
-fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
+fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var m3State by remember { mutableStateOf(0.00) }
@@ -768,6 +789,8 @@ fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         val monitoreo = MedidorGas(
+            "",
+            userId = auth.getCurrentUser()?.uid,
             nombre,
             "Monitoreo",
             ubicacion,
@@ -777,7 +800,7 @@ fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit) {
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(monitoreo)
+                RepositoryList.addDispositivos(null)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
