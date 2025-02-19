@@ -65,6 +65,20 @@ fun ElementosScreen(onNavigateToConfiguracion: (String) -> Unit) {
             items(dispositivos) { dispositivo ->
                 when(dispositivo){
                     is SensorTemperatura -> DispositivoCard("Sensor Temperatura",R.drawable.imgsensortermometro, onNavigateToConfiguracion)
+                    is SensorMovimiento -> DispositivoCard("Sensor Movimiento", R.drawable.imgsensormovimiento, onNavigateToConfiguracion)
+                    is SensorVibracion -> DispositivoCard("Sensor Vibración", R.drawable.imgsensorvibracion, onNavigateToConfiguracion)
+                    is SensorMovimiento -> DispositivoCard("Sensor Movimiento", R.drawable.imgsensormovimiento, onNavigateToConfiguracion)
+                    is SensorNivelAgua -> DispositivoCard("Sensor Nivel Agua", R.drawable.imgsensornivelagua, onNavigateToConfiguracion)
+                    is SensorLuz -> DispositivoCard("Sensor Luz", R.drawable.imgsensorluz, onNavigateToConfiguracion)
+                    is SensorPresion -> DispositivoCard("Sensor Presión", R.drawable.imgsensorpresion, onNavigateToConfiguracion)
+                    is SensorApertura -> DispositivoCard("Sensor Apertura", R.drawable.imgsensorapertura, onNavigateToConfiguracion)
+                    is SensorCalidadAire -> DispositivoCard("Sensor Calidad Aire", R.drawable.imgsensorcalidadaire, onNavigateToConfiguracion)
+                    is ActuadorValvula -> DispositivoCard("Actuador Válvula", R.drawable.imgactuadorvalvula, onNavigateToConfiguracion)
+                    is ControladorClima -> DispositivoCard("Controlador Clima", R.drawable.imgcontroladorclima, onNavigateToConfiguracion)
+                    is MedidorConsumoAgua -> DispositivoCard("Medidor Consumo Agua", R.drawable.imgconsumoagua , onNavigateToConfiguracion)
+                    is CerraduraElectronica -> DispositivoCard("Cerradura Electrónica", R.drawable.imgcerraduraelectronica, onNavigateToConfiguracion)
+                    is MedidorGas -> DispositivoCard("Medidor Gas", R.drawable.imgconsumogas, onNavigateToConfiguracion)
+                    is ControladorIluminacion -> DispositivoCard("Controlador Iluminación", R.drawable.imgcontroladorluz, onNavigateToConfiguracion)
                     else -> {}
                 }
 
