@@ -60,31 +60,31 @@ fun ConfiguracionScreen(
             if (tipoDispositivo == "Sensor Temperatura") {
                 ConfiguracionSensorTemperatura(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor de luz") {
-                ConfiguracionSensorLuz(navigateToInicio, mqttService, auth)
+                ConfiguracionSensorLuz(navigateToInicio, mqttService, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor Movimiento") {
-                ConfiguracionSensorMovimiento(navigateToInicio, auth)
+                ConfiguracionSensorMovimiento(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor Vibración") {
-                ConfiguracionSensorVibracion(navigateToInicio, auth)
+                ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor Nivel de Agua") {
-                ConfiguracionSensorNivelAgua(navigateToInicio, auth)
+                ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor de Presión") {
-                ConfiguracionSensorPresion(navigateToInicio, auth)
+                ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor de Apertura") {
-                ConfiguracionSensorApertura(navigateToInicio, mqttService, auth)
+                ConfiguracionSensorApertura(navigateToInicio, mqttService, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor de Calidad del Aire") {
-                ConfiguracionSensorCalidadAire(navigateToInicio, auth)
+                ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Actuador Valvula") {
-                ConfiguracionActuadorValvula(navigateToInicio, mqttService, auth)
+                ConfiguracionActuadorValvula(navigateToInicio, mqttService, auth, inicioViewModel)
             } else if (tipoDispositivo == "Cerradura Electrónica") {
-                ConfiguracionCerraduraElectronica(navigateToInicio, mqttService, auth)
+                ConfiguracionCerraduraElectronica(navigateToInicio, mqttService, auth, inicioViewModel)
             } else if (tipoDispositivo == "Controlador Iluminación") {
-                ConfiguracionControladorIluminacion(navigateToInicio, mqttService, auth)
+                ConfiguracionControladorIluminacion(navigateToInicio, mqttService, auth, inicioViewModel)
             } else if (tipoDispositivo == "Controlador Clima") {
-                ConfiguracionControladorClima(navigateToInicio, auth)
+                ConfiguracionControladorClima(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Medidor de Consumo de Agua") {
-                ConfiguracionMedidorConsumoAgua(navigateToInicio, auth)
+                ConfiguracionMedidorConsumoAgua(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Medidor de gas") {
-                ConfiguracionMedidorGas(navigateToInicio, auth)
+                ConfiguracionMedidorGas(navigateToInicio, auth, inicioViewModel)
             } else {
                 Text(text = "Configuración no disponible para este dispositivo")
 
@@ -147,7 +147,7 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManag
 }
 
 @Composable
-fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
+fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var encendido by rememberSaveable { mutableStateOf(false) }
@@ -201,7 +201,7 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
 }
 
 @Composable
-fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
@@ -249,7 +249,7 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManage
 }
 
 @Composable
-fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
@@ -297,7 +297,7 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager
 }
 
 @Composable
-fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by remember { mutableStateOf(0.00) }
@@ -346,7 +346,7 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager
 }
 
 @Composable
-fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var presion by remember { mutableStateOf(0.00) }
@@ -394,7 +394,7 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager) 
 }
 
 @Composable
-fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
+fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -449,7 +449,7 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttS
 }
 
 @Composable
-fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var calidad by remember { mutableStateOf("") }
@@ -501,7 +501,7 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManag
 //ACTUADORES:
 
 @Composable
-fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
+fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -556,7 +556,7 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: Mqtt
 }
 
 @Composable
-fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
+fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -610,7 +610,7 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
 }
 
 @Composable
-fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager) {
+fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -665,7 +665,7 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
 //Monitoreo:
 
 @Composable
-fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
@@ -715,7 +715,7 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManage
 }
 
 @Composable
-fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by rememberSaveable { mutableStateOf(0.00) }
@@ -766,7 +766,7 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthMana
 }
 
 @Composable
-fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var m3State by remember { mutableStateOf(0.00) }
