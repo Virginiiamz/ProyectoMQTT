@@ -1,7 +1,7 @@
 package com.proyectomoviles.data
 
-import com.adrianj.retrofitapi.model.Pokemon
-import com.adrianj.retrofitapi.model.PokemonDB
+//import com.adrianj.retrofitapi.model.Pokemon
+//import com.adrianj.retrofitapi.model.PokemonDB
 import com.google.firebase.firestore.snapshots
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow

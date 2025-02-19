@@ -507,13 +507,13 @@ fun CargarActuadores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                 }
             }
 
-            Column {
-                when (dispositivo) {
-                    is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
-                    is CerraduraElectronica -> mostrarActuadorCerradura(dispositivo)
-                    is ControladorIluminacion -> mostrarControladorIluminacion(dispositivo)
-                }
-            }
+//            Column {
+//                when (dispositivo) {
+//                    is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
+//                    is CerraduraElectronica -> mostrarActuadorCerradura(dispositivo)
+//                    is ControladorIluminacion -> mostrarControladorIluminacion(dispositivo)
+//                }
+//            }
         }
     }
     if (showDialog.value) {
@@ -606,13 +606,13 @@ fun CargarMonitoreo(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                 }
             }
 
-            Column {
-                when (dispositivo) {
-                    is ControladorClima -> mostrarControladorClima(dispositivo)
-                    is MedidorConsumoAgua -> mostrarConsumoAgua(dispositivo)
-                    is MedidorGas -> mostrarConsumoGas(dispositivo)
-                }
-            }
+//            Column {
+//                when (dispositivo) {
+//                    is ControladorClima -> mostrarControladorClima(dispositivo)
+//                    is MedidorConsumoAgua -> mostrarConsumoAgua(dispositivo)
+//                    is MedidorGas -> mostrarConsumoGas(dispositivo)
+//                }
+//            }
         }
     }
     if (showDialog.value) {
