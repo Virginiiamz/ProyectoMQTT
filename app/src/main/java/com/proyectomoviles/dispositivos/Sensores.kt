@@ -2,7 +2,7 @@ package com.proyectomoviles.dispositivos
 
 data class SensorLuz(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
@@ -12,7 +12,7 @@ data class SensorLuz(
 
  data class SensorTemperatura(
      var id: String ?= null,
-     val userId: String?,
+     var userId: String?,
      val nombre: String?,
      val tipo: String?,
      val ubicacion: String?,
@@ -23,7 +23,7 @@ data class SensorLuz(
 
 data class SensorMovimiento(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
@@ -33,7 +33,7 @@ data class SensorMovimiento(
 
 data class SensorVibracion(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
@@ -43,7 +43,7 @@ data class SensorVibracion(
 
 data class SensorNivelAgua(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
@@ -52,7 +52,7 @@ data class SensorNivelAgua(
 )
 data class SensorPresion(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
@@ -62,7 +62,7 @@ data class SensorPresion(
 
 data class SensorApertura(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
@@ -72,7 +72,7 @@ data class SensorApertura(
 
 data class SensorCalidadAire(
     var id: String ?= null,
-    val userId: String?,
+    var userId: String?,
     val nombre: String?,
     val tipo: String?,
     val ubicacion: String?,
