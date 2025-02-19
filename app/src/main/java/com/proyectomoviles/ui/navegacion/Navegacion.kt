@@ -11,8 +11,10 @@ import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.screen.ConfiguracionScreen
 import com.proyectomoviles.screen.ElementosScreen
+import com.proyectomoviles.screen.ForgotPasswordScreen
 import com.proyectomoviles.screen.InicioScreen
 import com.proyectomoviles.screen.ScreenLogin
+import com.proyectomoviles.screen.SignUpScreen
 import com.proyectomoviles.services.MqttService
 
 @Composable
@@ -39,19 +41,19 @@ fun Navegacion(auth: AuthManager, mqttService: MqttService) {
         }
 
         composable<SignUp> {
-//            SignUpScreen(
-//                auth
-//            ) { navController.popBackStack() }
+            SignUpScreen(
+                auth
+            ) { navController.popBackStack() }
         }
 
         composable<ForgotPassword> {
-//            ForgotPasswordScreen(
-//                auth
-//            ) {
-//                navController.navigate(login) {
-//                    popUpTo(login) { inclusive = true }
-//                }
-//            }
+            ForgotPasswordScreen(
+                auth
+            ) {
+                navController.navigate(Login) {
+                    popUpTo(Login) { inclusive = true }
+                }
+            }
         }
 
         composable<Inicio> { backStatEntry ->

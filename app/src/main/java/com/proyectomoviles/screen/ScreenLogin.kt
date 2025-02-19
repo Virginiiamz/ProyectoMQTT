@@ -92,7 +92,7 @@ fun ScreenLogin(
 //                modifier = Modifier.size(100.dp)
 //            )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Pokédex", style = TextStyle(fontSize = 30.sp))
+            Text(text = "Proyecto API", style = TextStyle(fontSize = 30.sp))
             Spacer(modifier = Modifier.height(30.dp))
 
             // Campo de entrada para el correo
@@ -151,8 +151,8 @@ fun ScreenLogin(
             SocialMediaButton(
                 onClick = { auth.signInWithGoogle(googleSignLauncher) },
                 text = "Continuar con Google",
-                icon = R.drawable.imgcontroladorluz,
-                color = Color(0xFFF1F1F1)
+                icon = R.drawable.ic_google,
+                color = Color.Black
             )
         }
     }
@@ -198,7 +198,7 @@ fun SocialMediaButton(onClick: () -> Unit, text: String, icon: Int, color: Color
                 tint = Color.Unspecified
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = text, color = if (icon == R.drawable.imgcontroladorluz) Color.White else Color.Black)
+            Text(text = text, color = Color.White)
         }
     }
 }
