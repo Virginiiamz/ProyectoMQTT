@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import com.proyectomoviles.R
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,7 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.proyectomoviles.data.AuthManager
+import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.data.RepositoryList
 import com.proyectomoviles.data.TipoDispositivoCreado
 import com.proyectomoviles.dispositivos.ActuadorValvula
@@ -31,6 +34,7 @@ import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.services.MqttService
+import okhttp3.WebSocket
 
 @Composable
 fun ConfiguracionScreen(
@@ -38,8 +42,12 @@ fun ConfiguracionScreen(
     dispositivo: Dispositivo?,
     navigateToInicio: () -> Unit,
     mqttService: MqttService,
-    auth: AuthManager
+    auth: AuthManager,
+    firestore: FirestoreManager
 ) {
+    val factory = InicioViewModelFactory(firestore)
+    val inicioViewModel = viewModel(InicioViewModel::class.java, factory = factory)
+    val uiState by inicioViewModel.uiState.collectAsState()
     Scaffold(
     ) { paddingValues ->
         Column(
@@ -50,7 +58,7 @@ fun ConfiguracionScreen(
         ) {
 
             if (tipoDispositivo == "Sensor Temperatura") {
-                ConfiguracionSensorTemperatura(navigateToInicio, auth)
+                ConfiguracionSensorTemperatura(navigateToInicio, auth, inicioViewModel)
             } else if (tipoDispositivo == "Sensor de luz") {
                 ConfiguracionSensorLuz(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Sensor Movimiento") {
@@ -87,7 +95,7 @@ fun ConfiguracionScreen(
 
 //SENSORES:
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManager) {
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
@@ -129,7 +137,7 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManag
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorTemperatura(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
