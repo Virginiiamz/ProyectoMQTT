@@ -46,7 +46,7 @@ import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 
 @Composable
-fun ElementosScreen(onNavigateToConfiguracion: (Any) -> Unit) {
+fun ElementosScreen(onNavigateToConfiguracion: (String) -> Unit) {
     val dispositivos = listaElementos()
 
     Scaffold(
