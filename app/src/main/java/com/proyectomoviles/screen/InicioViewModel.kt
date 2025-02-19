@@ -1,6 +1,7 @@
 package com.proyectomoviles.screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.dispositivos.*
@@ -119,3 +120,10 @@ class InicioViewModel(val firestoreManager: FirestoreManager): ViewModel() {
 data class UiState(
     val dispositivos: List<Dispositivo> = emptyList()
 )
+
+class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return InicioViewModel(firestoreManager) as T
+    }
+}
