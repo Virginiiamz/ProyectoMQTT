@@ -46,7 +46,6 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     // SENSORES
-
     fun getSensorLuz(): Flow<List<SensorLuz>> {
         return firestore.collection(COLLECTION_SENSORES)
             .whereEqualTo("userId", userId)

@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.data.AuthManager
-import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.data.RepositoryList
 import com.proyectomoviles.data.TipoDispositivoCreado
 import com.proyectomoviles.dispositivos.ActuadorValvula
@@ -39,8 +38,7 @@ fun ConfiguracionScreen(
     dispositivo: Dispositivo?,
     navigateToInicio: () -> Unit,
     mqttService: MqttService,
-    auth: AuthManager,
-    firestoreManager: FirestoreManager
+    auth: AuthManager
 ) {
     Scaffold(
     ) { paddingValues ->
@@ -52,7 +50,7 @@ fun ConfiguracionScreen(
         ) {
 
             if (tipoDispositivo == "Sensor Temperatura") {
-                ConfiguracionSensorTemperatura(navigateToInicio, auth, firestoreManager)
+                ConfiguracionSensorTemperatura(navigateToInicio, auth)
             } else if (tipoDispositivo == "Sensor de luz") {
                 ConfiguracionSensorLuz(navigateToInicio, mqttService, auth)
             } else if (tipoDispositivo == "Sensor Movimiento") {
@@ -89,7 +87,7 @@ fun ConfiguracionScreen(
 
 //SENSORES:
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManager, firestoreManager: FirestoreManager) {
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManager) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
