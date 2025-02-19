@@ -1,8 +1,12 @@
 package com.proyectomoviles.funciones
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,8 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -26,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,27 +56,97 @@ import com.proyectomoviles.ui.theme.Naranja
 import com.proyectomoviles.ui.theme.Purple40
 
 @Composable
-fun mostrarInformacionDispositivos(dispositivo: Any) {
-//    Text(dispositivo, modifier = Modifier.padding(start = 6.dp), textAlign = TextAlign.Center)
-//    Spacer(
-//        Modifier.height(1.dp)
-//    )
-//    Text(dispositivo.ubicacion, modifier = Modifier.padding(start = 6.dp))
-//    Spacer(
-//        Modifier.height(1.dp)
-//    )
-}
+fun mostrarInformacionDispositivos(tipoDispositivo: String, nombre: String, imagen: Int, ubicacion: String, valor1: String, valor2: String) {
 
-@Composable
-fun agregarDispositivo(dispositivo: Dispositivo, listaDispositivos: MutableList<Dispositivo>): MutableList<Dispositivo> {
-    listaDispositivos.add(dispositivo)
-    return listaDispositivos
-}
+    Box(
+        modifier = Modifier
+            .width(400.dp)
+            .border(
+                border = BorderStroke(2.dp, Color.LightGray),
+                shape = RoundedCornerShape(8.dp),
+            )
+    ) {
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
+                contentDescription = "Cerrar",
+                tint = Color.Gray,
+                modifier = Modifier
+                    .size(24.dp)
+//                    .clickable {
+//                        showDialog.value = true
+//                    }
+            )
+        }
 
-@Composable
-fun borrarDispositivo(dispositivo: Dispositivo, listaDispositivos: MutableList<Dispositivo>): MutableList<Dispositivo> {
-    listaDispositivos.remove(dispositivo)
-    return listaDispositivos
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.padding(6.dp)
+                    ) {
+                        Image(
+                            painterResource(id = imagen),
+                            contentDescription = nombre,
+                            modifier = Modifier.padding(top = 6.dp, bottom = 6.dp)
+
+                        )
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(125.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        nombre,
+                        modifier = Modifier.padding(start = 6.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(
+                        Modifier.height(1.dp)
+                    )
+                    Text(ubicacion, modifier = Modifier.padding(start = 6.dp))
+                    Spacer(
+                        Modifier.height(1.dp)
+                    )
+                }
+            }
+
+            Column {
+                when (tipoDispositivo) {
+                    "sensorluz" -> mostrarSensorLuz(valor1)
+//                    is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
+//                    is SensorVibracion -> mostrarSensorVibracion(dispositivo)
+//                    is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
+//                    is SensorLuz -> mostrarSensorLuz(dispositivo, valor1)
+//                    is SensorPresion -> mostrarSensorPresion(dispositivo)
+//                    is SensorApertura -> mostrarSensorApertura(dispositivo)
+//                    is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
+                }
+            }
+        }
+
+    }
 }
 
 @Composable
@@ -232,7 +310,7 @@ fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
 }
 
 @Composable
-fun mostrarSensorLuz(sensorLuz: SensorLuz, encendido: String) {
+fun mostrarSensorLuz(encendido: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -536,7 +614,7 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Row (
+            Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
@@ -575,11 +653,11 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Row (
+            Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Column {
                     Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
                 }

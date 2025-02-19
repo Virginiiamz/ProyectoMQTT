@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -31,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +46,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.data.RepositoryList
 import com.proyectomoviles.data.TipoDispositivoCreado
 import com.proyectomoviles.dispositivos.ActuadorValvula
@@ -52,6 +57,7 @@ import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
+import com.proyectomoviles.dispositivos.SensorLuz
 import com.proyectomoviles.funciones.mostrarActuadorCerradura
 import com.proyectomoviles.funciones.mostrarActuadorValvula
 import com.proyectomoviles.funciones.mostrarConsumoAgua
@@ -66,9 +72,13 @@ import com.proyectomoviles.services.MqttService
 fun InicioScreen(
     navigateToElementos: () -> Unit,
     navigateToInicio: () -> Unit,
-    mqttService: MqttService
+    mqttService: MqttService,
+    firestoreManager: FirestoreManager
 ) {
     val listaDispositivo = RepositoryList.listaDispositivos as List<Dispositivo>
+    val factory = InicioViewModelFactory(firestoreManager)
+    val inicioViewModel = viewModel(InicioViewModel::class.java, factory = factory)
+    val uiState by inicioViewModel.uiState.collectAsState()
 
     var contadorSensor = 0
     var contadorActuador = 0
@@ -79,6 +89,111 @@ fun InicioScreen(
 
     var valor1 by rememberSaveable { mutableStateOf("") }
     var valor2 by rememberSaveable { mutableStateOf("") }
+
+    when (TipoDispositivoCreado.tipoDispositivoCreado) {
+        "sensortemperatura" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+
+            mqttService.subscribe("") {
+                valor2 = it
+            }
+        }
+
+        "sensorluz" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "sensormovimiento" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "sensorvibracion" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "sensornivelagua" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "sensorpresion" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "sensorapertura" -> {
+            mqttService.subscribe("sensorapertura") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "sensorcalidadaire" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "actuadorvalvula" -> {
+            mqttService.subscribe("actuadorvalvula") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "cerraduraelectronica" -> {
+            mqttService.subscribe("cerraduraelectronica") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "controladoriluminacion" -> {
+            mqttService.subscribe("controladoriluminacion") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "controladorclima" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            mqttService.subscribe("") {
+                valor2 = it
+            }
+        }
+
+        "consumoagua" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+
+        "medidorgas" -> {
+            mqttService.subscribe("") {
+                valor1 = it
+            }
+            valor2 = null.toString()
+        }
+    }
 
 
     listaDispositivo.forEach { dispositivo ->
@@ -104,26 +219,49 @@ fun InicioScreen(
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValue ->
         if (listaDispositivo.isEmpty()) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .padding(16.dp),
-                elevation = CardDefaults.elevatedCardElevation(12.dp),
-                shape = RoundedCornerShape(8.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.LightGray,
-                    contentColor = Color.Black
-                ),
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
-                }
+//            Card(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(100.dp)
+//                    .padding(16.dp),
+//                elevation = CardDefaults.elevatedCardElevation(12.dp),
+//                shape = RoundedCornerShape(8.dp),
+//                colors = CardDefaults.cardColors(
+//                    containerColor = Color.LightGray,
+//                    contentColor = Color.Black
+//                ),
+//            ) {
+//                Row(
+//                    modifier = Modifier.fillMaxSize(),
+//                    horizontalArrangement = Arrangement.Center,
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
+//                }
+//
+//            }
 
+            LazyColumn(
+                modifier = Modifier.padding(top = 40.dp)
+            ) {
+                items(uiState.dispositivos) { dispositivo ->
+                    when (dispositivo) {
+                        is SensorLuz -> {
+                            dispositivo.nombre?.let {
+                                dispositivo.imagen?.let { it1 ->
+                                    dispositivo.ubicacion?.let { it2 ->
+                                        mostrarInformacionDispositivos(
+                                            "sensorluz",
+                                            it,
+                                            it1, it2, valor1, valor2
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
 
         } else {
@@ -144,98 +282,6 @@ fun InicioScreen(
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp
                         )
-                    }
-
-                    when (TipoDispositivoCreado.tipoDispositivoCreado) {
-                        "sensortemperatura" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-
-                            mqttService.subscribe("") {
-                                valor2 = it
-                            }
-                        }
-                        "sensorluz" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "sensormovimiento" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "sensorvibracion" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "sensornivelagua" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "sensorpresion" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "sensorapertura" -> {
-                            mqttService.subscribe("sensorapertura") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "sensorcalidadaire" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "actuadorvalvula" -> {
-                            mqttService.subscribe("actuadorvalvula") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "cerraduraelectronica" -> {
-                            mqttService.subscribe("cerraduraelectronica") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "controladoriluminacion" -> {
-                            mqttService.subscribe("controladoriluminacion") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "controladorclima" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            mqttService.subscribe("") {
-                                valor2 = it
-                            }
-                        }
-                        "consumoagua" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
-                        "medidorgas" -> {
-                            mqttService.subscribe("") {
-                                valor1 = it
-                            }
-                            valor2 = null.toString()
-                        }
                     }
 
                     items(listaSensores) { dispositivo ->
@@ -382,7 +428,7 @@ fun CargarSensores(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    mostrarInformacionDispositivos(dispositivo)
+//                    mostrarInformacionDispositivos(dispositivo)
                 }
             }
 
@@ -487,7 +533,7 @@ fun CargarActuadores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    mostrarInformacionDispositivos(dispositivo)
+//                    mostrarInformacionDispositivos(dispositivo)
                 }
             }
 
@@ -586,7 +632,7 @@ fun CargarMonitoreo(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    mostrarInformacionDispositivos(dispositivo)
+//                    mostrarInformacionDispositivos(dispositivo)
                 }
             }
 
