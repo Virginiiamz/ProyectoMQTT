@@ -190,7 +190,7 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorLuz(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorluz, encendido))
                 mqttService.publish("sensorluz", encendido.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -239,7 +239,7 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManage
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorMovimiento(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensormovimiento, estado))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -287,7 +287,7 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorVibracion(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorvibracion, estado))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -336,7 +336,7 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorNivelAgua(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensornivelagua, litros))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -384,7 +384,7 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager, 
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorPresion(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorpresion, presion))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -438,7 +438,7 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttS
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorApertura(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorapertura, estado))
                 mqttService.publish("sensorapertura", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -489,7 +489,7 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManag
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(SensorCalidadAire(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorcalidadaire, calidad))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -545,7 +545,7 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: Mqtt
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(ActuadorValvula(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Actuador", ubicacion, R.drawable.imgactuadorvalvula, estado ))
                 mqttService.publish("actuadorvalvula", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -599,7 +599,7 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(CerraduraElectronica(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Actuador", ubicacion, R.drawable.imgcerraduraelectronica, estado))
                 mqttService.publish("cerraduraelectronica", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -652,7 +652,7 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(ControladorIluminacion(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Actuador", ubicacion, R.drawable.imgcontroladorluz, estado))
                 mqttService.publish("controladoriluminacion", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -705,7 +705,7 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManage
         Button(
             onClick = {
                 navigateToInicio()
-                RepositoryList.addDispositivos(null)
+                inicioViewModel.addDispositivo(ControladorClima(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Monitoreo", ubicacion, R.drawable.imgcontroladorclima, grados, humedad))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
