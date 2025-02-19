@@ -1,5 +1,6 @@
 package com.proyectomoviles.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.proyectomoviles.R
@@ -30,6 +32,7 @@ import com.proyectomoviles.dispositivos.ActuadorValvula
 import com.proyectomoviles.dispositivos.CerraduraElectronica
 import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.ControladorIluminacion
+import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorApertura
@@ -46,13 +49,6 @@ import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 fun ElementosScreen(onNavigateToConfiguracion: (Any) -> Unit) {
     val dispositivos = listaElementos()
 
-    val dispositivoImagenMap = mapOf(
-        "Sensor de temperatura" to R.drawable.imgsensortermometro,
-        "Sensor de luz" to R.drawable.imgsensorluz,
-        "Sensor de movimiento" to R.drawable.imgsensormovimiento,
-        "Sensor de vibracion" to R.drawable.imgsensorvibracion
-    )
-
     Scaffold(
         floatingActionButton = { },
     ) { paddingValue ->
@@ -66,18 +62,12 @@ fun ElementosScreen(onNavigateToConfiguracion: (Any) -> Unit) {
             verticalArrangement = Arrangement.spacedBy(1.dp),
             horizontalArrangement = Arrangement.spacedBy(1.dp)
         ) {
-            if (dispositivos.isEmpty()) {
-                item {
-                    Text("No hay dispositivos vinculados")
+            items(dispositivos) { dispositivo ->
+                when(dispositivo){
+                    is SensorTemperatura -> DispositivoCard("Sensor Temperatura",R.drawable.imgsensortermometro, onNavigateToConfiguracion)
+                    else -> {}
                 }
-            } else {
-                items(dispositivos) { dispositivo ->
-                    //val imageRes = dispositivoImagenMap[dispositivo] ?: R.drawable.error
-                    DispositivoCard(dispositivo){
-                        onNavigateToConfiguracion(dispositivo)
-                    }
 
-                }
             }
         }
     }
@@ -85,13 +75,13 @@ fun ElementosScreen(onNavigateToConfiguracion: (Any) -> Unit) {
 
 
 @Composable
-fun DispositivoCard(dispositivo: Any, onNavigateToConfiguracion: (String) -> Unit) {
+fun DispositivoCard(nombreDispositivo: String, imagen: Int, onNavigateToConfiguracion: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
             .padding(16.dp)
-            .clickable { onNavigateToConfiguracion(dispositivo.toString())},
+            .clickable { onNavigateToConfiguracion(nombreDispositivo)},
         elevation = CardDefaults.elevatedCardElevation(12.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -106,9 +96,14 @@ fun DispositivoCard(dispositivo: Any, onNavigateToConfiguracion: (String) -> Uni
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            mostrarImagenByDispositivo(dispositivo)
+            Image(
+                painterResource(id = imagen),
+                contentDescription = nombreDispositivo,
+                modifier = Modifier.padding(top = 6.dp, bottom = 6.dp)
+
+            )
             Spacer(modifier = Modifier.size(8.dp))
-            Text(dispositivo.toString(), textAlign = TextAlign.Center)
+            Text(nombreDispositivo, textAlign = TextAlign.Center)
         }
     }
 }
@@ -116,21 +111,21 @@ fun DispositivoCard(dispositivo: Any, onNavigateToConfiguracion: (String) -> Uni
 
 
 
-fun listaElementos(): List<Any> {
+fun listaElementos(): List<Dispositivo> {
     val listaDispositivo = listOf(
-        SensorTemperatura(null ,null,"Sensor Temperatura", "Sensor", "Cocina", R.drawable.imgsensortermometro,0.00, 0.00),
-        SensorMovimiento(null ,null,"Sensor Movimiento", "Sensor", "Dormitorio",R.drawable.imgsensormovimiento, false),
-        SensorVibracion(null ,null,"Sensor Vibración", "Sensor", "Cuarto de baño",R.drawable.imgsensorvibracion, false),
-        SensorNivelAgua(null ,null,"Sensor Nivel de Agua", "Sensor", "Cocina", R.drawable.imgsensornivelagua,0.00),
-        SensorLuz(null ,null,"Sensor de luz", "Sensor", "Pasillo", R.drawable.imgsensorluz, false),
-        SensorPresion(null ,null,"Sensor de Presión", "Sensor", "Cocina",R.drawable.imgsensorpresion, 0.00),
-        SensorApertura(null ,null,"Sensor de Apertura", "Sensor", "Cocina", R.drawable.imgsensorapertura, false),
-        SensorCalidadAire(null ,null,"Sensor de Calidad del Aire", "Sensor", "Baño", R.drawable.imgsensorcalidadaire,""),
-        ActuadorValvula(null ,null,"Actuador Valvula", "Actuador", "Cocina", R.drawable.imgactuadorvalvula,false),
-        ControladorClima(null ,null,"Controlador Clima", "Monitoreo", "Cocina", R.drawable.imgcontroladorclima, 0.00, 0.00),
-        MedidorConsumoAgua(null ,null,"Medidor de Consumo de Agua", "Monitoreo", "Baño", R.drawable.imgconsumoagua, 0.00),
-        CerraduraElectronica(null ,null,"Cerradura Electrónica", "Monitoreo", "Dormitorio", R.drawable.imgcerraduraelectronica, false),
-        MedidorGas(null ,null,"Medidor de gas", "Monitoreo", "Baño", R.drawable.imgconsumogas, 0.00),
+        SensorTemperatura(null ,null,"Sensor Temperatura", "Sensor", "", R.drawable.imgsensortermometro,0.00, 0.00),
+        SensorMovimiento(null ,null,"Sensor Movimiento", "Sensor", "",R.drawable.imgsensormovimiento, false),
+        SensorVibracion(null ,null,"Sensor Vibración", "Sensor", "",R.drawable.imgsensorvibracion, false),
+        SensorNivelAgua(null ,null,"Sensor Nivel de Agua", "Sensor", "", R.drawable.imgsensornivelagua,0.00),
+        SensorLuz(null ,null,"Sensor de luz", "Sensor", "", R.drawable.imgsensorluz, false),
+        SensorPresion(null ,null,"Sensor de Presión", "Sensor", "",R.drawable.imgsensorpresion, 0.00),
+        SensorApertura(null ,null,"Sensor de Apertura", "Sensor", "", R.drawable.imgsensorapertura, false),
+        SensorCalidadAire(null ,null,"Sensor de Calidad del Aire", "Sensor", "", R.drawable.imgsensorcalidadaire,""),
+        ActuadorValvula(null ,null,"Actuador Valvula", "Actuador", "", R.drawable.imgactuadorvalvula,false),
+        ControladorClima(null ,null,"Controlador Clima", "Monitoreo", "", R.drawable.imgcontroladorclima, 0.00, 0.00),
+        MedidorConsumoAgua(null ,null,"Medidor de Consumo de Agua", "Monitoreo", "", R.drawable.imgconsumoagua, 0.00),
+        CerraduraElectronica(null ,null,"Cerradura Electrónica", "Monitoreo", "", R.drawable.imgcerraduraelectronica, false),
+        MedidorGas(null ,null,"Medidor de gas", "Monitoreo", "", R.drawable.imgconsumogas, 0.00),
         ControladorIluminacion(null ,null,"Controlador Iluminación", "Actuador", "", R.drawable.imgcontroladorluz, false),
     )
     return listaDispositivo

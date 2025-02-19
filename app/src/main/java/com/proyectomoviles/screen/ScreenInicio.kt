@@ -82,18 +82,18 @@ fun InicioScreen(
 
 
     listaDispositivo.forEach { dispositivo ->
-        if (dispositivo.tipo == "Sensor") {
-            contadorSensor++
-            listaSensores += dispositivo
-        }
-        if (dispositivo.tipo == "Actuador") {
-            contadorActuador++
-            listaActuadores += dispositivo
-        }
-        if (dispositivo.tipo == "Monitoreo") {
-            contadorMonitoreo++
-            listaMonitoreo += dispositivo
-        }
+//        if (dispositivo.tipo == "Sensor") {
+//            contadorSensor++
+//            listaSensores += dispositivo
+//        }
+//        if (dispositivo.tipo == "Actuador") {
+//            contadorActuador++
+//            listaActuadores += dispositivo
+//        }
+//        if (dispositivo.tipo == "Monitoreo") {
+//            contadorMonitoreo++
+//            listaMonitoreo += dispositivo
+//        }
     }
 
 
@@ -321,7 +321,7 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
 
 @Composable
 fun CargarSensores(
-    dispositivo: Dispositivo,
+    dispositivo: Any,
     navigateToInicio: () -> Unit,
     valor1: String,
     valor2: String
@@ -401,29 +401,29 @@ fun CargarSensores(
         }
     }
     if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = { showDialog.value = false },
-            title = { Text("Eliminar dispositivo") },
-            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo.nombre}'?") },
-            confirmButton = {
-                Text(
-                    "Confirmar",
-                    modifier = Modifier.clickable {
-                        RepositoryList.removeDispositivos(dispositivo)
-                        showDialog.value = false
-                        navigateToInicio()
-                    },
-                    color = MaterialTheme.colorScheme.primary
-                )
-            },
-            dismissButton = {
-                Text(
-                    "Cancelar",
-                    modifier = Modifier.clickable { showDialog.value = false },
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-        )
+//        AlertDialog(
+//            onDismissRequest = { showDialog.value = false },
+//            title = { Text("Eliminar dispositivo") },
+//            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
+//            confirmButton = {
+//                Text(
+//                    "Confirmar",
+//                    modifier = Modifier.clickable {
+//                        RepositoryList.removeDispositivos(dispositivo)
+//                        showDialog.value = false
+//                        navigateToInicio()
+//                    },
+//                    color = MaterialTheme.colorScheme.primary
+//                )
+//            },
+//            dismissButton = {
+//                Text(
+//                    "Cancelar",
+//                    modifier = Modifier.clickable { showDialog.value = false },
+//                    color = MaterialTheme.colorScheme.secondary
+//                )
+//            }
+//        )
     }
 
 }
@@ -504,7 +504,7 @@ fun CargarActuadores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
             title = { Text("Eliminar dispositivo") },
-            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo.nombre}'?") },
+            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
             confirmButton = {
                 Text(
                     "Confirmar",
@@ -603,7 +603,7 @@ fun CargarMonitoreo(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
             title = { Text("Eliminar dispositivo") },
-            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo.nombre}'?") },
+            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
             confirmButton = {
                 Text(
                     "Confirmar",

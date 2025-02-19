@@ -9,7 +9,7 @@ data class ControladorClima(
     val imagen: Int?,
     val temperatura: Double?,
     val humedad: Double?,
-)
+): Dispositivo()
 
 data class MedidorConsumoAgua(
     var id: String? = null,
@@ -19,7 +19,7 @@ data class MedidorConsumoAgua(
     val ubicacion: String?,
     val imagen: Int?,
     val litros: Double?
-)
+): Dispositivo()
 
 data class MedidorGas(
     var id: String? = null,
@@ -29,4 +29,4 @@ data class MedidorGas(
     val ubicacion: String?,
     val imagen: Int?,
     var metroscubicos: Double?,
-)
+): Dispositivo()

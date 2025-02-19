@@ -8,7 +8,7 @@ data class ActuadorValvula(
     val ubicacion: String?,
     val imagen: Int?,
     var activo: Boolean?
-)
+): Dispositivo()
 
 data class CerraduraElectronica(
     var id: String ?= null,
@@ -18,7 +18,7 @@ data class CerraduraElectronica(
     val ubicacion: String?,
     val imagen: Int?,
     var cerrado: Boolean?
-)
+): Dispositivo()
 data class ControladorIluminacion(
     var id: String ?= null,
     val userId: String?,
@@ -27,5 +27,5 @@ data class ControladorIluminacion(
     val ubicacion: String?,
     val imagen: Int?,
     var encendido: Boolean?,
-)
+): Dispositivo()
 

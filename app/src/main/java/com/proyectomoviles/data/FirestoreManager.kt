@@ -72,6 +72,10 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         firestore.collection(COLLECTION_SENSORES).add(sensorLuz).await()
     }
 
+    suspend fun addSensor(sensor: Any) {
+        firestore.collection(COLLECTION_SENSORES).add(sensor).await()
+    }
+
     suspend fun updateSensorLuz(sensorLuz: SensorLuz) {
         val sensorLuzRef = sensorLuz.id?.let {
             firestore.collection(COLLECTION_SENSORES).document(it)

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.proyectomoviles.data.AuthManager
+import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.screen.ConfiguracionScreen
 import com.proyectomoviles.screen.ElementosScreen
@@ -18,6 +19,7 @@ import com.proyectomoviles.services.MqttService
 fun Navegacion(auth: AuthManager, mqttService: MqttService) {
     val navController = rememberNavController()
     val context = LocalContext.current
+    val firestore = FirestoreManager(auth, context)
 
     NavHost(
         navController = navController,
@@ -70,7 +72,7 @@ fun Navegacion(auth: AuthManager, mqttService: MqttService) {
 
         composable<ConfigurarDispositivos> { backStatEntry ->
             val tipoDispositivo = backStatEntry.toRoute<ConfigurarDispositivos>()
-            ConfiguracionScreen(tipoDispositivo.tipo, null, { navController.navigate(Inicio) }, mqttService, auth)
+            ConfiguracionScreen(tipoDispositivo.tipo, null, { navController.navigate(Inicio) }, mqttService, auth, firestore)
         }
     }
 }

@@ -48,15 +48,15 @@ import com.proyectomoviles.ui.theme.Naranja
 import com.proyectomoviles.ui.theme.Purple40
 
 @Composable
-fun mostrarInformacionDispositivos(dispositivo: Dispositivo) {
-    Text(dispositivo.nombre, modifier = Modifier.padding(start = 6.dp), textAlign = TextAlign.Center)
-    Spacer(
-        Modifier.height(1.dp)
-    )
-    Text(dispositivo.ubicacion, modifier = Modifier.padding(start = 6.dp))
-    Spacer(
-        Modifier.height(1.dp)
-    )
+fun mostrarInformacionDispositivos(dispositivo: Any) {
+//    Text(dispositivo, modifier = Modifier.padding(start = 6.dp), textAlign = TextAlign.Center)
+//    Spacer(
+//        Modifier.height(1.dp)
+//    )
+//    Text(dispositivo.ubicacion, modifier = Modifier.padding(start = 6.dp))
+//    Spacer(
+//        Modifier.height(1.dp)
+//    )
 }
 
 @Composable
@@ -114,45 +114,45 @@ fun mostrarSensorMovimiento(sensorMov: SensorMovimiento) {
             .padding(top = 6.dp),
 
         ) {
-        if (sensorMov.estado) {
-            Column(
-                modifier = Modifier
-                    .background(
-                        Color.Green,
-                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-                    )
-                    .padding(8.dp)
-                    .weight(1f)
-                    .height(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    "Se ha detectado movimiento",
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        } else {
-            Column(
-                modifier = Modifier
-                    .background(
-                        Color.Red,
-                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-                    )
-                    .padding(8.dp)
-                    .weight(1f)
-                    .height(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    "No se ha detectado movimiento",
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
+//        if (sensorMov.estado) {
+//            Column(
+//                modifier = Modifier
+//                    .background(
+//                        Color.Green,
+//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .weight(1f)
+//                    .height(50.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                Text(
+//                    "Se ha detectado movimiento",
+//                    color = Color.White,
+//                    fontWeight = FontWeight.Medium
+//                )
+//            }
+//        } else {
+//            Column(
+//                modifier = Modifier
+//                    .background(
+//                        Color.Red,
+//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .weight(1f)
+//                    .height(50.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                Text(
+//                    "No se ha detectado movimiento",
+//                    color = Color.White,
+//                    fontWeight = FontWeight.Medium
+//                )
+//            }
+//        }
     }
 }
 
@@ -164,45 +164,45 @@ fun mostrarSensorVibracion(sensorVib: SensorVibracion) {
             .padding(top = 6.dp),
 
         ) {
-        if (sensorVib.estado) {
-            Column(
-                modifier = Modifier
-                    .background(
-                        Color.Green,
-                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-                    )
-                    .padding(8.dp)
-                    .weight(1f)
-                    .height(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    "Se han detectado vibraciones",
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        } else {
-            Column(
-                modifier = Modifier
-                    .background(
-                        Color.Red,
-                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-                    )
-                    .padding(8.dp)
-                    .weight(1f)
-                    .height(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    "No se han detectado vibraciones",
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
+//        if (sensorVib.estado) {
+//            Column(
+//                modifier = Modifier
+//                    .background(
+//                        Color.Green,
+//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .weight(1f)
+//                    .height(50.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                Text(
+//                    "Se han detectado vibraciones",
+//                    color = Color.White,
+//                    fontWeight = FontWeight.Medium
+//                )
+//            }
+//        } else {
+//            Column(
+//                modifier = Modifier
+//                    .background(
+//                        Color.Red,
+//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .weight(1f)
+//                    .height(50.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                Text(
+//                    "No se han detectado vibraciones",
+//                    color = Color.White,
+//                    fontWeight = FontWeight.Medium
+//                )
+//            }
+//        }
     }
 }
 
@@ -306,37 +306,37 @@ fun mostrarSensorApertura(sensorApertura: SensorApertura) {
             .padding(top = 6.dp),
 
         ) {
-        if (sensorApertura.estado) {
-            Column(
-                modifier = Modifier
-                    .background(
-                        Color.Green,
-                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-                    )
-                    .padding(8.dp)
-                    .weight(1f)
-                    .height(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text("La puerta está abierta", color = Color.White, fontWeight = FontWeight.Medium)
-            }
-        } else {
-            Column(
-                modifier = Modifier
-                    .background(
-                        Color.Red,
-                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-                    )
-                    .padding(8.dp)
-                    .weight(1f)
-                    .height(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text("La puerta está cerrada", color = Color.White, fontWeight = FontWeight.Medium)
-            }
-        }
+//        if (sensorApertura.estado) {
+//            Column(
+//                modifier = Modifier
+//                    .background(
+//                        Color.Green,
+//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .weight(1f)
+//                    .height(50.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                Text("La puerta está abierta", color = Color.White, fontWeight = FontWeight.Medium)
+//            }
+//        } else {
+//            Column(
+//                modifier = Modifier
+//                    .background(
+//                        Color.Red,
+//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .weight(1f)
+//                    .height(50.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                Text("La puerta está cerrada", color = Color.White, fontWeight = FontWeight.Medium)
+//            }
+//        }
     }
 }
 
@@ -428,16 +428,16 @@ fun mostrarActuadorValvula(ActValvula: ActuadorValvula) {
 
 
             ) {
-            Switch(
-                checked = estadoActuador,
-                onCheckedChange = { estadoActuador = !estadoActuador },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Green,
-                    uncheckedThumbColor = Color.White,
-                    uncheckedTrackColor = Color.Red
-                )
-            )
+//            Switch(
+//                checked = estadoActuador,
+//                onCheckedChange = { estadoActuador = !estadoActuador },
+//                colors = SwitchDefaults.colors(
+//                    checkedThumbColor = Color.White,
+//                    checkedTrackColor = Color.Green,
+//                    uncheckedThumbColor = Color.White,
+//                    uncheckedTrackColor = Color.Red
+//                )
+//            )
         }
     }
 }
@@ -465,16 +465,16 @@ fun mostrarActuadorCerradura(ActCerradura: CerraduraElectronica) {
 
 
             ) {
-            Switch(
-                checked = estadoCerradura,
-                onCheckedChange = { estadoCerradura = !estadoCerradura },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Green,
-                    uncheckedThumbColor = Color.White,
-                    uncheckedTrackColor = Color.Red
-                )
-            )
+//            Switch(
+//                checked = estadoCerradura,
+//                onCheckedChange = { estadoCerradura = !estadoCerradura },
+//                colors = SwitchDefaults.colors(
+//                    checkedThumbColor = Color.White,
+//                    checkedTrackColor = Color.Green,
+//                    uncheckedThumbColor = Color.White,
+//                    uncheckedTrackColor = Color.Red
+//                )
+//            )
         }
     }
 }
@@ -502,16 +502,16 @@ fun mostrarControladorIluminacion(ContIluminacion: ControladorIluminacion) {
 
 
             ) {
-            Switch(
-                checked = estadoiluminacion,
-                onCheckedChange = { estadoiluminacion = !estadoiluminacion },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Green,
-                    uncheckedThumbColor = Color.White,
-                    uncheckedTrackColor = Color.Red
-                )
-            )
+//            Switch(
+//                checked = estadoiluminacion,
+//                onCheckedChange = { estadoiluminacion = !estadoiluminacion },
+//                colors = SwitchDefaults.colors(
+//                    checkedThumbColor = Color.White,
+//                    checkedTrackColor = Color.Green,
+//                    uncheckedThumbColor = Color.White,
+//                    uncheckedTrackColor = Color.Red
+//                )
+//            )
         }
     }
 }
@@ -544,26 +544,26 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
                 Column {
                     Text("${temperatura} Cº", color = Color.White, fontWeight = FontWeight.Medium)
                 }
-                Column {
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowUp,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .clickable {
-                                temperatura++
-                            }
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowDown,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .clickable {
-                                temperatura--
-                            }
-                    )
-                }
+//                Column {
+//                    Icon(
+//                        imageVector = Icons.Filled.KeyboardArrowUp,
+//                        contentDescription = null,
+//                        tint = Color.White,
+//                        modifier = Modifier
+//                            .clickable {
+//                                temperatura++
+//                            }
+//                    )
+//                    Icon(
+//                        imageVector = Icons.Filled.KeyboardArrowDown,
+//                        contentDescription = null,
+//                        tint = Color.White,
+//                        modifier = Modifier
+//                            .clickable {
+//                                temperatura--
+//                            }
+//                    )
+//                }
             }
         }
         Column(
@@ -583,26 +583,26 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
                 Column {
                     Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
                 }
-                Column {
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowUp,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                        .clickable {
-                            humedad++
-                        }
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowDown,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .clickable {
-                                humedad--
-                            }
-                    )
-                }
+//                Column {
+//                    Icon(
+//                        imageVector = Icons.Filled.KeyboardArrowUp,
+//                        contentDescription = null,
+//                        tint = Color.White,
+//                        modifier = Modifier
+//                        .clickable {
+//                            humedad++
+//                        }
+//                    )
+//                    Icon(
+//                        imageVector = Icons.Filled.KeyboardArrowDown,
+//                        contentDescription = null,
+//                        tint = Color.White,
+//                        modifier = Modifier
+//                            .clickable {
+//                                humedad--
+//                            }
+//                    )
+//                }
             }
         }
     }

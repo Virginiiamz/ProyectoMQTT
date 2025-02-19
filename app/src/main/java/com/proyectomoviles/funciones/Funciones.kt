@@ -8,11 +8,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun mostrarImagenByDispositivo(dispositivo: Any) {
-    Image(
-        painterResource(id = dispositivo.imagen),
-        contentDescription = dispositivo.nombre,
-        modifier = Modifier.padding(top = 6.dp, bottom = 6.dp)
-
-    )
+fun mostrarImagenByDispositivo(tipoDispositivo: Any) {
+//    Image(
+//        painterResource(id = dispositivo.imagen),
+//        contentDescription = dispositivo.nombre,
+//        modifier = Modifier.padding(top = 6.dp, bottom = 6.dp)
+//
+//    )
 }
