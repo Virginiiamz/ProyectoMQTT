@@ -245,8 +245,12 @@ fun InicioScreen(
             LazyColumn(
                 modifier = Modifier.padding(top = 40.dp)
             ) {
+                item {
+                    Text(uiState.dispositivos.toString())
+                }
+
                 items(uiState.dispositivos) { dispositivo ->
-//                    Text(dispositivo.toString())
+                    Text(dispositivo.toString())
                     when (dispositivo) {
                         is SensorTemperatura -> {
                             val valor1 = dispositivo.grados.toString()

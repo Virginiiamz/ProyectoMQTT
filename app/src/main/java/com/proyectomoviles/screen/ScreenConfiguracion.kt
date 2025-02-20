@@ -146,9 +146,10 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit,mqttService: Mqt
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
+       val sensor = SensorTemperatura(id = null , userId = auth.getCurrentUser()?.uid, nombre, "SensorTemperatura", ubicacion, R.drawable.imgsensortermometro, grados, humedad)
         Button(
             onClick = {
-                inicioViewModel.addDispositivo(SensorTemperatura(id = null , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad))
+                inicioViewModel.addSensorTemperatura(sensor)
                 navigateToInicio()
             },
             modifier = Modifier.fillMaxWidth()

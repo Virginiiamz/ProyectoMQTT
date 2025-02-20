@@ -10,6 +10,7 @@ import com.proyectomoviles.dispositivos.ControladorClima
 import com.proyectomoviles.dispositivos.ControladorClimaDB
 import com.proyectomoviles.dispositivos.ControladorIluminacion
 import com.proyectomoviles.dispositivos.ControladorIluminacionDB
+import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorConsumoAguaDB
 import com.proyectomoviles.dispositivos.MedidorGas
@@ -43,6 +44,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         private const val COLLECTION_SENSORES = "sensores"
         private const val COLLECTION_ACTUADORES = "actuadores"
         private const val COLLECTION_MONITOREO = "monitoreo"
+        private const val COLLECTION_SENSORTEMP = "sensores_temperatura"
     }
 
     // SENSORES
@@ -86,8 +88,8 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         firestore.collection(COLLECTION_SENSORES).document(sensorLuzId).delete().await()
     }
 
-    fun getSensorTemperatura(): Flow<List<SensorTemperatura>> {
-        return firestore.collection(COLLECTION_SENSORES)
+    fun getSensorTemperatura(): Flow<List<Dispositivo>> {
+        return firestore.collection(COLLECTION_SENSORTEMP)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -110,7 +112,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
 
     suspend fun addSensorTemperatura(sensorTemperatura: SensorTemperatura) {
         val db = FirebaseFirestore.getInstance()
-        val sensoresRef = db.collection("sensores")
+        val sensoresRef = db.collection(COLLECTION_SENSORTEMP)
 
         // Agregar el sensor sin ID (Firestore lo generará)
         val documentReference = sensoresRef.add(sensorTemperatura).await()
@@ -124,13 +126,13 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
 
     suspend fun updateSensorTemperatura(sensorTemperatura: SensorTemperatura) {
         val sensorTemperaturaRef = sensorTemperatura.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
+            firestore.collection(COLLECTION_SENSORTEMP).document(it)
         }
         sensorTemperaturaRef?.set(sensorTemperatura)?.await()
     }
 
     suspend fun deleteSensorTemperaturaById(sensorTemperaturaId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorTemperaturaId).delete().await()
+        firestore.collection(COLLECTION_SENSORTEMP).document(sensorTemperaturaId).delete().await()
     }
 
     fun getSensorMovimiento(): Flow<List<SensorMovimiento>> {

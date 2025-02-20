@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.lang.Thread.State
 
-class InicioViewModel(val firestoreManager: FirestoreManager): ViewModel() {
+class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
 
     val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
@@ -37,20 +37,88 @@ class InicioViewModel(val firestoreManager: FirestoreManager): ViewModel() {
     )
 
     init {
-//        fetchDispositivos()
         viewModelScope.launch {
-            _uiState.update { it.copy() }
-            dispositivo.map { dispositivo ->
-                dispositivo.collect { tipoDispositivo ->
+            // Listado de flujos de sensores
+            val sensoresFlujos = listOf(
+                firestoreManager.getSensorLuz(),
+                firestoreManager.getSensorTemperatura(),
+                firestoreManager.getSensorMovimiento(),
+                firestoreManager.getSensorVibracion(),
+                firestoreManager.getSensorNivelAgua(),
+                firestoreManager.getSensorPresion(),
+                firestoreManager.getSensorApertura(),
+                firestoreManager.getSensorCalidadAire(),
+                firestoreManager.getActuadorValvula(),
+                firestoreManager.getCerraduraElectronica(),
+                firestoreManager.getControladorIluminacion(),
+                firestoreManager.getControladorClima(),
+                firestoreManager.getMedidorConsumoAgua(),
+                firestoreManager.getMedidorGas()
+            )
+
+            // Recolectar todos los flujos de forma simultánea
+            sensoresFlujos.forEach { flow ->
+                flow.collect { tipoDispositivo ->
+                    println("Dispositivo recibido: $tipoDispositivo")
                     _uiState.update { uiState ->
                         uiState.copy(
-                            dispositivos = tipoDispositivo
+                            dispositivos = uiState.dispositivos + tipoDispositivo // Agregar sin sobrescribir
                         )
                     }
                 }
             }
         }
+//        fetchDispositivos()
+//        viewModelScope.launch {
+//            _uiState.update { it.copy() }
+//            dispositivo.map { dispositivo ->
+//                dispositivo.collect { tipoDispositivo ->
+//                    _uiState.update { uiState ->
+//                        uiState.copy(
+//                            dispositivos = tipoDispositivo
+//                        )
+//                    }
+//                }
+//            }
 
+//            _uiState.update { it.copy() }
+//
+//            // Combinar todos los flujos en una lista
+//            val sensoresFlujos = listOf(
+//                firestoreManager.getSensorLuz(),
+//                firestoreManager.getSensorTemperatura(),
+//                firestoreManager.getSensorMovimiento(),
+//                firestoreManager.getSensorVibracion(),
+//                firestoreManager.getSensorNivelAgua(),
+//                firestoreManager.getSensorPresion(),
+//                firestoreManager.getSensorApertura(),
+//                firestoreManager.getSensorCalidadAire(),
+//                firestoreManager.getActuadorValvula(),
+//                firestoreManager.getCerraduraElectronica(),
+//                firestoreManager.getControladorIluminacion(),
+//                firestoreManager.getControladorClima(),
+//                firestoreManager.getMedidorConsumoAgua(),
+//                firestoreManager.getMedidorGas()
+//            )
+//
+//            // Combinar todos los sensores en una lista
+//            sensoresFlujos.forEach { flow ->
+//                flow.collect { tipoDispositivo ->
+//                    _uiState.update { uiState ->
+//                        uiState.copy(
+//                            dispositivos = uiState.dispositivos + tipoDispositivo // Agregar sin sobrescribir
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//        }
+    }
+
+    fun addSensorTemperatura(sensorTemperatura: SensorTemperatura) {
+        viewModelScope.launch {
+            firestoreManager.addSensorTemperatura(sensorTemperatura)
+        }
     }
 
     fun addDispositivo(dispositivo: Dispositivo) {
@@ -87,7 +155,10 @@ class InicioViewModel(val firestoreManager: FirestoreManager): ViewModel() {
                 is SensorCalidadAire -> firestoreManager.updateSensorCalidadAire(dispositivo)
                 is ActuadorValvula -> firestoreManager.updateActuadorValvula(dispositivo)
                 is CerraduraElectronica -> firestoreManager.updateCerraduraElectronica(dispositivo)
-                is ControladorIluminacion -> firestoreManager.updateControladorIluminacion(dispositivo)
+                is ControladorIluminacion -> firestoreManager.updateControladorIluminacion(
+                    dispositivo
+                )
+
                 is ControladorClima -> firestoreManager.updateControladorClima(dispositivo)
                 is MedidorConsumoAgua -> firestoreManager.updateMedidorConsumoAgua(dispositivo)
                 is MedidorGas -> firestoreManager.updateMedidorGas(dispositivo)
@@ -107,8 +178,14 @@ class InicioViewModel(val firestoreManager: FirestoreManager): ViewModel() {
                 "SensorApertura" -> firestoreManager.deleteSensorAperturaById(dispositivoId)
                 "SensorCalidadAire" -> firestoreManager.deleteSensorCalidadAireById(dispositivoId)
                 "ActuadorValvula" -> firestoreManager.deleteActuadorValvulaById(dispositivoId)
-                "CerraduraElectronica" -> firestoreManager.deleteCerraduraElectronicaById(dispositivoId)
-                "ControladorIluminacion" -> firestoreManager.deleteControladorIluminacionById(dispositivoId)
+                "CerraduraElectronica" -> firestoreManager.deleteCerraduraElectronicaById(
+                    dispositivoId
+                )
+
+                "ControladorIluminacion" -> firestoreManager.deleteControladorIluminacionById(
+                    dispositivoId
+                )
+
                 "ControladorClima" -> firestoreManager.deleteControladorClimaById(dispositivoId)
                 "MedidorConsumoAgua" -> firestoreManager.deleteMedidorConsumoAguaById(dispositivoId)
                 "MedidorGas" -> firestoreManager.deleteMedidorGasById(dispositivoId)
