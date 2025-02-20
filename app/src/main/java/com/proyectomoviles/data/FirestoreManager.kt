@@ -88,8 +88,8 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         firestore.collection(COLLECTION_SENSORES).document(sensorLuzId).delete().await()
     }
 
-    fun getSensorTemperatura(): Flow<List<Dispositivo>> {
-        return firestore.collection(COLLECTION_SENSORTEMP)
+    fun getSensorTemperatura(): Flow<List<SensorTemperatura>> {
+        return firestore.collection("sensores_temperatura")
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
