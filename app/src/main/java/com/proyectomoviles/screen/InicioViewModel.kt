@@ -19,9 +19,6 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
     private val _sensorTemperatura = MutableStateFlow<SensorTemperatura?>(null)
     val sensorTemperatura: StateFlow<SensorTemperatura?> = _sensorTemperatura
 
-//    private val _dispositivos = MutableStateFlow<List<Dispositivo>>(emptyList())
-//    val dispositivos: StateFlow<List<Dispositivo>> = _dispositivos
-
     val dispositivo = listOf(
         firestoreManager.getSensorLuz(),
         firestoreManager.getSensorTemperatura(),
@@ -61,11 +58,19 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
 
             _uiState.update { it.copy() }
             firestoreManager.getSensorTemperatura().collect { sensorTemperatura ->
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        sensorTemperatura = sensorTemperatura
-                    )
+                firestoreManager.getSensorLuz().collect { sensorLuz ->
+                    _uiState.update { uiState ->
+                        uiState.copy(
+                            sensorTemperatura = sensorTemperatura,
+                            sensorLuz = sensorLuz
+                        )
+                    }
                 }
+//                _uiState.update { uiState ->
+//                    uiState.copy(
+//                        sensorTemperatura = sensorTemperatura
+//                    )
+//                }
             }
 
         }
@@ -196,7 +201,8 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
 }
 
 data class UiState(
-    val sensorTemperatura: List<SensorTemperatura> = emptyList()
+    val sensorTemperatura: List<SensorTemperatura> = emptyList(),
+    val sensorLuz: List<SensorLuz> = emptyList()
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :

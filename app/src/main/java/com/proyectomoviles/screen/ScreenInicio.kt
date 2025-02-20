@@ -268,22 +268,32 @@ fun InicioScreen(
                                 }
                             }
                         }
-//                        is SensorLuz -> {
-//                            valor1 = dispositivo.estadoEncendido.toString()
-//                            valor2 = null.toString()
-//
-//                            dispositivo.nombre?.let {
-//                                dispositivo.imagen?.let { it1 ->
-//                                    dispositivo.ubicacion?.let { it2 ->
-//                                        mostrarInformacionDispositivos(
-//                                            "sensorluz",
-//                                            it,
-//                                            it1, it2, valor1, valor2
-//                                        )
-//                                    }
-//                                }
-//                            }
-//                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                item {
+                    Text(uiState.sensorLuz.toString())
+                }
+
+                items(uiState.sensorLuz) { dispositivo ->
+                    Text(dispositivo.toString())
+                    when (dispositivo) {
+                        is SensorLuz -> {
+                            valor1 = dispositivo.estadoEncendido.toString()
+                            valor2 = null.toString()
+
+                            dispositivo.nombre?.let {
+                                dispositivo.imagen?.let { it1 ->
+                                    dispositivo.ubicacion?.let { it2 ->
+                                        mostrarInformacionDispositivos(
+                                            "sensorluz",
+                                            it,
+                                            it1, it2, valor1, valor2
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }

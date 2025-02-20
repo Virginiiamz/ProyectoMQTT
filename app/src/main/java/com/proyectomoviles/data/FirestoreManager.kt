@@ -45,11 +45,12 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_ACTUADORES = "actuadores"
         const val COLLECTION_MONITOREO = "monitoreo"
         const val COLLECTION_SENSORTEMP = "sensores_temperatura"
+        const val COLLECTION_SENSORLUZ = "sensores_luz"
     }
 
     // SENSORES
     fun getSensorLuz(): Flow<List<SensorLuz>> {
-        return firestore.collection(COLLECTION_SENSORES)
+        return firestore.collection(COLLECTION_SENSORLUZ)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -70,22 +71,18 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorLuz(sensorLuz: SensorLuz) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorLuz).await()
-    }
-
-    suspend fun addSensor(sensor: Any) {
-        firestore.collection(COLLECTION_SENSORES).add(sensor).await()
+        firestore.collection(COLLECTION_SENSORLUZ).add(sensorLuz).await()
     }
 
     suspend fun updateSensorLuz(sensorLuz: SensorLuz) {
         val sensorLuzRef = sensorLuz.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
+            firestore.collection(COLLECTION_SENSORLUZ).document(it)
         }
         sensorLuzRef?.set(sensorLuz)?.await()
     }
 
     suspend fun deleteSensorLuzById(sensorLuzId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorLuzId).delete().await()
+        firestore.collection(COLLECTION_SENSORLUZ).document(sensorLuzId).delete().await()
     }
 
     fun getSensorTemperatura(): Flow<List<SensorTemperatura>> {
