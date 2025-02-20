@@ -19,6 +19,9 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
     private val _sensorTemperatura = MutableStateFlow<SensorTemperatura?>(null)
     val sensorTemperatura: StateFlow<SensorTemperatura?> = _sensorTemperatura
 
+    private val _sensorLuz = MutableStateFlow<SensorLuz?>(null)
+    val sensorLuz: StateFlow<SensorLuz?> = _sensorLuz
+
     val dispositivo = listOf(
         firestoreManager.getSensorLuz(),
         firestoreManager.getSensorTemperatura(),
