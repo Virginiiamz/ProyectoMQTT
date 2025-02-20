@@ -58,6 +58,7 @@ import com.proyectomoviles.dispositivos.Dispositivo
 import com.proyectomoviles.dispositivos.MedidorConsumoAgua
 import com.proyectomoviles.dispositivos.MedidorGas
 import com.proyectomoviles.dispositivos.SensorLuz
+import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.funciones.mostrarActuadorCerradura
 import com.proyectomoviles.funciones.mostrarActuadorValvula
 import com.proyectomoviles.funciones.mostrarConsumoAgua
@@ -92,13 +93,13 @@ fun InicioScreen(
 
     when (TipoDispositivoCreado.tipoDispositivoCreado) {
         "sensortemperatura" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-
-            mqttService.subscribe("") {
-                valor2 = it
-            }
+//            mqttService.subscribe("") {
+//                valor1 = it
+//            }
+//
+//            mqttService.subscribe("") {
+//                valor2 = it
+//            }
         }
 
         "sensorluz" -> {
@@ -245,8 +246,28 @@ fun InicioScreen(
                 modifier = Modifier.padding(top = 40.dp)
             ) {
                 items(uiState.dispositivos) { dispositivo ->
+//                    Text(dispositivo.toString())
                     when (dispositivo) {
+                        is SensorTemperatura -> {
+                            val valor1 = dispositivo.grados.toString()
+                            val valor2 = dispositivo.humedad.toString()
+
+                            dispositivo.nombre?.let {
+                                dispositivo.imagen?.let { it1 ->
+                                    dispositivo.ubicacion?.let { it2 ->
+                                        mostrarInformacionDispositivos(
+                                            "sensortemperatura",
+                                            it,
+                                            it1, it2, valor1, valor2
+                                        )
+                                    }
+                                }
+                            }
+                        }
                         is SensorLuz -> {
+                            valor1 = dispositivo.estadoEncendido.toString()
+                            valor2 = null.toString()
+
                             dispositivo.nombre?.let {
                                 dispositivo.imagen?.let { it1 ->
                                     dispositivo.ubicacion?.let { it2 ->

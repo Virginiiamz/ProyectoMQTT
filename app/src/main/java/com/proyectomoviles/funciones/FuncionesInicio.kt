@@ -134,6 +134,7 @@ fun mostrarInformacionDispositivos(tipoDispositivo: String, nombre: String, imag
 
             Column {
                 when (tipoDispositivo) {
+                    "sensortemperatura" -> mostrarSensorTemperatura(valor1, valor2)
                     "sensorluz" -> mostrarSensorLuz(valor1)
 //                    is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
 //                    is SensorVibracion -> mostrarSensorVibracion(dispositivo)
@@ -150,7 +151,7 @@ fun mostrarInformacionDispositivos(tipoDispositivo: String, nombre: String, imag
 }
 
 @Composable
-fun mostrarSensorTemperatura(sensorTemp: SensorTemperatura, grados: String, humedad: String) {
+fun mostrarSensorTemperatura(grados: String, humedad: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

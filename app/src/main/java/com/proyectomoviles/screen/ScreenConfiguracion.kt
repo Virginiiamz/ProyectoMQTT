@@ -57,37 +57,53 @@ fun ConfiguracionScreen(
                 .padding(16.dp)
         ) {
 
-            if (tipoDispositivo == "Sensor Temperatura") {
-                ConfiguracionSensorTemperatura(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor de luz") {
-                ConfiguracionSensorLuz(navigateToInicio, mqttService, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor Movimiento") {
-                ConfiguracionSensorMovimiento(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor Vibración") {
-                ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor Nivel de Agua") {
-                ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor de Presión") {
-                ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor de Apertura") {
-                ConfiguracionSensorApertura(navigateToInicio, mqttService, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Sensor de Calidad del Aire") {
-                ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Actuador Valvula") {
-                ConfiguracionActuadorValvula(navigateToInicio, mqttService, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Cerradura Electrónica") {
-                ConfiguracionCerraduraElectronica(navigateToInicio, mqttService, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Controlador Iluminación") {
-                ConfiguracionControladorIluminacion(navigateToInicio, mqttService, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Controlador Clima") {
-                ConfiguracionControladorClima(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Medidor de Consumo de Agua") {
-                ConfiguracionMedidorConsumoAgua(navigateToInicio, auth, inicioViewModel)
-            } else if (tipoDispositivo == "Medidor de gas") {
-                ConfiguracionMedidorGas(navigateToInicio, auth, inicioViewModel)
-            } else {
-                Text(text = "Configuración no disponible para este dispositivo")
+            when (tipoDispositivo) {
+                "Sensor Temperatura" -> {
+                    ConfiguracionSensorTemperatura(navigateToInicio,mqttService, auth, inicioViewModel)
+                }
+                "Sensor de luz" -> {
+                    ConfiguracionSensorLuz(navigateToInicio, mqttService, auth, inicioViewModel)
+                }
+                "Sensor Movimiento" -> {
+                    ConfiguracionSensorMovimiento(navigateToInicio, auth, inicioViewModel)
+                }
+                "Sensor Vibración" -> {
+                    ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
+                }
+                "Sensor Nivel de Agua" -> {
+                    ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
+                }
+                "Sensor de Presión" -> {
+                    ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
+                }
+                "Sensor de Apertura" -> {
+                    ConfiguracionSensorApertura(navigateToInicio, mqttService, auth, inicioViewModel)
+                }
+                "Sensor de Calidad del Aire" -> {
+                    ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
+                }
+                "Actuador Valvula" -> {
+                    ConfiguracionActuadorValvula(navigateToInicio, mqttService, auth, inicioViewModel)
+                }
+                "Cerradura Electrónica" -> {
+                    ConfiguracionCerraduraElectronica(navigateToInicio, mqttService, auth, inicioViewModel)
+                }
+                "Controlador Iluminación" -> {
+                    ConfiguracionControladorIluminacion(navigateToInicio, mqttService, auth, inicioViewModel)
+                }
+                "Controlador Clima" -> {
+                    ConfiguracionControladorClima(navigateToInicio, auth, inicioViewModel)
+                }
+                "Medidor de Consumo de Agua" -> {
+                    ConfiguracionMedidorConsumoAgua(navigateToInicio, auth, inicioViewModel)
+                }
+                "Medidor de gas" -> {
+                    ConfiguracionMedidorGas(navigateToInicio, auth, inicioViewModel)
+                }
+                else -> {
+                    Text(text = "Configuración no disponible para este dispositivo")
 
+                }
             }
         }
     }
@@ -95,13 +111,20 @@ fun ConfiguracionScreen(
 
 //SENSORES:
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit,mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
     var humedad by rememberSaveable { mutableStateOf(0.00) }
 
-    TipoDispositivoCreado.tipoDispositivoCreado = "sensortemperatura"
+//    TipoDispositivoCreado.tipoDispositivoCreado = "sensortemperatura"
+    mqttService.subscribe("shellies/consumo/emeter/0/power") {
+        grados = it.toDouble()
+    }
+
+    mqttService.subscribe("shellies/consumo/emeter/0/power") {
+        humedad = it.toDouble()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -123,21 +146,10 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit, auth: AuthManag
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
-
-        val sensor = SensorTemperatura(
-            "",
-            userId = auth.getCurrentUser()?.uid,
-            nombre,
-            "Sensor",
-            ubicacion,
-            R.drawable.imgsensortermometro,
-            grados,
-            humedad
-        )
         Button(
             onClick = {
+                inicioViewModel.addDispositivo(SensorTemperatura(id = null , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad))
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorTemperatura(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensortermometro, grados, humedad))
             },
             modifier = Modifier.fillMaxWidth()
         ) {
