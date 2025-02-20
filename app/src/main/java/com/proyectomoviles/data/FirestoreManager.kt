@@ -109,7 +109,17 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorTemperatura(sensorTemperatura: SensorTemperatura) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorTemperatura).await()
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection("sensores")
+
+        // Agregar el sensor sin ID (Firestore lo generará)
+        val documentReference = sensoresRef.add(sensorTemperatura).await()
+        val sensorId = documentReference.id  // ← Obtener el ID generado
+
+        // Actualizar el documento con su propio ID
+        documentReference.update("id", sensorId).await()
+        println("SensorTemperatura guardado correctamente con ID: $sensorId")
+//        firestore.collection(COLLECTION_SENSORES).add(sensorTemperatura).await()
     }
 
     suspend fun updateSensorTemperatura(sensorTemperatura: SensorTemperatura) {
