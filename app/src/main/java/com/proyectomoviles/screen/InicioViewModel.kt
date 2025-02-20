@@ -127,6 +127,12 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
         }
     }
 
+    fun addSensorLuz(sensorLuz: SensorLuz) {
+        viewModelScope.launch {
+            firestoreManager.addSensorLuz(sensorLuz)
+        }
+    }
+
     fun addDispositivo(dispositivo: Dispositivo) {
         viewModelScope.launch {
             when (dispositivo) {

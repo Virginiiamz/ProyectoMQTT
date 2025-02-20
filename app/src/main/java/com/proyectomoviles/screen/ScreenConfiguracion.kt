@@ -61,7 +61,7 @@ fun ConfiguracionScreen(
                 "Sensor Temperatura" -> {
                     ConfiguracionSensorTemperatura(navigateToInicio,mqttService, auth, inicioViewModel)
                 }
-                "Sensor de luz" -> {
+                "Sensor Luz" -> {
                     ConfiguracionSensorLuz(navigateToInicio, mqttService, auth, inicioViewModel)
                 }
                 "Sensor Movimiento" -> {
@@ -192,19 +192,19 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
             onCheckedChange = { encendido = !encendido }
         )
         val sensor = SensorLuz(
-            "",
+            null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
-            "Sensor",
+            "SensorLuz",
             ubicacion,
             R.drawable.imgsensorluz,
             encendido
         )
         Button(
             onClick = {
-                navigateToInicio()
-                inicioViewModel.addDispositivo(SensorLuz(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorluz, encendido))
                 mqttService.publish("sensorluz", encendido.toString())
+                inicioViewModel.addSensorLuz(sensor)
+                navigateToInicio()
             },
             modifier = Modifier.fillMaxWidth()
         ) {

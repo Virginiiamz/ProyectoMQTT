@@ -71,7 +71,18 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorLuz(sensorLuz: SensorLuz) {
-        firestore.collection(COLLECTION_SENSORLUZ).add(sensorLuz).await()
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_SENSORLUZ)
+
+        // Generar ID antes de guardar el objeto
+        val documentReference = sensoresRef.document() // Crea un documento vacío con ID generado
+        val sensorId = documentReference.id
+
+        // Crear una nueva instancia con el ID asignado
+        val sensorConId = sensorLuz.copy(id = sensorId)
+
+        // Guardar el sensor en Firestore
+        documentReference.set(sensorConId).await()
     }
 
     suspend fun updateSensorLuz(sensorLuz: SensorLuz) {
