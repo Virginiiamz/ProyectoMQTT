@@ -5,16 +5,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.proyectomoviles.data.FirestoreManager
 import com.proyectomoviles.dispositivos.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 
 class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
 
     val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
+
+    private val _sensorTemperatura = MutableStateFlow<SensorTemperatura?>(null)
+    val sensorTemperatura: StateFlow<SensorTemperatura?> = _sensorTemperatura
 
 //    private val _dispositivos = MutableStateFlow<List<Dispositivo>>(emptyList())
 //    val dispositivos: StateFlow<List<Dispositivo>> = _dispositivos
@@ -56,17 +59,15 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                 firestoreManager.getMedidorGas()
             )
 
-            // Recolectar todos los flujos de forma simultánea
-            sensoresFlujos.forEach { flow ->
-                flow.collect { tipoDispositivo ->
-                    println("Dispositivo recibido: $tipoDispositivo")
-                    _uiState.update { uiState ->
-                        uiState.copy(
-                            dispositivos = uiState.dispositivos + tipoDispositivo // Agregar sin sobrescribir
-                        )
-                    }
+            _uiState.update { it.copy() }
+            firestoreManager.getSensorTemperatura().collect { sensorTemperatura ->
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        sensorTemperatura = sensorTemperatura
+                    )
                 }
             }
+
         }
 //        fetchDispositivos()
 //        viewModelScope.launch {
@@ -195,7 +196,7 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
 }
 
 data class UiState(
-    val dispositivos: List<Dispositivo> = emptyList()
+    val sensorTemperatura: List<SensorTemperatura> = emptyList()
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :

@@ -41,10 +41,10 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     private val userId = auth.getCurrentUser()?.uid
 
     companion object{
-        private const val COLLECTION_SENSORES = "sensores"
-        private const val COLLECTION_ACTUADORES = "actuadores"
-        private const val COLLECTION_MONITOREO = "monitoreo"
-        private const val COLLECTION_SENSORTEMP = "sensores_temperatura"
+        const val COLLECTION_SENSORES = "sensores"
+        const val COLLECTION_ACTUADORES = "actuadores"
+        const val COLLECTION_MONITOREO = "monitoreo"
+        const val COLLECTION_SENSORTEMP = "sensores_temperatura"
     }
 
     // SENSORES
@@ -89,7 +89,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getSensorTemperatura(): Flow<List<SensorTemperatura>> {
-        return firestore.collection("sensores_temperatura")
+        return firestore.collection(COLLECTION_SENSORTEMP)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
