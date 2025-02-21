@@ -93,51 +93,44 @@ fun InicioScreen(
             LazyColumn(
                 modifier = Modifier.padding(top = 40.dp)
             ) {
-                item {
-                    Text(uiState.sensorTemperatura.toString())
-                }
 
                 items(uiState.sensorTemperatura) { dispositivo ->
-                    when (dispositivo) {
-                        is SensorTemperatura -> {
-                            val valor1 = dispositivo.grados.toString()
-                            val valor2 = dispositivo.humedad.toString()
+                    mqttService.subscribe("grados") {
+                        valor1 = it
+                    }
 
-                            dispositivo.nombre?.let {
-                                dispositivo.imagen?.let { it1 ->
-                                    dispositivo.ubicacion?.let { it2 ->
-                                        mostrarInformacionDispositivos(
-                                            "sensortemperatura",
-                                            it,
-                                            it1, it2, valor1, valor2
-                                        )
-                                    }
-                                }
+                    mqttService.subscribe("humedad") {
+                        valor2 = it
+                    }
+
+                    dispositivo.nombre?.let {
+                        dispositivo.imagen?.let { it1 ->
+                            dispositivo.ubicacion?.let { it2 ->
+                                mostrarInformacionDispositivos(
+                                    "sensortemperatura",
+                                    it,
+                                    it1, it2, valor1, valor2
+                                )
                             }
                         }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
-                item {
-                    Text(uiState.sensorLuz.toString())
-                }
 
                 items(uiState.sensorLuz) { dispositivo ->
-                    when (dispositivo) {
-                        is SensorLuz -> {
-                            valor1 = dispositivo.estadoEncendido.toString()
-                            valor2 = null.toString()
+                    mqttService.subscribe("sensorluz") {
+                        valor1 = it
+                        valor2 = ""
+                    }
 
-                            dispositivo.nombre?.let {
-                                dispositivo.imagen?.let { it1 ->
-                                    dispositivo.ubicacion?.let { it2 ->
-                                        mostrarInformacionDispositivos(
-                                            "sensorluz",
-                                            it,
-                                            it1, it2, valor1, valor2
-                                        )
-                                    }
-                                }
+                    dispositivo.nombre?.let {
+                        dispositivo.imagen?.let { it1 ->
+                            dispositivo.ubicacion?.let { it2 ->
+                                mostrarInformacionDispositivos(
+                                    "sensorluz",
+                                    it,
+                                    it1, it2, valor1, valor2
+                                )
                             }
                         }
                     }

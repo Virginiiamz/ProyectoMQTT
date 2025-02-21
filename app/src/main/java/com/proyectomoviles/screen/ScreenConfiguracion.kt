@@ -65,7 +65,6 @@ fun ConfiguracionScreen(
                 "Sensor Temperatura" -> {
                     ConfiguracionSensorTemperatura(
                         navigateToInicio,
-                        mqttService,
                         auth,
                         inicioViewModel
                     )
@@ -156,7 +155,6 @@ fun ConfiguracionScreen(
 @Composable
 fun ConfiguracionSensorTemperatura(
     navigateToInicio: () -> Unit,
-    mqttService: MqttService,
     auth: AuthManager,
     inicioViewModel: InicioViewModel
 ) {
@@ -164,15 +162,6 @@ fun ConfiguracionSensorTemperatura(
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
     var humedad by rememberSaveable { mutableStateOf(0.00) }
-
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensortemperatura"
-    mqttService.subscribe("shellies/consumo/emeter/0/power") {
-        grados = it.toDouble()
-    }
-
-    mqttService.subscribe("shellies/consumo/emeter/0/power") {
-        humedad = it.toDouble()
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -261,9 +250,9 @@ fun ConfiguracionSensorLuz(
             encendido
         )
 
-        mqttService.publish("sensorluz", encendido.toString())
         Button(
             onClick = {
+                mqttService.publish("sensorluz", encendido.toString())
                 inicioViewModel.addSensorLuz(sensor)
                 navigateToInicio()
             },
