@@ -167,6 +167,7 @@ fun mostrarInformacionDispositivos(
                     "sensorcalidadaire" -> mostrarSensorCalidadAire(valor1)
                     "actuadorvalvula" -> mostrarActuadorValvula(valor1)
                     "cerraduraelectronica" -> mostrarActuadorCerradura(valor1)
+                    "controladoriluminacion" ->mostrarControladorIluminacion(valor1)
                 }
             }
         }
@@ -589,8 +590,8 @@ fun mostrarActuadorCerradura(estado: String) {
 }
 
 @Composable
-fun mostrarControladorIluminacion(ContIluminacion: ControladorIluminacion) {
-    var estadoiluminacion by remember { mutableStateOf(ContIluminacion.encendido) }
+fun mostrarControladorIluminacion(estado:String) {
+    var estadoiluminacion by remember { mutableStateOf(estado.toBoolean()) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -611,16 +612,16 @@ fun mostrarControladorIluminacion(ContIluminacion: ControladorIluminacion) {
 
 
             ) {
-//            Switch(
-//                checked = estadoiluminacion,
-//                onCheckedChange = { estadoiluminacion = !estadoiluminacion },
-//                colors = SwitchDefaults.colors(
-//                    checkedThumbColor = Color.White,
-//                    checkedTrackColor = Color.Green,
-//                    uncheckedThumbColor = Color.White,
-//                    uncheckedTrackColor = Color.Red
-//                )
-//            )
+            Switch(
+                checked = estadoiluminacion,
+                onCheckedChange = { estadoiluminacion = !estadoiluminacion },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Green,
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = Color.Red
+                )
+            )
         }
     }
 }

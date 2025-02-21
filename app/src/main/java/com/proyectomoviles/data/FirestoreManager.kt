@@ -54,6 +54,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_SENSORCALIDADAIRE = "sensores_calidad_aire"
         const val COLLECTION_ACTUADORVALVULA = "actuadores_valvula"
         const val COLLECTION_ACTUADORCERRADURAELECTRONICA = "actuadores_cerradura_electronica"
+        const val COLLECTION_ACTUADORCONTROLADORILUMINACION = "actuadores_controlador_iluminacion"
 
     }
 
@@ -435,7 +436,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getControladorIluminacion(): Flow<List<ControladorIluminacion>> {
-        return firestore.collection(COLLECTION_ACTUADORES)
+        return firestore.collection(COLLECTION_ACTUADORCONTROLADORILUMINACION)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -456,18 +457,21 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addControladorIluminacion(controladorIluminacion: ControladorIluminacion) {
-        firestore.collection(COLLECTION_ACTUADORES).add(controladorIluminacion).await()
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_ACTUADORCONTROLADORILUMINACION)
+
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = controladorIluminacion.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
-    suspend fun updateControladorIluminacion(controladorIluminacion: ControladorIluminacion) {
-        val controladorIluminacionRef = controladorIluminacion.id?.let {
-            firestore.collection(COLLECTION_ACTUADORES).document(it)
-        }
-        controladorIluminacionRef?.set(controladorIluminacion)?.await()
-    }
+
 
     suspend fun deleteControladorIluminacionById(controladorIluminacionId: String) {
-        firestore.collection(COLLECTION_ACTUADORES).document(controladorIluminacionId).delete().await()
+        firestore.collection(COLLECTION_ACTUADORCONTROLADORILUMINACION).document(controladorIluminacionId).delete().await()
     }
 
 

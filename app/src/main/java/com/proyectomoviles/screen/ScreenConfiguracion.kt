@@ -119,15 +119,15 @@ fun ConfiguracionScreen(
                         inicioViewModel
                     )
                 }
-//
-//                "Controlador Iluminación" -> {
-//                    ConfiguracionControladorIluminacion(
-//                        navigateToInicio,
-//                        mqttService,
-//                        auth,
-//                        inicioViewModel
-//                    )
-//                }
+
+                "Controlador Iluminación" -> {
+                    ConfiguracionControladorIluminacion(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
+                }
 //
 //                "Controlador Clima" -> {
 //                    ConfiguracionControladorClima(navigateToInicio, auth, inicioViewModel)
@@ -710,74 +710,64 @@ fun ConfiguracionCerraduraElectronica(
         }
     }
 }
-//
-//@Composable
-//fun ConfiguracionControladorIluminacion(
-//    navigateToInicio: () -> Unit,
-//    mqttService: MqttService,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var estado by rememberSaveable { mutableStateOf(false) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "controladoriluminacion"
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Controlador de Iluminación")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Text("Activo:")
-//        Switch(
-//            checked = estado,
-//            onCheckedChange = { estado = !estado }
-//        )
-//        val actuador = ControladorIluminacion(
-//            "",
-//            userId = auth.getCurrentUser()?.uid,
-//            nombre,
-//            "Actuador",
-//            ubicacion,
-//            R.drawable.imgcontroladorluz,
-//            estado
-//        )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    ControladorIluminacion(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Actuador",
-//                        ubicacion,
-//                        R.drawable.imgcontroladorluz,
-//                        estado
-//                    )
-//                )
-//                mqttService.publish("controladoriluminacion", estado.toString())
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
+
+@Composable
+fun ConfiguracionControladorIluminacion(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "controladoriluminacion"
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Controlador de Iluminación")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Activo:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        val actuador = ControladorIluminacion(
+            null,
+            userId = auth.getCurrentUser()?.uid,
+            nombre,
+            "Actuador",
+            ubicacion,
+            R.drawable.imgcontroladorluz,
+            estado
+        )
+        Button(
+            onClick = {
+                mqttService.publish("controladoriluminacion", estado.toString())
+                inicioViewModel.addActuadorControladorIluminacion(actuador)
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 //
 ////Monitoreo:
 //
