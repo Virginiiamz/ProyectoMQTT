@@ -160,13 +160,7 @@ fun mostrarInformacionDispositivos(
                     "sensortemperatura" -> mostrarSensorTemperatura(valor1, valor2)
                     "sensorluz" -> mostrarSensorLuz(valor1)
                     "sensormovimiento" -> mostrarSensorMovimiento(valor1)
-//                    is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
-//                    is SensorVibracion -> mostrarSensorVibracion(dispositivo)
-//                    is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
-//                    is SensorLuz -> mostrarSensorLuz(dispositivo, valor1)
-//                    is SensorPresion -> mostrarSensorPresion(dispositivo)
-//                    is SensorApertura -> mostrarSensorApertura(dispositivo)
-//                    is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
+                    "sensorvibracion" -> mostrarSensorVibracion(valor1)
                 }
             }
         }
@@ -260,52 +254,52 @@ fun mostrarSensorMovimiento(estado: String) {
 }
 
 @Composable
-fun mostrarSensorVibracion(sensorVib: SensorVibracion) {
+fun mostrarSensorVibracion(estado: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
         ) {
-//        if (sensorVib.estado) {
-//            Column(
-//                modifier = Modifier
-//                    .background(
-//                        Color.Green,
-//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-//                    )
-//                    .padding(8.dp)
-//                    .weight(1f)
-//                    .height(50.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                Text(
-//                    "Se han detectado vibraciones",
-//                    color = Color.White,
-//                    fontWeight = FontWeight.Medium
-//                )
-//            }
-//        } else {
-//            Column(
-//                modifier = Modifier
-//                    .background(
-//                        Color.Red,
-//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-//                    )
-//                    .padding(8.dp)
-//                    .weight(1f)
-//                    .height(50.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                Text(
-//                    "No se han detectado vibraciones",
-//                    color = Color.White,
-//                    fontWeight = FontWeight.Medium
-//                )
-//            }
-//        }
+        if (estado.toBoolean()) {
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Se han detectado vibraciones",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "No se han detectado vibraciones",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
     }
 }
 

@@ -47,6 +47,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_SENSORTEMP = "sensores_temperatura"
         const val COLLECTION_SENSORLUZ = "sensores_luz"
         const val COLLECTION_SENSORMOVIMIENTO = "sensores_movimiento"
+        const val COLLECTION_SENSORVIBRACION = "sensores_vibracion"
     }
 
     // SENSORES
@@ -75,7 +76,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         val db = FirebaseFirestore.getInstance()
         val sensoresRef = db.collection(COLLECTION_SENSORLUZ)
 
-        val documentReference = sensoresRef.document() // Crea un documento vacío con ID generado
+        val documentReference = sensoresRef.document()
         val sensorId = documentReference.id
 
         val sensorConId = sensorLuz.copy(id = sensorId)
@@ -161,7 +162,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getSensorVibracion(): Flow<List<SensorVibracion>> {
-        return firestore.collection(COLLECTION_SENSORES)
+        return firestore.collection(COLLECTION_SENSORVIBRACION)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -182,18 +183,19 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorVibracion(sensorVibracion: SensorVibracion) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorVibracion).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_SENSORVIBRACION)
 
-    suspend fun updateSensorVibracion(sensorVibracion: SensorVibracion) {
-        val sensorVibracionRef = sensorVibracion.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
-        }
-        sensorVibracionRef?.set(sensorVibracion)?.await()
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = sensorVibracion.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
     suspend fun deleteSensorVibracionById(sensorVibracionId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorVibracionId).delete().await()
+        firestore.collection(COLLECTION_SENSORVIBRACION).document(sensorVibracionId).delete().await()
     }
 
     fun getSensorNivelAgua(): Flow<List<SensorNivelAgua>> {

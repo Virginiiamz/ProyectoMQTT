@@ -78,9 +78,9 @@ fun ConfiguracionScreen(
                     ConfiguracionSensorMovimiento(navigateToInicio, auth, inicioViewModel)
                 }
 
-//                "Sensor Vibración" -> {
-//                    ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
-//                }
+                "Sensor Vibración" -> {
+                    ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
+                }
 //
 //                "Sensor Nivel de Agua" -> {
 //                    ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
@@ -316,68 +316,59 @@ fun ConfiguracionSensorMovimiento(
     }
 }
 
-//@Composable
-//fun ConfiguracionSensorVibracion(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var estado by remember { mutableStateOf(false) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensorvibracion"
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Sensor de Vibración")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        val sensor =
-//            SensorVibracion(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Sensor",
-//                ubicacion,
-//                R.drawable.imgsensorvibracion,
-//                estado
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    SensorVibracion(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Sensor",
-//                        ubicacion,
-//                        R.drawable.imgsensorvibracion,
-//                        estado
-//                    )
-//                )
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-//
+@Composable
+fun ConfiguracionSensorVibracion(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Sensor de Vibración")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        val sensor =
+            SensorVibracion(
+                null,
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorvibracion,
+                estado
+            )
+        Button(
+            onClick = {
+                inicioViewModel.addSensorVibracion(
+                    sensor
+                )
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
+
 //@Composable
 //fun ConfiguracionSensorNivelAgua(
 //    navigateToInicio: () -> Unit,
