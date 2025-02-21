@@ -102,18 +102,19 @@ fun InicioScreen(
                     mqttService.subscribe("humedad") {
                         valor2 = it
                     }
-
-                    dispositivo.nombre?.let {
-                        dispositivo.imagen?.let { it1 ->
-                            dispositivo.ubicacion?.let { it2 ->
-                                mostrarInformacionDispositivos(
-                                    "sensortemperatura",
-                                    it,
-                                    it1, it2, valor1, valor2
-                                )
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "sensortemperatura", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
                             }
                         }
                     }
+
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
@@ -123,14 +124,15 @@ fun InicioScreen(
                         valor2 = ""
                     }
 
-                    dispositivo.nombre?.let {
-                        dispositivo.imagen?.let { it1 ->
-                            dispositivo.ubicacion?.let { it2 ->
-                                mostrarInformacionDispositivos(
-                                    "sensorluz",
-                                    it,
-                                    it1, it2, valor1, valor2
-                                )
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "sensorluz", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
                             }
                         }
                     }
@@ -188,30 +190,3 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = null)
     }
 }
-
-//AlertDialog(
-//onDismissRequest = { showDialog.value = false },
-//title = { Text("Eliminar dispositivo") },
-//text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
-//confirmButton = {
-//    Text(
-//        "Confirmar",
-//        modifier = Modifier.clickable {
-//            RepositoryList.removeDispositivos(dispositivo)
-//            showDialog.value = false
-//            navigateToInicio()
-//        },
-//        color = MaterialTheme.colorScheme.primary
-//    )
-//},
-//dismissButton = {
-//    Text(
-//        "Cancelar",
-//        modifier = Modifier.clickable { showDialog.value = false },
-//        color = MaterialTheme.colorScheme.secondary
-//    )
-//}
-//)
-
-
-

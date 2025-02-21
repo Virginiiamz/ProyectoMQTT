@@ -21,7 +21,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -52,12 +54,23 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
+import com.proyectomoviles.screen.InicioViewModel
 import com.proyectomoviles.ui.theme.Naranja
 import com.proyectomoviles.ui.theme.Purple40
 
 @Composable
-fun mostrarInformacionDispositivos(tipoDispositivo: String, nombre: String, imagen: Int, ubicacion: String, valor1: String, valor2: String) {
-
+fun mostrarInformacionDispositivos(
+    id: String,
+    tipoDispositivo: String,
+    nombre: String,
+    imagen: Int,
+    ubicacion: String,
+    valor1: String,
+    valor2: String,
+    inicioViewModel: InicioViewModel,
+    navigateToInicio: () -> Unit
+) {
+    var mostrarDialogo by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .width(400.dp)
@@ -77,9 +90,19 @@ fun mostrarInformacionDispositivos(tipoDispositivo: String, nombre: String, imag
                 tint = Color.Gray,
                 modifier = Modifier
                     .size(24.dp)
-//                    .clickable {
-//                        showDialog.value = true
-//                    }
+                    .clickable {
+                        mostrarDialogo = true
+                    }
+            )
+        }
+
+        if (mostrarDialogo) {
+            mostrarEliminar(
+                tipoDispositivo = tipoDispositivo,
+                id = id,
+                inicioViewModel = inicioViewModel,
+                onDismiss = { mostrarDialogo = false },
+                navigateToInicio
             )
         }
 
@@ -737,6 +760,39 @@ fun mostrarConsumoGas(ConsGas: MedidorGas) {
     }
 }
 
+@Composable
+fun mostrarEliminar(
+    tipoDispositivo: String,
+    id: String,
+    inicioViewModel: InicioViewModel,
+    onDismiss: () -> Unit,
+    navigateToInicio: () -> Unit
+) {
+
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text("Eliminar dispositivo") },
+        text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${tipoDispositivo}'?") },
+        confirmButton = {
+            Text(
+                "Confirmar",
+                modifier = Modifier.clickable {
+                    onDismiss()
+                    inicioViewModel.deleteDispositivoById(id, tipoDispositivo)
+                    navigateToInicio()
+                },
+                color = MaterialTheme.colorScheme.primary
+            )
+        },
+        dismissButton = {
+            Text(
+                "Cancelar",
+                modifier = Modifier.clickable { onDismiss() },
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+    )
+}
 
 
 

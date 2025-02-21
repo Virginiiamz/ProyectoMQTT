@@ -181,11 +181,17 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
         }
     }
 
+    fun deleteSensorTemperatura(id: String) {
+        viewModelScope.launch {
+            firestoreManager.deleteSensorTemperaturaById(id)
+        }
+    }
+
     fun deleteDispositivoById(dispositivoId: String, tipoDispositivo: String) {
         viewModelScope.launch {
             when (tipoDispositivo) {
-                "SensorLuz" -> firestoreManager.deleteSensorLuzById(dispositivoId)
-                "SensorTemperatura" -> firestoreManager.deleteSensorTemperaturaById(dispositivoId)
+                "sensorluz" -> firestoreManager.deleteSensorLuzById(dispositivoId)
+                "sensortemperatura" -> firestoreManager.deleteSensorTemperaturaById(dispositivoId)
                 "SensorMovimiento" -> firestoreManager.deleteSensorMovimientoById(dispositivoId)
                 "SensorVibracion" -> firestoreManager.deleteSensorVibracionById(dispositivoId)
                 "SensorNivelAgua" -> firestoreManager.deleteSensorNivelAguaById(dispositivoId)
