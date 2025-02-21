@@ -454,7 +454,7 @@ fun ConfiguracionSensorPresion(
                 null, // tiene que ser nulo
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
-                "Sensor",
+                "SensorPresion",
                 ubicacion,
                 R.drawable.imgsensorpresion,
                 presion
@@ -511,7 +511,7 @@ fun ConfiguracionSensorApertura(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
-                "Sensor",
+                "SensorApertura",
                 ubicacion,
                 R.drawable.imgsensorapertura,
                 estado

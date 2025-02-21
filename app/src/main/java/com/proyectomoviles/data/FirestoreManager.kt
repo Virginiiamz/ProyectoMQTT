@@ -239,7 +239,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getSensorPresion(): Flow<List<SensorPresion>> {
-        return firestore.collection(COLLECTION_SENSORES)
+        return firestore.collection(COLLECTION_SENSORPRESION)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -272,11 +272,11 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun deleteSensorPresionById(sensorPresionId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorPresionId).delete().await()
+        firestore.collection(COLLECTION_SENSORPRESION).document(sensorPresionId).delete().await()
     }
 
     fun getSensorApertura(): Flow<List<SensorApertura>> {
-        return firestore.collection(COLLECTION_SENSORES)
+        return firestore.collection(COLLECTION_SENSORAPERTURA)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -309,7 +309,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun deleteSensorAperturaById(sensorAperturaId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorAperturaId).delete().await()
+        firestore.collection(COLLECTION_SENSORAPERTURA).document(sensorAperturaId).delete().await()
     }
 
     fun getSensorCalidadAire(): Flow<List<SensorCalidadAire>> {
