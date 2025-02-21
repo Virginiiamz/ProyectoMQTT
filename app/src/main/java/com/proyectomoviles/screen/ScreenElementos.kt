@@ -67,7 +67,6 @@ fun ElementosScreen(onNavigateToConfiguracion: (String) -> Unit) {
                     is SensorTemperatura -> DispositivoCard("Sensor Temperatura",R.drawable.imgsensortermometro, onNavigateToConfiguracion)
                     is SensorMovimiento -> DispositivoCard("Sensor Movimiento", R.drawable.imgsensormovimiento, onNavigateToConfiguracion)
                     is SensorVibracion -> DispositivoCard("Sensor Vibración", R.drawable.imgsensorvibracion, onNavigateToConfiguracion)
-                    is SensorMovimiento -> DispositivoCard("Sensor Movimiento", R.drawable.imgsensormovimiento, onNavigateToConfiguracion)
                     is SensorNivelAgua -> DispositivoCard("Sensor Nivel Agua", R.drawable.imgsensornivelagua, onNavigateToConfiguracion)
                     is SensorLuz -> DispositivoCard("Sensor Luz", R.drawable.imgsensorluz, onNavigateToConfiguracion)
                     is SensorPresion -> DispositivoCard("Sensor Presión", R.drawable.imgsensorpresion, onNavigateToConfiguracion)

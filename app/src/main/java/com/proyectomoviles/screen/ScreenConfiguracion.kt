@@ -81,10 +81,10 @@ fun ConfiguracionScreen(
                 "Sensor Vibración" -> {
                     ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
                 }
-//
-//                "Sensor Nivel de Agua" -> {
-//                    ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
-//                }
+
+                "Sensor Nivel Agua" -> {
+                    ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
+                }
 //
 //                "Sensor de Presión" -> {
 //                    ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
@@ -350,7 +350,7 @@ fun ConfiguracionSensorVibracion(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
-                "Sensor",
+                "SensoVibracionr",
                 ubicacion,
                 R.drawable.imgsensorvibracion,
                 estado
@@ -369,69 +369,59 @@ fun ConfiguracionSensorVibracion(
     }
 }
 
-//@Composable
-//fun ConfiguracionSensorNivelAgua(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var litros by remember { mutableStateOf(0.00) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensornivelagua"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Sensor de Nivel de Agua")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        val sensor =
-//            SensorNivelAgua(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Sensor",
-//                ubicacion,
-//                R.drawable.imgsensornivelagua,
-//                litros
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    SensorNivelAgua(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Sensor",
-//                        ubicacion,
-//                        R.drawable.imgsensornivelagua,
-//                        litros
-//                    )
-//                )
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-//
+@Composable
+fun ConfiguracionSensorNivelAgua(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var litros by remember { mutableStateOf(0.00) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Sensor de Nivel de Agua")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        val sensor =
+            SensorNivelAgua(
+                null,
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "SensorNivelAgua",
+                ubicacion,
+                R.drawable.imgsensornivelagua,
+                litros
+            )
+        Button(
+            onClick = {
+                inicioViewModel.addSensorNivelAgua(
+                    sensor
+                )
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
+
 //@Composable
 //fun ConfiguracionSensorPresion(
 //    navigateToInicio: () -> Unit,

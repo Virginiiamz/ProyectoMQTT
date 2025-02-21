@@ -161,6 +161,7 @@ fun mostrarInformacionDispositivos(
                     "sensorluz" -> mostrarSensorLuz(valor1)
                     "sensormovimiento" -> mostrarSensorMovimiento(valor1)
                     "sensorvibracion" -> mostrarSensorVibracion(valor1)
+                    "sensornivelagua" -> mostrarSensorNivelAgua(valor1)
                 }
             }
         }
@@ -304,7 +305,7 @@ fun mostrarSensorVibracion(estado: String) {
 }
 
 @Composable
-fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
+fun mostrarSensorNivelAgua(litros: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -322,7 +323,7 @@ fun mostrarSensorNivelAgua(sensorNivAgua: SensorNivelAgua) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${sensorNivAgua.litros} L", color = Color.White, fontWeight = FontWeight.Medium)
+            Text("${litros} L", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
     }

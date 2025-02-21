@@ -23,13 +23,16 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                 firestoreManager.getSensorLuz().collect { sensorLuz ->
                     firestoreManager.getSensorMovimiento().collect { sensorMovimiento ->
                         firestoreManager.getSensorVibracion().collect { sensorVibracion ->
-                            _uiState.update { uiState ->
-                                uiState.copy(
-                                    sensorTemperatura = sensorTemperatura,
-                                    sensorLuz = sensorLuz,
-                                    sensorMovimiento = sensorMovimiento,
-                                    sensorVibracion = sensorVibracion,
-                                )
+                            firestoreManager.getSensorNivelAgua().collect { sensorNivelAgua ->
+                                _uiState.update { uiState ->
+                                    uiState.copy(
+                                        sensorTemperatura = sensorTemperatura,
+                                        sensorLuz = sensorLuz,
+                                        sensorMovimiento = sensorMovimiento,
+                                        sensorVibracion = sensorVibracion,
+                                        sensorNivelAgua = sensorNivelAgua,
+                                    )
+                                }
                             }
                         }
                     }
@@ -60,6 +63,12 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
     fun addSensorVibracion(sensorVibracion: SensorVibracion) {
         viewModelScope.launch {
             firestoreManager.addSensorVibracion(sensorVibracion)
+        }
+    }
+
+    fun addSensorNivelAgua(sensorNivelAgua: SensorNivelAgua) {
+        viewModelScope.launch {
+            firestoreManager.addSensorNivelAgua(sensorNivelAgua)
         }
     }
 
@@ -96,6 +105,7 @@ data class UiState(
     val sensorLuz: List<SensorLuz> = emptyList(),
     val sensorMovimiento: List<SensorMovimiento> = emptyList(),
     val sensorVibracion: List<SensorVibracion> = emptyList(),
+    val sensorNivelAgua: List<SensorNivelAgua> = emptyList(),
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :
