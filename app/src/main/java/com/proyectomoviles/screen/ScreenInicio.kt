@@ -89,7 +89,7 @@ fun InicioScreen(
         },
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValue ->
-        if (uiState.sensorTemperatura.isNotEmpty() || uiState.sensorLuz.isNotEmpty()) {
+        if (uiState.sensorTemperatura.isNotEmpty() || uiState.sensorLuz.isNotEmpty() || uiState.sensorMovimiento.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.padding(top = 40.dp)
             ) {
@@ -130,6 +130,27 @@ fun InicioScreen(
                                 dispositivo.ubicacion?.let { ubicacion ->
                                     mostrarInformacionDispositivos(
                                         id, "sensorluz", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
+                items(uiState.sensorMovimiento) { dispositivo ->
+                    mqttService.subscribe("sensormovimiento") {
+                        valor1 = it
+                        valor2 = ""
+                    }
+
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "sensormovimiento", nombre,
                                         imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
                                     )
                                 }

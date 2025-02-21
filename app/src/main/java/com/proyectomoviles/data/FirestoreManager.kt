@@ -46,6 +46,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_MONITOREO = "monitoreo"
         const val COLLECTION_SENSORTEMP = "sensores_temperatura"
         const val COLLECTION_SENSORLUZ = "sensores_luz"
+        const val COLLECTION_SENSORMOVIMIENTO = "sensores_movimiento"
     }
 
     // SENSORES
@@ -74,22 +75,12 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         val db = FirebaseFirestore.getInstance()
         val sensoresRef = db.collection(COLLECTION_SENSORLUZ)
 
-        // Generar ID antes de guardar el objeto
         val documentReference = sensoresRef.document() // Crea un documento vacío con ID generado
         val sensorId = documentReference.id
 
-        // Crear una nueva instancia con el ID asignado
         val sensorConId = sensorLuz.copy(id = sensorId)
 
-        // Guardar el sensor en Firestore
         documentReference.set(sensorConId).await()
-    }
-
-    suspend fun updateSensorLuz(sensorLuz: SensorLuz) {
-        val sensorLuzRef = sensorLuz.id?.let {
-            firestore.collection(COLLECTION_SENSORLUZ).document(it)
-        }
-        sensorLuzRef?.set(sensorLuz)?.await()
     }
 
     suspend fun deleteSensorLuzById(sensorLuzId: String) {
@@ -122,21 +113,10 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         val db = FirebaseFirestore.getInstance()
         val sensoresRef = db.collection(COLLECTION_SENSORTEMP)
 
-        // Agregar el sensor sin ID (Firestore lo generará)
         val documentReference = sensoresRef.add(sensorTemperatura).await()
-        val sensorId = documentReference.id  // ← Obtener el ID generado
+        val sensorId = documentReference.id
 
-        // Actualizar el documento con su propio ID
         documentReference.update("id", sensorId).await()
-        println("SensorTemperatura guardado correctamente con ID: $sensorId")
-//        firestore.collection(COLLECTION_SENSORES).add(sensorTemperatura).await()
-    }
-
-    suspend fun updateSensorTemperatura(sensorTemperatura: SensorTemperatura) {
-        val sensorTemperaturaRef = sensorTemperatura.id?.let {
-            firestore.collection(COLLECTION_SENSORTEMP).document(it)
-        }
-        sensorTemperaturaRef?.set(sensorTemperatura)?.await()
     }
 
     suspend fun deleteSensorTemperaturaById(sensorTemperaturaId: String) {
@@ -144,7 +124,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getSensorMovimiento(): Flow<List<SensorMovimiento>> {
-        return firestore.collection(COLLECTION_SENSORES)
+        return firestore.collection(COLLECTION_SENSORMOVIMIENTO)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -165,18 +145,19 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorMovimiento(sensorMovimiento: SensorMovimiento) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorMovimiento).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_SENSORMOVIMIENTO)
 
-    suspend fun updateSensorMovimiento(sensorMovimiento: SensorMovimiento) {
-        val sensorMovimientoRef = sensorMovimiento.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
-        }
-        sensorMovimientoRef?.set(sensorMovimiento)?.await()
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = sensorMovimiento.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
     suspend fun deleteSensorMovimientoById(sensorMovimientoId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorMovimientoId).delete().await()
+        firestore.collection(COLLECTION_SENSORMOVIMIENTO).document(sensorMovimientoId).delete().await()
     }
 
     fun getSensorVibracion(): Flow<List<SensorVibracion>> {

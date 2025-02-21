@@ -159,6 +159,7 @@ fun mostrarInformacionDispositivos(
                 when (tipoDispositivo) {
                     "sensortemperatura" -> mostrarSensorTemperatura(valor1, valor2)
                     "sensorluz" -> mostrarSensorLuz(valor1)
+                    "sensormovimiento" -> mostrarSensorMovimiento(valor1)
 //                    is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
 //                    is SensorVibracion -> mostrarSensorVibracion(dispositivo)
 //                    is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
@@ -209,52 +210,52 @@ fun mostrarSensorTemperatura(grados: String, humedad: String) {
 
 
 @Composable
-fun mostrarSensorMovimiento(sensorMov: SensorMovimiento) {
+fun mostrarSensorMovimiento(estado: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
         ) {
-//        if (sensorMov.estado) {
-//            Column(
-//                modifier = Modifier
-//                    .background(
-//                        Color.Green,
-//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-//                    )
-//                    .padding(8.dp)
-//                    .weight(1f)
-//                    .height(50.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                Text(
-//                    "Se ha detectado movimiento",
-//                    color = Color.White,
-//                    fontWeight = FontWeight.Medium
-//                )
-//            }
-//        } else {
-//            Column(
-//                modifier = Modifier
-//                    .background(
-//                        Color.Red,
-//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-//                    )
-//                    .padding(8.dp)
-//                    .weight(1f)
-//                    .height(50.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                Text(
-//                    "No se ha detectado movimiento",
-//                    color = Color.White,
-//                    fontWeight = FontWeight.Medium
-//                )
-//            }
-//        }
+        if (estado.toBoolean()) {
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Se ha detectado movimiento",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "No se ha detectado movimiento",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
     }
 }
 

@@ -21,11 +21,14 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
             _uiState.update { it.copy() }
             firestoreManager.getSensorTemperatura().collect { sensorTemperatura ->
                 firestoreManager.getSensorLuz().collect { sensorLuz ->
-                    _uiState.update { uiState ->
-                        uiState.copy(
-                            sensorTemperatura = sensorTemperatura,
-                            sensorLuz = sensorLuz
-                        )
+                    firestoreManager.getSensorMovimiento().collect { sensorMovimiento ->
+                        _uiState.update { uiState ->
+                            uiState.copy(
+                                sensorTemperatura = sensorTemperatura,
+                                sensorLuz = sensorLuz,
+                                sensorMovimiento = sensorMovimiento,
+                            )
+                        }
                     }
                 }
             }
@@ -45,12 +48,18 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
         }
     }
 
+    fun addSensorMovimiento(sensorMovimiento: SensorMovimiento) {
+        viewModelScope.launch {
+            firestoreManager.addSensorMovimiento(sensorMovimiento)
+        }
+    }
+
     fun deleteDispositivoById(dispositivoId: String, tipoDispositivo: String) {
         viewModelScope.launch {
             when (tipoDispositivo) {
                 "sensorluz" -> firestoreManager.deleteSensorLuzById(dispositivoId)
                 "sensortemperatura" -> firestoreManager.deleteSensorTemperaturaById(dispositivoId)
-                "SensorMovimiento" -> firestoreManager.deleteSensorMovimientoById(dispositivoId)
+                "sensormovimiento" -> firestoreManager.deleteSensorMovimientoById(dispositivoId)
                 "SensorVibracion" -> firestoreManager.deleteSensorVibracionById(dispositivoId)
                 "SensorNivelAgua" -> firestoreManager.deleteSensorNivelAguaById(dispositivoId)
                 "SensorPresion" -> firestoreManager.deleteSensorPresionById(dispositivoId)
@@ -75,7 +84,8 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
 
 data class UiState(
     val sensorTemperatura: List<SensorTemperatura> = emptyList(),
-    val sensorLuz: List<SensorLuz> = emptyList()
+    val sensorLuz: List<SensorLuz> = emptyList(),
+    val sensorMovimiento: List<SensorMovimiento> = emptyList(),
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :
