@@ -85,19 +85,18 @@ fun ConfiguracionScreen(
                 "Sensor Nivel Agua" -> {
                     ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
                 }
-//
-//                "Sensor de Presión" -> {
-//                    ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
-//                }
-//
-//                "Sensor de Apertura" -> {
-//                    ConfiguracionSensorApertura(
-//                        navigateToInicio,
-//                        mqttService,
-//                        auth,
-//                        inicioViewModel
-//                    )
-//                }
+
+                "Sensor Presión" -> {
+                    ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
+                }
+                "Sensor Apertura" -> {
+                    ConfiguracionSensorApertura(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
+                }
 //
 //                "Sensor de Calidad del Aire" -> {
 //                    ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
@@ -422,138 +421,114 @@ fun ConfiguracionSensorNivelAgua(
     }
 }
 
-//@Composable
-//fun ConfiguracionSensorPresion(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var presion by remember { mutableStateOf(0.00) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensorpresion"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Sensor de Presión")
-//        Spacer(modifier = Modifier.height(8.dp))
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        val sensor =
-//            SensorPresion(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Sensor",
-//                ubicacion,
-//                R.drawable.imgsensorpresion,
-//                presion
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    SensorPresion(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Sensor",
-//                        ubicacion,
-//                        R.drawable.imgsensorpresion,
-//                        presion
-//                    )
-//                )
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-//
-//@Composable
-//fun ConfiguracionSensorApertura(
-//    navigateToInicio: () -> Unit,
-//    mqttService: MqttService,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var estado by rememberSaveable { mutableStateOf(false) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensorapertura"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Sensor de Apertura")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Text("Estado:")
-//        Switch(
-//            checked = estado,
-//            onCheckedChange = { estado = !estado }
-//        )
-//        val sensor =
-//            SensorApertura(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Sensor",
-//                ubicacion,
-//                R.drawable.imgsensorapertura,
-//                estado
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    SensorApertura(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Sensor",
-//                        ubicacion,
-//                        R.drawable.imgsensorapertura,
-//                        estado
-//                    )
-//                )
-//                mqttService.publish("sensorapertura", estado.toString())
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-//
+@Composable
+fun ConfiguracionSensorPresion(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var presion by remember { mutableStateOf(0.00) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Sensor de Presión")
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        val sensor =
+            SensorPresion(
+                null, // tiene que ser nulo
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorpresion,
+                presion
+            )
+        Button(
+            onClick = {
+                inicioViewModel.addSensorPresion(sensor)
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
+
+@Composable
+fun ConfiguracionSensorApertura(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Sensor de Apertura")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Estado:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        val sensor =
+            SensorApertura(
+                null,
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Sensor",
+                ubicacion,
+                R.drawable.imgsensorapertura,
+                estado
+            )
+        Button(
+            onClick = {
+                mqttService.publish("sensorapertura", estado.toString())
+                inicioViewModel.addSensorApertura(sensor)
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
+
 //@Composable
 //fun ConfiguracionSensorCalidadAire(
 //    navigateToInicio: () -> Unit,

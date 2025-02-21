@@ -162,6 +162,8 @@ fun mostrarInformacionDispositivos(
                     "sensormovimiento" -> mostrarSensorMovimiento(valor1)
                     "sensorvibracion" -> mostrarSensorVibracion(valor1)
                     "sensornivelagua" -> mostrarSensorNivelAgua(valor1)
+                    "sensorpresion" -> mostrarSensorPresion(valor1)
+                    "sensorapertura" -> mostrarSensorApertura(valor1)
                 }
             }
         }
@@ -372,7 +374,7 @@ fun mostrarSensorLuz(encendido: String) {
 }
 
 @Composable
-fun mostrarSensorPresion(sensorPresion: SensorPresion) {
+fun mostrarSensorPresion(presion: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -390,51 +392,51 @@ fun mostrarSensorPresion(sensorPresion: SensorPresion) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${sensorPresion.presion} Pa", color = Color.White, fontWeight = FontWeight.Medium)
+            Text("${presion} Pa", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
     }
 }
 
 @Composable
-fun mostrarSensorApertura(sensorApertura: SensorApertura) {
+fun mostrarSensorApertura(estado: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
 
         ) {
-//        if (sensorApertura.estado) {
-//            Column(
-//                modifier = Modifier
-//                    .background(
-//                        Color.Green,
-//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-//                    )
-//                    .padding(8.dp)
-//                    .weight(1f)
-//                    .height(50.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                Text("La puerta está abierta", color = Color.White, fontWeight = FontWeight.Medium)
-//            }
-//        } else {
-//            Column(
-//                modifier = Modifier
-//                    .background(
-//                        Color.Red,
-//                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
-//                    )
-//                    .padding(8.dp)
-//                    .weight(1f)
-//                    .height(50.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                Text("La puerta está cerrada", color = Color.White, fontWeight = FontWeight.Medium)
-//            }
-//        }
+        if (estado.toBoolean()) {
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.Green,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("La puerta está abierta", color = Color.White, fontWeight = FontWeight.Medium)
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .background(
+                        Color.Red,
+                        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
+                    )
+                    .padding(8.dp)
+                    .weight(1f)
+                    .height(50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("La puerta está cerrada", color = Color.White, fontWeight = FontWeight.Medium)
+            }
+        }
     }
 }
 

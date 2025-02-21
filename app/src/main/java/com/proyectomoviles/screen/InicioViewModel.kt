@@ -24,14 +24,20 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                     firestoreManager.getSensorMovimiento().collect { sensorMovimiento ->
                         firestoreManager.getSensorVibracion().collect { sensorVibracion ->
                             firestoreManager.getSensorNivelAgua().collect { sensorNivelAgua ->
-                                _uiState.update { uiState ->
-                                    uiState.copy(
-                                        sensorTemperatura = sensorTemperatura,
-                                        sensorLuz = sensorLuz,
-                                        sensorMovimiento = sensorMovimiento,
-                                        sensorVibracion = sensorVibracion,
-                                        sensorNivelAgua = sensorNivelAgua,
-                                    )
+                                firestoreManager.getSensorPresion().collect { sensorPresion ->
+                                    firestoreManager.getSensorApertura().collect { sensorApertura ->
+                                        _uiState.update { uiState ->
+                                            uiState.copy(
+                                                sensorTemperatura = sensorTemperatura,
+                                                sensorLuz = sensorLuz,
+                                                sensorMovimiento = sensorMovimiento,
+                                                sensorVibracion = sensorVibracion,
+                                                sensorNivelAgua = sensorNivelAgua,
+                                                sensorPresion = sensorPresion,
+                                                sensorApertura = sensorApertura,
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -72,6 +78,18 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
         }
     }
 
+    fun addSensorPresion(sensorPresion: SensorPresion) {
+        viewModelScope.launch {
+            firestoreManager.addSensorPresion(sensorPresion)
+        }
+    }
+
+    fun addSensorApertura(sensorApertura: SensorApertura) {
+        viewModelScope.launch {
+            firestoreManager.addSensorApertura(sensorApertura)
+        }
+    }
+
     fun deleteDispositivoById(dispositivoId: String, tipoDispositivo: String) {
         viewModelScope.launch {
             when (tipoDispositivo) {
@@ -106,6 +124,11 @@ data class UiState(
     val sensorMovimiento: List<SensorMovimiento> = emptyList(),
     val sensorVibracion: List<SensorVibracion> = emptyList(),
     val sensorNivelAgua: List<SensorNivelAgua> = emptyList(),
+    val sensorPresion: List<SensorPresion> = emptyList(),
+    val sensorApertura: List<SensorApertura> = emptyList(),
+//    val sensorCalidadAire: List<SensorCalidadAire> = emptyList(),
+//    val actuadorValvula: List<ActuadorValvula> = emptyList(),
+//    val cerraduraElectronica: List<CerraduraElectronica> = emptyList(),
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :
