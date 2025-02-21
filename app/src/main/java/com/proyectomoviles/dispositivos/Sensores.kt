@@ -50,6 +50,7 @@ data class SensorNivelAgua(
     val imagen: Int?,
     val litros: Double?
 ): Dispositivo()
+
 data class SensorPresion(
     var id: String ?= null,
     var userId: String?,

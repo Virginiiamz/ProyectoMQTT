@@ -49,6 +49,8 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_SENSORMOVIMIENTO = "sensores_movimiento"
         const val COLLECTION_SENSORVIBRACION = "sensores_vibracion"
         const val COLLECTION_SENSORNIVELAGUA = "sensores_nivel_agua"
+        const val COLLECTION_SENSORPRESION = "sensores_presion"
+        const val COLLECTION_SENSORAPERTURA = "sensores_apertura"
     }
 
     // SENSORES
@@ -258,14 +260,15 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorPresion(sensorPresion: SensorPresion) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorPresion).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_SENSORPRESION)
 
-    suspend fun updateSensorPresion(sensorPresion: SensorPresion) {
-        val sensorPresionRef = sensorPresion.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
-        }
-        sensorPresionRef?.set(sensorPresion)?.await()
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = sensorPresion.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
     suspend fun deleteSensorPresionById(sensorPresionId: String) {
@@ -294,14 +297,15 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorApertura(sensorApertura: SensorApertura) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorApertura).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_SENSORAPERTURA)
 
-    suspend fun updateSensorApertura(sensorApertura: SensorApertura) {
-        val sensorAperturaRef = sensorApertura.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
-        }
-        sensorAperturaRef?.set(sensorApertura)?.await()
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = sensorApertura.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
     suspend fun deleteSensorAperturaById(sensorAperturaId: String) {
