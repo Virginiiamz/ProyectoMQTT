@@ -16,49 +16,8 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
     val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
-    private val _sensorTemperatura = MutableStateFlow<SensorTemperatura?>(null)
-    val sensorTemperatura: StateFlow<SensorTemperatura?> = _sensorTemperatura
-
-    private val _sensorLuz = MutableStateFlow<SensorLuz?>(null)
-    val sensorLuz: StateFlow<SensorLuz?> = _sensorLuz
-
-    val dispositivo = listOf(
-        firestoreManager.getSensorLuz(),
-        firestoreManager.getSensorTemperatura(),
-        firestoreManager.getSensorMovimiento(),
-        firestoreManager.getSensorVibracion(),
-        firestoreManager.getSensorNivelAgua(),
-        firestoreManager.getSensorPresion(),
-        firestoreManager.getSensorApertura(),
-        firestoreManager.getSensorCalidadAire(),
-        firestoreManager.getActuadorValvula(),
-        firestoreManager.getCerraduraElectronica(),
-        firestoreManager.getControladorIluminacion(),
-        firestoreManager.getControladorClima(),
-        firestoreManager.getMedidorConsumoAgua(),
-        firestoreManager.getMedidorGas()
-    )
-
     init {
         viewModelScope.launch {
-            // Listado de flujos de sensores
-            val sensoresFlujos = listOf(
-                firestoreManager.getSensorLuz(),
-                firestoreManager.getSensorTemperatura(),
-                firestoreManager.getSensorMovimiento(),
-                firestoreManager.getSensorVibracion(),
-                firestoreManager.getSensorNivelAgua(),
-                firestoreManager.getSensorPresion(),
-                firestoreManager.getSensorApertura(),
-                firestoreManager.getSensorCalidadAire(),
-                firestoreManager.getActuadorValvula(),
-                firestoreManager.getCerraduraElectronica(),
-                firestoreManager.getControladorIluminacion(),
-                firestoreManager.getControladorClima(),
-                firestoreManager.getMedidorConsumoAgua(),
-                firestoreManager.getMedidorGas()
-            )
-
             _uiState.update { it.copy() }
             firestoreManager.getSensorTemperatura().collect { sensorTemperatura ->
                 firestoreManager.getSensorLuz().collect { sensorLuz ->
@@ -69,59 +28,9 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                         )
                     }
                 }
-//                _uiState.update { uiState ->
-//                    uiState.copy(
-//                        sensorTemperatura = sensorTemperatura
-//                    )
-//                }
             }
 
         }
-//        fetchDispositivos()
-//        viewModelScope.launch {
-//            _uiState.update { it.copy() }
-//            dispositivo.map { dispositivo ->
-//                dispositivo.collect { tipoDispositivo ->
-//                    _uiState.update { uiState ->
-//                        uiState.copy(
-//                            dispositivos = tipoDispositivo
-//                        )
-//                    }
-//                }
-//            }
-
-//            _uiState.update { it.copy() }
-//
-//            // Combinar todos los flujos en una lista
-//            val sensoresFlujos = listOf(
-//                firestoreManager.getSensorLuz(),
-//                firestoreManager.getSensorTemperatura(),
-//                firestoreManager.getSensorMovimiento(),
-//                firestoreManager.getSensorVibracion(),
-//                firestoreManager.getSensorNivelAgua(),
-//                firestoreManager.getSensorPresion(),
-//                firestoreManager.getSensorApertura(),
-//                firestoreManager.getSensorCalidadAire(),
-//                firestoreManager.getActuadorValvula(),
-//                firestoreManager.getCerraduraElectronica(),
-//                firestoreManager.getControladorIluminacion(),
-//                firestoreManager.getControladorClima(),
-//                firestoreManager.getMedidorConsumoAgua(),
-//                firestoreManager.getMedidorGas()
-//            )
-//
-//            // Combinar todos los sensores en una lista
-//            sensoresFlujos.forEach { flow ->
-//                flow.collect { tipoDispositivo ->
-//                    _uiState.update { uiState ->
-//                        uiState.copy(
-//                            dispositivos = uiState.dispositivos + tipoDispositivo // Agregar sin sobrescribir
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//        }
     }
 
     fun addSensorTemperatura(sensorTemperatura: SensorTemperatura) {
@@ -133,57 +42,6 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
     fun addSensorLuz(sensorLuz: SensorLuz) {
         viewModelScope.launch {
             firestoreManager.addSensorLuz(sensorLuz)
-        }
-    }
-
-    fun addDispositivo(dispositivo: Dispositivo) {
-        viewModelScope.launch {
-            when (dispositivo) {
-                is SensorLuz -> firestoreManager.addSensorLuz(dispositivo)
-                is SensorTemperatura -> firestoreManager.addSensorTemperatura(dispositivo)
-                is SensorMovimiento -> firestoreManager.addSensorMovimiento(dispositivo)
-                is SensorVibracion -> firestoreManager.addSensorVibracion(dispositivo)
-                is SensorNivelAgua -> firestoreManager.addSensorNivelAgua(dispositivo)
-                is SensorPresion -> firestoreManager.addSensorPresion(dispositivo)
-                is SensorApertura -> firestoreManager.addSensorApertura(dispositivo)
-                is SensorCalidadAire -> firestoreManager.addSensorCalidadAire(dispositivo)
-                is ActuadorValvula -> firestoreManager.addActuadorValvula(dispositivo)
-                is CerraduraElectronica -> firestoreManager.addCerraduraElectronica(dispositivo)
-                is ControladorIluminacion -> firestoreManager.addControladorIluminacion(dispositivo)
-                is ControladorClima -> firestoreManager.addControladorClima(dispositivo)
-                is MedidorConsumoAgua -> firestoreManager.addMedidorConsumoAgua(dispositivo)
-                is MedidorGas -> firestoreManager.addMedidorGas(dispositivo)
-            }
-        }
-    }
-
-    fun updateDispositivo(dispositivo: Dispositivo) {
-        viewModelScope.launch {
-            when (dispositivo) {
-                is SensorLuz -> firestoreManager.updateSensorLuz(dispositivo)
-                is SensorTemperatura -> firestoreManager.updateSensorTemperatura(dispositivo)
-                is SensorMovimiento -> firestoreManager.updateSensorMovimiento(dispositivo)
-                is SensorVibracion -> firestoreManager.updateSensorVibracion(dispositivo)
-                is SensorNivelAgua -> firestoreManager.updateSensorNivelAgua(dispositivo)
-                is SensorPresion -> firestoreManager.updateSensorPresion(dispositivo)
-                is SensorApertura -> firestoreManager.updateSensorApertura(dispositivo)
-                is SensorCalidadAire -> firestoreManager.updateSensorCalidadAire(dispositivo)
-                is ActuadorValvula -> firestoreManager.updateActuadorValvula(dispositivo)
-                is CerraduraElectronica -> firestoreManager.updateCerraduraElectronica(dispositivo)
-                is ControladorIluminacion -> firestoreManager.updateControladorIluminacion(
-                    dispositivo
-                )
-
-                is ControladorClima -> firestoreManager.updateControladorClima(dispositivo)
-                is MedidorConsumoAgua -> firestoreManager.updateMedidorConsumoAgua(dispositivo)
-                is MedidorGas -> firestoreManager.updateMedidorGas(dispositivo)
-            }
-        }
-    }
-
-    fun deleteSensorTemperatura(id: String) {
-        viewModelScope.launch {
-            firestoreManager.deleteSensorTemperaturaById(id)
         }
     }
 
