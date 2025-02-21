@@ -76,142 +76,12 @@ fun InicioScreen(
     mqttService: MqttService,
     firestoreManager: FirestoreManager
 ) {
-    val listaDispositivo = RepositoryList.listaDispositivos as List<Dispositivo>
     val factory = InicioViewModelFactory(firestoreManager)
     val inicioViewModel = viewModel(InicioViewModel::class.java, factory = factory)
     val uiState by inicioViewModel.uiState.collectAsState()
 
-    var contadorSensor = 0
-    var contadorActuador = 0
-    var contadorMonitoreo = 0
-    var listaSensores: List<Dispositivo> = mutableListOf()
-    var listaActuadores: List<Dispositivo> = mutableListOf()
-    var listaMonitoreo: List<Dispositivo> = mutableListOf()
-
     var valor1 by rememberSaveable { mutableStateOf("") }
     var valor2 by rememberSaveable { mutableStateOf("") }
-
-    when (TipoDispositivoCreado.tipoDispositivoCreado) {
-        "sensortemperatura" -> {
-//            mqttService.subscribe("") {
-//                valor1 = it
-//            }
-//
-//            mqttService.subscribe("") {
-//                valor2 = it
-//            }
-        }
-
-        "sensorluz" -> {
-//            mqttService.subscribe("") {
-//                valor1 = it
-//            }
-//            valor2 = null.toString()
-        }
-
-        "sensormovimiento" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "sensorvibracion" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "sensornivelagua" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "sensorpresion" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "sensorapertura" -> {
-            mqttService.subscribe("sensorapertura") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "sensorcalidadaire" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "actuadorvalvula" -> {
-            mqttService.subscribe("actuadorvalvula") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "cerraduraelectronica" -> {
-            mqttService.subscribe("cerraduraelectronica") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "controladoriluminacion" -> {
-            mqttService.subscribe("controladoriluminacion") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "controladorclima" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            mqttService.subscribe("") {
-                valor2 = it
-            }
-        }
-
-        "consumoagua" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-
-        "medidorgas" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
-        }
-    }
-
-
-    listaDispositivo.forEach { dispositivo ->
-//        if (dispositivo.tipo == "Sensor") {
-//            contadorSensor++
-//            listaSensores += dispositivo
-//        }
-//        if (dispositivo.tipo == "Actuador") {
-//            contadorActuador++
-//            listaActuadores += dispositivo
-//        }
-//        if (dispositivo.tipo == "Monitoreo") {
-//            contadorMonitoreo++
-//            listaMonitoreo += dispositivo
-//        }
-    }
-
 
     Scaffold(
         floatingActionButton = {
@@ -219,7 +89,7 @@ fun InicioScreen(
         },
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValue ->
-        if (uiState.sensorTemperatura.isNotEmpty()) {
+        if (uiState.sensorTemperatura.isNotEmpty() || uiState.sensorLuz.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.padding(top = 40.dp)
             ) {
@@ -228,7 +98,6 @@ fun InicioScreen(
                 }
 
                 items(uiState.sensorTemperatura) { dispositivo ->
-                    Text(dispositivo.toString())
                     when (dispositivo) {
                         is SensorTemperatura -> {
                             val valor1 = dispositivo.grados.toString()
@@ -254,7 +123,6 @@ fun InicioScreen(
                 }
 
                 items(uiState.sensorLuz) { dispositivo ->
-                    Text(dispositivo.toString())
                     when (dispositivo) {
                         is SensorLuz -> {
                             valor1 = dispositivo.estadoEncendido.toString()
@@ -276,30 +144,6 @@ fun InicioScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
-//            Card(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(100.dp)
-//                    .padding(16.dp),
-//                elevation = CardDefaults.elevatedCardElevation(12.dp),
-//                shape = RoundedCornerShape(8.dp),
-//                colors = CardDefaults.cardColors(
-//                    containerColor = Color.LightGray,
-//                    contentColor = Color.Black
-//                ),
-//            ) {
-//                Row(
-//                    modifier = Modifier.fillMaxSize(),
-//                    horizontalArrangement = Arrangement.Center,
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
-//                }
-//
-//            }
-
-
-
         } else {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
@@ -310,79 +154,30 @@ fun InicioScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
 
                 ) {
-                if (contadorSensor > 0) {
-                    item {
-                        Text(
-                            "Sensores",
-                            modifier = Modifier.padding(top = 16.dp, bottom = 6.dp),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp
-                        )
-                    }
-
-                    items(listaSensores) { dispositivo ->
-
-                        CargarSensores(dispositivo, navigateToInicio, valor1, valor2)
-                    }
-
-                    if (contadorMonitoreo == 0 && contadorActuador == 0) {
-                        item {
-                            Spacer(
-                                modifier = Modifier
-                                    .height(60.dp)
-                                    .fillMaxWidth()
-                            )
+                item {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .padding(16.dp),
+                        elevation = CardDefaults.elevatedCardElevation(12.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.LightGray,
+                            contentColor = Color.Black
+                        ),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
                         }
+
                     }
                 }
 
-                if (contadorActuador > 0) {
-                    item {
-                        Text(
-                            "Actuadores",
-                            modifier = Modifier.padding(top = 16.dp, bottom = 6.dp),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp
-                        )
-                    }
-                    items(listaActuadores) { dispositivo ->
-                        CargarActuadores(dispositivo, navigateToInicio)
-                    }
-
-                    if (contadorSensor == 0 && contadorMonitoreo == 0) {
-                        item {
-                            Spacer(
-                                modifier = Modifier
-                                    .height(60.dp)
-                                    .fillMaxWidth()
-                            )
-                        }
-                    }
-                }
-
-                if (contadorMonitoreo > 0) {
-                    item {
-                        Text(
-                            "Monitoreo y control complejo",
-                            modifier = Modifier.padding(top = 16.dp, bottom = 6.dp),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp
-                        )
-                    }
-                    items(listaMonitoreo) { dispositivo ->
-                        CargarMonitoreo(dispositivo, navigateToInicio)
-                    }
-
-                    if (contadorSensor == 0 && contadorActuador == 0) {
-                        item {
-                            Spacer(
-                                modifier = Modifier
-                                    .height(60.dp)
-                                    .fillMaxWidth()
-                            )
-                        }
-                    }
-                }
             }
         }
 
@@ -401,312 +196,29 @@ fun MyFloatingActionButton(navigateToElementos: () -> Unit) {
     }
 }
 
-@Composable
-fun CargarSensores(
-    dispositivo: Any,
-    navigateToInicio: () -> Unit,
-    valor1: String,
-    valor2: String
-) {
-    val showDialog = remember { mutableStateOf(false) }
-    Box(
-        modifier = Modifier
-            .width(400.dp)
-            .border(
-                border = BorderStroke(2.dp, Color.LightGray),
-                shape = RoundedCornerShape(8.dp),
-            )
-    ) {
-        // Icono de cruz gris
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
-                contentDescription = "Cerrar",
-                tint = Color.Gray,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        showDialog.value = true
-                    }
-            )
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.padding(6.dp)
-                    ) {
-                        mostrarImagenByDispositivo(dispositivo)
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(125.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-//                    mostrarInformacionDispositivos(dispositivo)
-                }
-            }
-
-            /*Column {
-                when (dispositivo) {
-                    is SensorTemperatura -> mostrarSensorTemperatura(dispositivo, valor1, valor2)
-                    is SensorMovimiento -> mostrarSensorMovimiento(dispositivo)
-                    is SensorVibracion -> mostrarSensorVibracion(dispositivo)
-                    is SensorNivelAgua -> mostrarSensorNivelAgua(dispositivo)
-                    is SensorLuz -> mostrarSensorLuz(dispositivo, valor1)
-                    is SensorPresion -> mostrarSensorPresion(dispositivo)
-                    is SensorApertura -> mostrarSensorApertura(dispositivo)
-                    is SensorCalidadAire -> mostrarSensorCalidadAire(dispositivo)
-                }
-            }*/
-        }
-    }
-    if (showDialog.value) {
-//        AlertDialog(
-//            onDismissRequest = { showDialog.value = false },
-//            title = { Text("Eliminar dispositivo") },
-//            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
-//            confirmButton = {
-//                Text(
-//                    "Confirmar",
-//                    modifier = Modifier.clickable {
-//                        RepositoryList.removeDispositivos(dispositivo)
-//                        showDialog.value = false
-//                        navigateToInicio()
-//                    },
-//                    color = MaterialTheme.colorScheme.primary
-//                )
-//            },
-//            dismissButton = {
-//                Text(
-//                    "Cancelar",
-//                    modifier = Modifier.clickable { showDialog.value = false },
-//                    color = MaterialTheme.colorScheme.secondary
-//                )
-//            }
-//        )
-    }
-
-}
-
-
-@Composable
-fun CargarActuadores(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
-    val showDialog = remember { mutableStateOf(false) }
-    Box(
-        modifier = Modifier
-            .width(400.dp)
-            .border(
-                border = BorderStroke(2.dp, Color.LightGray),
-                shape = RoundedCornerShape(8.dp),
-            )
-    ) {
-        // Icono de cruz gris
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
-                contentDescription = "Cerrar",
-                tint = Color.Gray,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        showDialog.value = true
-                    }
-            )
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.padding(6.dp)
-                    ) {
-                        mostrarImagenByDispositivo(dispositivo)
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(125.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-//                    mostrarInformacionDispositivos(dispositivo)
-                }
-            }
-
-//            Column {
-//                when (dispositivo) {
-//                    is ActuadorValvula -> mostrarActuadorValvula(dispositivo)
-//                    is CerraduraElectronica -> mostrarActuadorCerradura(dispositivo)
-//                    is ControladorIluminacion -> mostrarControladorIluminacion(dispositivo)
-//                }
-//            }
-        }
-    }
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = { showDialog.value = false },
-            title = { Text("Eliminar dispositivo") },
-            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
-            confirmButton = {
-                Text(
-                    "Confirmar",
-                    modifier = Modifier.clickable {
-                        RepositoryList.removeDispositivos(dispositivo)
-                        showDialog.value = false
-                        navigateToInicio()
-                    },
-                    color = MaterialTheme.colorScheme.primary
-                )
-            },
-            dismissButton = {
-                Text(
-                    "Cancelar",
-                    modifier = Modifier.clickable { showDialog.value = false },
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-        )
-    }
-}
-
-
-@Composable
-fun CargarMonitoreo(dispositivo: Dispositivo, navigateToInicio: () -> Unit) {
-    val showDialog = remember { mutableStateOf(false) }
-    Box(
-        modifier = Modifier
-            .width(400.dp)
-            .border(
-                border = BorderStroke(2.dp, Color.LightGray),
-                shape = RoundedCornerShape(8.dp),
-            )
-    ) {
-        // Icono de cruz gris
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Close, // Usa un ícono adecuado, como "Close"
-                contentDescription = "Cerrar",
-                tint = Color.Gray,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        showDialog.value = true
-                    }
-            )
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.padding(6.dp)
-                    ) {
-                        mostrarImagenByDispositivo(dispositivo)
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(125.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-//                    mostrarInformacionDispositivos(dispositivo)
-                }
-            }
-
-//            Column {
-//                when (dispositivo) {
-//                    is ControladorClima -> mostrarControladorClima(dispositivo)
-//                    is MedidorConsumoAgua -> mostrarConsumoAgua(dispositivo)
-//                    is MedidorGas -> mostrarConsumoGas(dispositivo)
-//                }
-//            }
-        }
-    }
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = { showDialog.value = false },
-            title = { Text("Eliminar dispositivo") },
-            text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
-            confirmButton = {
-                Text(
-                    "Confirmar",
-                    modifier = Modifier.clickable {
-                        RepositoryList.removeDispositivos(dispositivo)
-                        showDialog.value = false
-                        navigateToInicio()
-                    },
-                    color = MaterialTheme.colorScheme.primary
-                )
-            },
-            dismissButton = {
-                Text(
-                    "Cancelar",
-                    modifier = Modifier.clickable { showDialog.value = false },
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-        )
-    }
-}
+//AlertDialog(
+//onDismissRequest = { showDialog.value = false },
+//title = { Text("Eliminar dispositivo") },
+//text = { Text("¿Estás seguro de que deseas eliminar el dispositivo '${dispositivo}'?") },
+//confirmButton = {
+//    Text(
+//        "Confirmar",
+//        modifier = Modifier.clickable {
+//            RepositoryList.removeDispositivos(dispositivo)
+//            showDialog.value = false
+//            navigateToInicio()
+//        },
+//        color = MaterialTheme.colorScheme.primary
+//    )
+//},
+//dismissButton = {
+//    Text(
+//        "Cancelar",
+//        modifier = Modifier.clickable { showDialog.value = false },
+//        color = MaterialTheme.colorScheme.secondary
+//    )
+//}
+//)
 
 
 

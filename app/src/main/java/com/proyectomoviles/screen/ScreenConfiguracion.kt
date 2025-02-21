@@ -227,8 +227,6 @@ fun ConfiguracionSensorLuz(
     var ubicacion by remember { mutableStateOf("") }
     var encendido by rememberSaveable { mutableStateOf(false) }
 
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensorluz"
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
