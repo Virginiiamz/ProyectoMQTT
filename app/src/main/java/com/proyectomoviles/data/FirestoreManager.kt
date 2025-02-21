@@ -52,6 +52,8 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_SENSORPRESION = "sensores_presion"
         const val COLLECTION_SENSORAPERTURA = "sensores_apertura"
         const val COLLECTION_SENSORCALIDADAIRE = "sensores_calidad_aire"
+        const val COLLECTION_ACTUADORVALVULA = "actuadores_valvula"
+
     }
 
     // SENSORES
@@ -354,7 +356,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
 
     // ACTUADORES
     fun getActuadorValvula(): Flow<List<ActuadorValvula>> {
-        return firestore.collection(COLLECTION_ACTUADORES)
+        return firestore.collection(COLLECTION_ACTUADORVALVULA)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -375,18 +377,21 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addActuadorValvula(actuadorValvula: ActuadorValvula) {
-        firestore.collection(COLLECTION_ACTUADORES).add(actuadorValvula).await()
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_ACTUADORVALVULA)
+
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = actuadorValvula.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
-    suspend fun updateActuadorValvula(actuadorValvula: ActuadorValvula) {
-        val actuadorValvulaRef = actuadorValvula.id?.let {
-            firestore.collection(COLLECTION_ACTUADORES).document(it)
-        }
-        actuadorValvulaRef?.set(actuadorValvula)?.await()
-    }
+
 
     suspend fun deleteActuadorValvulaById(actuadorValvulaId: String) {
-        firestore.collection(COLLECTION_ACTUADORES).document(actuadorValvulaId).delete().await()
+        firestore.collection(COLLECTION_ACTUADORVALVULA).document(actuadorValvulaId).delete().await()
     }
 
     fun getCerraduraElectronica(): Flow<List<CerraduraElectronica>> {

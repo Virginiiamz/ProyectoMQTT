@@ -265,6 +265,27 @@ fun InicioScreen(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
+
+                items(uiState.actuadorValvula) { dispositivo ->
+                    mqttService.subscribe("actuadorvalvula") {
+                        valor1 = it
+                        valor2 = ""
+                    }
+
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "actuadorvalvula", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         } else {
             LazyVerticalGrid(

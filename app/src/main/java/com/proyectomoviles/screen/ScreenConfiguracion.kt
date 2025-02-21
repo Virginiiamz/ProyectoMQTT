@@ -101,15 +101,15 @@ fun ConfiguracionScreen(
                 "Sensor Calidad Aire" -> {
                     ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
                 }
-//
-//                "Actuador Valvula" -> {
-//                    ConfiguracionActuadorValvula(
-//                        navigateToInicio,
-//                        mqttService,
-//                        auth,
-//                        inicioViewModel
-//                    )
-//                }
+
+                "Actuador Válvula" -> {
+                    ConfiguracionActuadorValvula(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
+                }
 //
 //                "Cerradura Electrónica" -> {
 //                    ConfiguracionCerraduraElectronica(
@@ -587,75 +587,68 @@ fun ConfiguracionSensorCalidadAire(
 //
 ////ACTUADORES:
 //
-//@Composable
-//fun ConfiguracionActuadorValvula(
-//    navigateToInicio: () -> Unit,
-//    mqttService: MqttService,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var estado by rememberSaveable { mutableStateOf(false) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "actuadorvalvula"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Actuador de Válvula")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Text("Activo:")
-//        Switch(
-//            checked = estado,
-//            onCheckedChange = { estado = !estado }
-//        )
-//        val actuador =
-//            ActuadorValvula(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Actuador",
-//                ubicacion,
-//                R.drawable.imgactuadorvalvula,
-//                estado
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    ActuadorValvula(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Actuador",
-//                        ubicacion,
-//                        R.drawable.imgactuadorvalvula,
-//                        estado
-//                    )
-//                )
-//                mqttService.publish("actuadorvalvula", estado.toString())
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
+@Composable
+fun ConfiguracionActuadorValvula(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "actuadorvalvula"
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Actuador de Válvula")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Activo:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        val actuador =
+            ActuadorValvula(
+                null,
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "ActuadorValvula",
+                ubicacion,
+                R.drawable.imgactuadorvalvula,
+                estado
+            )
+        Button(
+            onClick = {
+                mqttService.publish("actuadorvalvula", estado.toString())
+                inicioViewModel.addActuadorValvula(actuador
+                    )
+                navigateToInicio()
+
+
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 //
 //@Composable
 //fun ConfiguracionCerraduraElectronica(

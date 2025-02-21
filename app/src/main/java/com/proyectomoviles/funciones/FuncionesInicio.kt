@@ -165,6 +165,7 @@ fun mostrarInformacionDispositivos(
                     "sensorpresion" -> mostrarSensorPresion(valor1)
                     "sensorapertura" -> mostrarSensorApertura(valor1)
                     "sensorcalidadaire" -> mostrarSensorCalidadAire(valor1)
+                    "actuadorvalvula" -> mostrarActuadorValvula(valor1)
                 }
             }
         }
@@ -513,8 +514,8 @@ fun mostrarSensorCalidadAire(tipoCalidad: String) {
 }
 
 @Composable
-fun mostrarActuadorValvula(ActValvula: ActuadorValvula) {
-    var estadoActuador by remember { mutableStateOf(ActValvula.activo) }
+fun mostrarActuadorValvula(estado: String) {
+    var estadoActuador by remember { mutableStateOf(estado.toBoolean()) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -535,16 +536,16 @@ fun mostrarActuadorValvula(ActValvula: ActuadorValvula) {
 
 
             ) {
-//            Switch(
-//                checked = estadoActuador,
-//                onCheckedChange = { estadoActuador = !estadoActuador },
-//                colors = SwitchDefaults.colors(
-//                    checkedThumbColor = Color.White,
-//                    checkedTrackColor = Color.Green,
-//                    uncheckedThumbColor = Color.White,
-//                    uncheckedTrackColor = Color.Red
-//                )
-//            )
+            Switch(
+                checked = estadoActuador,
+                onCheckedChange = { estadoActuador = !estadoActuador },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Green,
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = Color.Red
+                )
+            )
         }
     }
 }
