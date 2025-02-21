@@ -160,10 +160,10 @@ fun InicioScreen(
         }
 
         "sensorluz" -> {
-            mqttService.subscribe("") {
-                valor1 = it
-            }
-            valor2 = null.toString()
+//            mqttService.subscribe("") {
+//                valor1 = it
+//            }
+//            valor2 = null.toString()
         }
 
         "sensormovimiento" -> {
