@@ -51,6 +51,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_SENSORNIVELAGUA = "sensores_nivel_agua"
         const val COLLECTION_SENSORPRESION = "sensores_presion"
         const val COLLECTION_SENSORAPERTURA = "sensores_apertura"
+        const val COLLECTION_SENSORCALIDADAIRE = "sensores_calidad_aire"
     }
 
     // SENSORES
@@ -313,7 +314,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getSensorCalidadAire(): Flow<List<SensorCalidadAire>> {
-        return firestore.collection(COLLECTION_SENSORES)
+        return firestore.collection(COLLECTION_SENSORCALIDADAIRE)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -334,18 +335,20 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
-        firestore.collection(COLLECTION_SENSORES).add(sensorCalidadAire).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_SENSORCALIDADAIRE)
 
-    suspend fun updateSensorCalidadAire(sensorCalidadAire: SensorCalidadAire) {
-        val sensorCalidadAireRef = sensorCalidadAire.id?.let {
-            firestore.collection(COLLECTION_SENSORES).document(it)
-        }
-        sensorCalidadAireRef?.set(sensorCalidadAire)?.await()
-    }
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = sensorCalidadAire.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()    }
+
+
 
     suspend fun deleteSensorCalidadAireById(sensorCalidadAireId: String) {
-        firestore.collection(COLLECTION_SENSORES).document(sensorCalidadAireId).delete().await()
+        firestore.collection(COLLECTION_SENSORCALIDADAIRE).document(sensorCalidadAireId).delete().await()
     }
 
 

@@ -89,7 +89,7 @@ fun InicioScreen(
         },
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValue ->
-        if (uiState.sensorPresion.isNotEmpty() || uiState.sensorApertura.isNotEmpty() || uiState.sensorTemperatura.isNotEmpty() || uiState.sensorLuz.isNotEmpty() || uiState.sensorMovimiento.isNotEmpty() || uiState.sensorVibracion.isNotEmpty() || uiState.sensorNivelAgua.isNotEmpty()) {
+        if (uiState.sensorPresion.isNotEmpty() || uiState.sensorApertura.isNotEmpty() || uiState.sensorTemperatura.isNotEmpty() || uiState.sensorLuz.isNotEmpty() || uiState.sensorMovimiento.isNotEmpty() || uiState.sensorVibracion.isNotEmpty() || uiState.sensorNivelAgua.isNotEmpty() || uiState.sensorCalidadAire.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.padding(top = 40.dp)
             ) {
@@ -236,6 +236,27 @@ fun InicioScreen(
                                 dispositivo.ubicacion?.let { ubicacion ->
                                     mostrarInformacionDispositivos(
                                         id, "sensorapertura", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
+                items(uiState.sensorCalidadAire) { dispositivo ->
+                    mqttService.subscribe("sensorcalidadaire") {
+                        valor1 = it
+                        valor2 = ""
+                    }
+
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "sensorcalidadaire", nombre,
                                         imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
                                     )
                                 }

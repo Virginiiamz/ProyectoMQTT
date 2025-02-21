@@ -97,10 +97,10 @@ fun ConfiguracionScreen(
                         inicioViewModel
                     )
                 }
-//
-//                "Sensor de Calidad del Aire" -> {
-//                    ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
-//                }
+
+                "Sensor Calidad Aire" -> {
+                    ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
+                }
 //
 //                "Actuador Valvula" -> {
 //                    ConfiguracionActuadorValvula(
@@ -529,69 +529,61 @@ fun ConfiguracionSensorApertura(
     }
 }
 
-//@Composable
-//fun ConfiguracionSensorCalidadAire(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var calidad by remember { mutableStateOf("") }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "sensorcalidadaire"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//
-//        Text(text = "Configuración del Sensor de Calidad del Aire")
-//        Spacer(modifier = Modifier.height(16.dp))
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
-//        val sensor =
-//            SensorCalidadAire(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Sensor",
-//                ubicacion,
-//                R.drawable.imgsensorcalidadaire,
-//                calidad
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    SensorCalidadAire(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Sensor",
-//                        ubicacion,
-//                        R.drawable.imgsensorcalidadaire,
-//                        calidad
-//                    )
-//                )
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
+@Composable
+fun ConfiguracionSensorCalidadAire(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var calidad by remember { mutableStateOf("") }
+
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(text = "Configuración del Sensor de Calidad del Aire")
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        val sensor =
+            SensorCalidadAire(
+                null,
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "SensorCalidadAire",
+                ubicacion,
+                R.drawable.imgsensorcalidadaire,
+                calidad
+            )
+        Button(
+            onClick = {
+
+                inicioViewModel.addSensorCalidadAire(
+                    sensor
+                )
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 //
 ////ACTUADORES:
 //

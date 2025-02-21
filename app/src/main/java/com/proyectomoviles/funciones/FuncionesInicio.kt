@@ -164,6 +164,7 @@ fun mostrarInformacionDispositivos(
                     "sensornivelagua" -> mostrarSensorNivelAgua(valor1)
                     "sensorpresion" -> mostrarSensorPresion(valor1)
                     "sensorapertura" -> mostrarSensorApertura(valor1)
+                    "sensorcalidadaire" -> mostrarSensorCalidadAire(valor1)
                 }
             }
         }
@@ -441,7 +442,7 @@ fun mostrarSensorApertura(estado: String) {
 }
 
 @Composable
-fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
+fun mostrarSensorCalidadAire(tipoCalidad: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -449,7 +450,7 @@ fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
 
         ) {
 
-        var colorbackground = when (sensorCalAire.ICA) {
+        var colorbackground = when (tipoCalidad) {
             "Bueno" -> Color.Green
             "Moderado" -> Color.Yellow
             "Desfavorable" -> Naranja
@@ -470,7 +471,7 @@ fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            when (sensorCalAire.ICA) {
+            when (tipoCalidad) {
                 "Bueno" -> Text(
                     "La calidad del aire es buena",
                     color = Color.White,
@@ -498,6 +499,12 @@ fun mostrarSensorCalidadAire(sensorCalAire: SensorCalidadAire) {
                 "Muy dañino" -> Text(
                     "La calidad del aire es muy dañina",
                     color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+
+                else -> Text(
+                    "No se ha detectado la calidad del aire",
+                    color = Color.Red,
                     fontWeight = FontWeight.Medium
                 )
             }
