@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import com.proyectomoviles.R
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +35,9 @@ import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.services.MqttService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.WebSocket
 
 @Composable
@@ -59,47 +63,86 @@ fun ConfiguracionScreen(
 
             when (tipoDispositivo) {
                 "Sensor Temperatura" -> {
-                    ConfiguracionSensorTemperatura(navigateToInicio,mqttService, auth, inicioViewModel)
+                    ConfiguracionSensorTemperatura(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
                 }
+
                 "Sensor Luz" -> {
                     ConfiguracionSensorLuz(navigateToInicio, mqttService, auth, inicioViewModel)
                 }
+
                 "Sensor Movimiento" -> {
                     ConfiguracionSensorMovimiento(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Sensor Vibración" -> {
                     ConfiguracionSensorVibracion(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Sensor Nivel de Agua" -> {
                     ConfiguracionSensorNivelAgua(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Sensor de Presión" -> {
                     ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Sensor de Apertura" -> {
-                    ConfiguracionSensorApertura(navigateToInicio, mqttService, auth, inicioViewModel)
+                    ConfiguracionSensorApertura(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
                 }
+
                 "Sensor de Calidad del Aire" -> {
                     ConfiguracionSensorCalidadAire(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Actuador Valvula" -> {
-                    ConfiguracionActuadorValvula(navigateToInicio, mqttService, auth, inicioViewModel)
+                    ConfiguracionActuadorValvula(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
                 }
+
                 "Cerradura Electrónica" -> {
-                    ConfiguracionCerraduraElectronica(navigateToInicio, mqttService, auth, inicioViewModel)
+                    ConfiguracionCerraduraElectronica(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
                 }
+
                 "Controlador Iluminación" -> {
-                    ConfiguracionControladorIluminacion(navigateToInicio, mqttService, auth, inicioViewModel)
+                    ConfiguracionControladorIluminacion(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
                 }
+
                 "Controlador Clima" -> {
                     ConfiguracionControladorClima(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Medidor de Consumo de Agua" -> {
                     ConfiguracionMedidorConsumoAgua(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Medidor de gas" -> {
                     ConfiguracionMedidorGas(navigateToInicio, auth, inicioViewModel)
                 }
+
                 else -> {
                     Text(text = "Configuración no disponible para este dispositivo")
 
@@ -111,7 +154,12 @@ fun ConfiguracionScreen(
 
 //SENSORES:
 @Composable
-fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit,mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorTemperatura(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
@@ -146,7 +194,16 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit,mqttService: Mqt
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
         )
-       val sensor = SensorTemperatura(id = null , userId = auth.getCurrentUser()?.uid, nombre, "SensorTemperatura", ubicacion, R.drawable.imgsensortermometro, grados, humedad)
+        val sensor = SensorTemperatura(
+            id = null,
+            userId = auth.getCurrentUser()?.uid,
+            nombre,
+            "SensorTemperatura",
+            ubicacion,
+            R.drawable.imgsensortermometro,
+            grados,
+            humedad
+        )
         Button(
             onClick = {
                 inicioViewModel.addSensorTemperatura(sensor)
@@ -160,7 +217,12 @@ fun ConfiguracionSensorTemperatura(navigateToInicio: () -> Unit,mqttService: Mqt
 }
 
 @Composable
-fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorLuz(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var encendido by rememberSaveable { mutableStateOf(false) }
@@ -200,9 +262,10 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
             R.drawable.imgsensorluz,
             encendido
         )
+
+        mqttService.publish("sensorluz", encendido.toString())
         Button(
             onClick = {
-                mqttService.publish("sensorluz", encendido.toString())
                 inicioViewModel.addSensorLuz(sensor)
                 navigateToInicio()
             },
@@ -214,7 +277,11 @@ fun ConfiguracionSensorLuz(navigateToInicio: () -> Unit, mqttService: MqttServic
 }
 
 @Composable
-fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorMovimiento(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
@@ -252,7 +319,17 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManage
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorMovimiento(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensormovimiento, estado))
+                inicioViewModel.addDispositivo(
+                    SensorMovimiento(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Sensor",
+                        ubicacion,
+                        R.drawable.imgsensormovimiento,
+                        estado
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -262,7 +339,11 @@ fun ConfiguracionSensorMovimiento(navigateToInicio: () -> Unit, auth: AuthManage
 }
 
 @Composable
-fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorVibracion(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
@@ -300,7 +381,17 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorVibracion(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorvibracion, estado))
+                inicioViewModel.addDispositivo(
+                    SensorVibracion(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Sensor",
+                        ubicacion,
+                        R.drawable.imgsensorvibracion,
+                        estado
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -310,7 +401,11 @@ fun ConfiguracionSensorVibracion(navigateToInicio: () -> Unit, auth: AuthManager
 }
 
 @Composable
-fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorNivelAgua(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by remember { mutableStateOf(0.00) }
@@ -349,7 +444,17 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorNivelAgua(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensornivelagua, litros))
+                inicioViewModel.addDispositivo(
+                    SensorNivelAgua(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Sensor",
+                        ubicacion,
+                        R.drawable.imgsensornivelagua,
+                        litros
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -359,7 +464,11 @@ fun ConfiguracionSensorNivelAgua(navigateToInicio: () -> Unit, auth: AuthManager
 }
 
 @Composable
-fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorPresion(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var presion by remember { mutableStateOf(0.00) }
@@ -397,7 +506,17 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager, 
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorPresion(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorpresion, presion))
+                inicioViewModel.addDispositivo(
+                    SensorPresion(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Sensor",
+                        ubicacion,
+                        R.drawable.imgsensorpresion,
+                        presion
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -407,7 +526,12 @@ fun ConfiguracionSensorPresion(navigateToInicio: () -> Unit, auth: AuthManager, 
 }
 
 @Composable
-fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorApertura(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -451,7 +575,17 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttS
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorApertura(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorapertura, estado))
+                inicioViewModel.addDispositivo(
+                    SensorApertura(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Sensor",
+                        ubicacion,
+                        R.drawable.imgsensorapertura,
+                        estado
+                    )
+                )
                 mqttService.publish("sensorapertura", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -462,7 +596,11 @@ fun ConfiguracionSensorApertura(navigateToInicio: () -> Unit, mqttService: MqttS
 }
 
 @Composable
-fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionSensorCalidadAire(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var calidad by remember { mutableStateOf("") }
@@ -502,7 +640,17 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManag
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(SensorCalidadAire(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Sensor", ubicacion, R.drawable.imgsensorcalidadaire, calidad))
+                inicioViewModel.addDispositivo(
+                    SensorCalidadAire(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Sensor",
+                        ubicacion,
+                        R.drawable.imgsensorcalidadaire,
+                        calidad
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -514,7 +662,12 @@ fun ConfiguracionSensorCalidadAire(navigateToInicio: () -> Unit, auth: AuthManag
 //ACTUADORES:
 
 @Composable
-fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionActuadorValvula(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -558,7 +711,17 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: Mqtt
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(ActuadorValvula(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Actuador", ubicacion, R.drawable.imgactuadorvalvula, estado ))
+                inicioViewModel.addDispositivo(
+                    ActuadorValvula(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Actuador",
+                        ubicacion,
+                        R.drawable.imgactuadorvalvula,
+                        estado
+                    )
+                )
                 mqttService.publish("actuadorvalvula", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -569,7 +732,12 @@ fun ConfiguracionActuadorValvula(navigateToInicio: () -> Unit, mqttService: Mqtt
 }
 
 @Composable
-fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionCerraduraElectronica(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -612,7 +780,17 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(CerraduraElectronica(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Actuador", ubicacion, R.drawable.imgcerraduraelectronica, estado))
+                inicioViewModel.addDispositivo(
+                    CerraduraElectronica(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Actuador",
+                        ubicacion,
+                        R.drawable.imgcerraduraelectronica,
+                        estado
+                    )
+                )
                 mqttService.publish("cerraduraelectronica", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -623,7 +801,12 @@ fun ConfiguracionCerraduraElectronica(navigateToInicio: () -> Unit, mqttService:
 }
 
 @Composable
-fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttService: MqttService, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionControladorIluminacion(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
@@ -665,7 +848,17 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(ControladorIluminacion(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Actuador", ubicacion, R.drawable.imgcontroladorluz, estado))
+                inicioViewModel.addDispositivo(
+                    ControladorIluminacion(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Actuador",
+                        ubicacion,
+                        R.drawable.imgcontroladorluz,
+                        estado
+                    )
+                )
                 mqttService.publish("controladoriluminacion", estado.toString())
             },
             modifier = Modifier.fillMaxWidth()
@@ -678,7 +871,11 @@ fun ConfiguracionControladorIluminacion(navigateToInicio: () -> Unit, mqttServic
 //Monitoreo:
 
 @Composable
-fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionControladorClima(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
@@ -718,7 +915,18 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManage
         Button(
             onClick = {
                 navigateToInicio()
-                inicioViewModel.addDispositivo(ControladorClima(id = "" , userId = auth.getCurrentUser()?.uid, nombre, "Monitoreo", ubicacion, R.drawable.imgcontroladorclima, grados, humedad))
+                inicioViewModel.addDispositivo(
+                    ControladorClima(
+                        id = "",
+                        userId = auth.getCurrentUser()?.uid,
+                        nombre,
+                        "Monitoreo",
+                        ubicacion,
+                        R.drawable.imgcontroladorclima,
+                        grados,
+                        humedad
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -728,7 +936,11 @@ fun ConfiguracionControladorClima(navigateToInicio: () -> Unit, auth: AuthManage
 }
 
 @Composable
-fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionMedidorConsumoAgua(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by rememberSaveable { mutableStateOf(0.00) }
@@ -758,7 +970,8 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthMana
         Spacer(modifier = Modifier.height(8.dp))
 
         val monitoreo =
-            MedidorConsumoAgua("",
+            MedidorConsumoAgua(
+                "",
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
                 "Monitoreo",
@@ -779,7 +992,11 @@ fun ConfiguracionMedidorConsumoAgua(navigateToInicio: () -> Unit, auth: AuthMana
 }
 
 @Composable
-fun ConfiguracionMedidorGas(navigateToInicio: () -> Unit, auth: AuthManager, inicioViewModel: InicioViewModel) {
+fun ConfiguracionMedidorGas(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var m3State by remember { mutableStateOf(0.00) }
