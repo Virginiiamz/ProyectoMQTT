@@ -91,63 +91,6 @@ fun InicioScreen(
     var valor1 by rememberSaveable { mutableStateOf("") }
     var valor2 by rememberSaveable { mutableStateOf("") }
 
-    LazyColumn(
-        modifier = Modifier.padding(top = 40.dp)
-    ) {
-        item {
-            Text(uiState.sensorTemperatura.toString())
-        }
-
-        items(uiState.sensorTemperatura) { dispositivo ->
-            Text(dispositivo.toString())
-            when (dispositivo) {
-                is SensorTemperatura -> {
-                    val valor1 = dispositivo.grados.toString()
-                    val valor2 = dispositivo.humedad.toString()
-
-                    dispositivo.nombre?.let {
-                        dispositivo.imagen?.let { it1 ->
-                            dispositivo.ubicacion?.let { it2 ->
-                                mostrarInformacionDispositivos(
-                                    "sensortemperatura",
-                                    it,
-                                    it1, it2, valor1, valor2
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            Text(uiState.sensorLuz.toString())
-        }
-
-        items(uiState.sensorLuz) { dispositivo ->
-            Text(dispositivo.toString())
-            when (dispositivo) {
-                is SensorLuz -> {
-                    valor1 = dispositivo.estadoEncendido.toString()
-                    valor2 = null.toString()
-
-                    dispositivo.nombre?.let {
-                        dispositivo.imagen?.let { it1 ->
-                            dispositivo.ubicacion?.let { it2 ->
-                                mostrarInformacionDispositivos(
-                                    "sensorluz",
-                                    it,
-                                    it1, it2, valor1, valor2
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-    }
-
     when (TipoDispositivoCreado.tipoDispositivoCreado) {
         "sensortemperatura" -> {
 //            mqttService.subscribe("") {
@@ -276,7 +219,63 @@ fun InicioScreen(
         },
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValue ->
-        if (listaDispositivo.isEmpty()) {
+        if (uiState.sensorTemperatura.isNotEmpty()) {
+            LazyColumn(
+                modifier = Modifier.padding(top = 40.dp)
+            ) {
+                item {
+                    Text(uiState.sensorTemperatura.toString())
+                }
+
+                items(uiState.sensorTemperatura) { dispositivo ->
+                    Text(dispositivo.toString())
+                    when (dispositivo) {
+                        is SensorTemperatura -> {
+                            val valor1 = dispositivo.grados.toString()
+                            val valor2 = dispositivo.humedad.toString()
+
+                            dispositivo.nombre?.let {
+                                dispositivo.imagen?.let { it1 ->
+                                    dispositivo.ubicacion?.let { it2 ->
+                                        mostrarInformacionDispositivos(
+                                            "sensortemperatura",
+                                            it,
+                                            it1, it2, valor1, valor2
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                item {
+                    Text(uiState.sensorLuz.toString())
+                }
+
+                items(uiState.sensorLuz) { dispositivo ->
+                    Text(dispositivo.toString())
+                    when (dispositivo) {
+                        is SensorLuz -> {
+                            valor1 = dispositivo.estadoEncendido.toString()
+                            valor2 = null.toString()
+
+                            dispositivo.nombre?.let {
+                                dispositivo.imagen?.let { it1 ->
+                                    dispositivo.ubicacion?.let { it2 ->
+                                        mostrarInformacionDispositivos(
+                                            "sensorluz",
+                                            it,
+                                            it1, it2, valor1, valor2
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
 //            Card(
 //                modifier = Modifier
 //                    .fillMaxWidth()
