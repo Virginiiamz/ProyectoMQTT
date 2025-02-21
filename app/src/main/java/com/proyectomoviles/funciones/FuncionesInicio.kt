@@ -166,6 +166,7 @@ fun mostrarInformacionDispositivos(
                     "sensorapertura" -> mostrarSensorApertura(valor1)
                     "sensorcalidadaire" -> mostrarSensorCalidadAire(valor1)
                     "actuadorvalvula" -> mostrarActuadorValvula(valor1)
+                    "cerraduraelectronica" -> mostrarActuadorCerradura(valor1)
                 }
             }
         }
@@ -551,8 +552,8 @@ fun mostrarActuadorValvula(estado: String) {
 }
 
 @Composable
-fun mostrarActuadorCerradura(ActCerradura: CerraduraElectronica) {
-    var estadoCerradura by remember { mutableStateOf(ActCerradura.cerrado) }
+fun mostrarActuadorCerradura(estado: String) {
+    var estadoCerradura by remember { mutableStateOf(estado.toBoolean()) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -573,16 +574,16 @@ fun mostrarActuadorCerradura(ActCerradura: CerraduraElectronica) {
 
 
             ) {
-//            Switch(
-//                checked = estadoCerradura,
-//                onCheckedChange = { estadoCerradura = !estadoCerradura },
-//                colors = SwitchDefaults.colors(
-//                    checkedThumbColor = Color.White,
-//                    checkedTrackColor = Color.Green,
-//                    uncheckedThumbColor = Color.White,
-//                    uncheckedTrackColor = Color.Red
-//                )
-//            )
+            Switch(
+                checked = estadoCerradura,
+                onCheckedChange = { estadoCerradura = !estadoCerradura },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Green,
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = Color.Red
+                )
+            )
         }
     }
 }

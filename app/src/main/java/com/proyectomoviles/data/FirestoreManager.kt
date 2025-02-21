@@ -53,6 +53,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_SENSORAPERTURA = "sensores_apertura"
         const val COLLECTION_SENSORCALIDADAIRE = "sensores_calidad_aire"
         const val COLLECTION_ACTUADORVALVULA = "actuadores_valvula"
+        const val COLLECTION_ACTUADORCERRADURAELECTRONICA = "actuadores_cerradura_electronica"
 
     }
 
@@ -395,7 +396,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getCerraduraElectronica(): Flow<List<CerraduraElectronica>> {
-        return firestore.collection(COLLECTION_ACTUADORES)
+        return firestore.collection(COLLECTION_ACTUADORCERRADURAELECTRONICA)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -416,18 +417,21 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addCerraduraElectronica(cerraduraElectronica: CerraduraElectronica) {
-        firestore.collection(COLLECTION_ACTUADORES).add(cerraduraElectronica).await()
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_ACTUADORCERRADURAELECTRONICA)
+
+        val documentReference = sensoresRef.document()
+        val sensorId = documentReference.id
+
+        val sensorConId = cerraduraElectronica.copy(id = sensorId)
+
+        documentReference.set(sensorConId).await()
     }
 
-    suspend fun updateCerraduraElectronica(cerraduraElectronica: CerraduraElectronica) {
-        val cerraduraElectronicaRef = cerraduraElectronica.id?.let {
-            firestore.collection(COLLECTION_ACTUADORES).document(it)
-        }
-        cerraduraElectronicaRef?.set(cerraduraElectronica)?.await()
-    }
+
 
     suspend fun deleteCerraduraElectronicaById(cerraduraElectronicaId: String) {
-        firestore.collection(COLLECTION_ACTUADORES).document(cerraduraElectronicaId).delete().await()
+        firestore.collection(COLLECTION_ACTUADORCERRADURAELECTRONICA).document(cerraduraElectronicaId).delete().await()
     }
 
     fun getControladorIluminacion(): Flow<List<ControladorIluminacion>> {

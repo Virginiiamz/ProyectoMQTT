@@ -110,15 +110,15 @@ fun ConfiguracionScreen(
                         inicioViewModel
                     )
                 }
-//
-//                "Cerradura Electrónica" -> {
-//                    ConfiguracionCerraduraElectronica(
-//                        navigateToInicio,
-//                        mqttService,
-//                        auth,
-//                        inicioViewModel
-//                    )
-//                }
+
+                "Cerradura Electrónica" -> {
+                    ConfiguracionCerraduraElectronica(
+                        navigateToInicio,
+                        mqttService,
+                        auth,
+                        inicioViewModel
+                    )
+                }
 //
 //                "Controlador Iluminación" -> {
 //                    ConfiguracionControladorIluminacion(
@@ -649,75 +649,67 @@ fun ConfiguracionActuadorValvula(
         }
     }
 }
-//
-//@Composable
-//fun ConfiguracionCerraduraElectronica(
-//    navigateToInicio: () -> Unit,
-//    mqttService: MqttService,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var estado by rememberSaveable { mutableStateOf(false) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "cerraduraelectronica"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración de la Cerradura Electrónica")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Text("Activo:")
-//        Switch(
-//            checked = estado,
-//            onCheckedChange = { estado = !estado }
-//        )
-//        val actuador = CerraduraElectronica(
-//            "",
-//            userId = auth.getCurrentUser()?.uid,
-//            nombre,
-//            "Actuador",
-//            ubicacion,
-//            R.drawable.imgcerraduraelectronica,
-//            estado
-//        )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    CerraduraElectronica(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Actuador",
-//                        ubicacion,
-//                        R.drawable.imgcerraduraelectronica,
-//                        estado
-//                    )
-//                )
-//                mqttService.publish("cerraduraelectronica", estado.toString())
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
+
+@Composable
+fun ConfiguracionCerraduraElectronica(
+    navigateToInicio: () -> Unit,
+    mqttService: MqttService,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var estado by rememberSaveable { mutableStateOf(false) }
+
+    TipoDispositivoCreado.tipoDispositivoCreado = "cerraduraelectronica"
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración de la Cerradura Electrónica")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Text("Activo:")
+        Switch(
+            checked = estado,
+            onCheckedChange = { estado = !estado }
+        )
+        val actuador = CerraduraElectronica(
+            null,
+            userId = auth.getCurrentUser()?.uid,
+            nombre,
+            "Actuador",
+            ubicacion,
+            R.drawable.imgcerraduraelectronica,
+            estado
+        )
+        Button(
+            onClick = {
+                mqttService.publish("cerraduraelectronica", estado.toString())
+
+                inicioViewModel.addActuadorCerraduraElectronica(actuador)
+                navigateToInicio()
+
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 //
 //@Composable
 //fun ConfiguracionControladorIluminacion(
