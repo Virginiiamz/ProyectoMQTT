@@ -41,9 +41,6 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     private val userId = auth.getCurrentUser()?.uid
 
     companion object{
-        const val COLLECTION_SENSORES = "sensores"
-        const val COLLECTION_ACTUADORES = "actuadores"
-        const val COLLECTION_MONITOREO = "monitoreo"
         const val COLLECTION_SENSORTEMP = "sensores_temperatura"
         const val COLLECTION_SENSORLUZ = "sensores_luz"
         const val COLLECTION_SENSORMOVIMIENTO = "sensores_movimiento"
@@ -56,7 +53,8 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_ACTUADORCERRADURAELECTRONICA = "actuadores_cerradura_electronica"
         const val COLLECTION_ACTUADORCONTROLADORILUMINACION = "actuadores_controlador_iluminacion"
         const val COLLECTION_MONITOREOCONTROLADORCLIMA = "monitoreo_controlador_clima"
-
+        const val COLLECTION_MONITOREOCONSUMOAGUA = "monitoreo_consumo_agua"
+        const val COLLECTION_MONITOREOCONSUMOGAS = "monitoreo_consumo_gas"
     }
 
     // SENSORES
@@ -514,7 +512,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     fun getMedidorConsumoAgua(): Flow<List<MedidorConsumoAgua>> {
-        return firestore.collection(COLLECTION_MONITOREO)
+        return firestore.collection(COLLECTION_MONITOREOCONSUMOAGUA)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -535,22 +533,21 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addMedidorConsumoAgua(medidorConsumoAgua: MedidorConsumoAgua) {
-        firestore.collection(COLLECTION_MONITOREO).add(medidorConsumoAgua).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_MONITOREOCONSUMOAGUA)
 
-    suspend fun updateMedidorConsumoAgua(medidorConsumoAgua: MedidorConsumoAgua) {
-        val medidorConsumoAguaRef = medidorConsumoAgua.id?.let {
-            firestore.collection(COLLECTION_MONITOREO).document(it)
-        }
-        medidorConsumoAguaRef?.set(medidorConsumoAgua)?.await()
+        val documentReference = sensoresRef.add(medidorConsumoAgua).await()
+        val sensorId = documentReference.id
+
+        documentReference.update("id", sensorId).await()
     }
 
     suspend fun deleteMedidorConsumoAguaById(medidorConsumoAguaId: String) {
-        firestore.collection(COLLECTION_MONITOREO).document(medidorConsumoAguaId).delete().await()
+        firestore.collection(COLLECTION_MONITOREOCONSUMOAGUA).document(medidorConsumoAguaId).delete().await()
     }
 
     fun getMedidorGas(): Flow<List<MedidorGas>> {
-        return firestore.collection(COLLECTION_MONITOREO)
+        return firestore.collection(COLLECTION_MONITOREOCONSUMOGAS)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -571,18 +568,17 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addMedidorGas(medidorGas: MedidorGas) {
-        firestore.collection(COLLECTION_MONITOREO).add(medidorGas).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_MONITOREOCONSUMOGAS)
 
-    suspend fun updateMedidorGas(medidorGas: MedidorGas) {
-        val medidorGasRef = medidorGas.id?.let {
-            firestore.collection(COLLECTION_MONITOREO).document(it)
-        }
-        medidorGasRef?.set(medidorGas)?.await()
+        val documentReference = sensoresRef.add(medidorGas).await()
+        val sensorId = documentReference.id
+
+        documentReference.update("id", sensorId).await()
     }
 
     suspend fun deleteMedidorGasById(medidorGasId: String) {
-        firestore.collection(COLLECTION_MONITOREO).document(medidorGasId).delete().await()
+        firestore.collection(COLLECTION_MONITOREOCONSUMOGAS).document(medidorGasId).delete().await()
     }
 
 }

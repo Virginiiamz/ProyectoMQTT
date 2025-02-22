@@ -655,26 +655,6 @@ fun mostrarControladorClima(temperatura: String, humedad: String) {
                 Column {
                     Text("${temperatura} Cº", color = Color.White, fontWeight = FontWeight.Medium)
                 }
-//                Column {
-//                    Icon(
-//                        imageVector = Icons.Filled.KeyboardArrowUp,
-//                        contentDescription = null,
-//                        tint = Color.White,
-//                        modifier = Modifier
-//                            .clickable {
-//                                temperatura++
-//                            }
-//                    )
-//                    Icon(
-//                        imageVector = Icons.Filled.KeyboardArrowDown,
-//                        contentDescription = null,
-//                        tint = Color.White,
-//                        modifier = Modifier
-//                            .clickable {
-//                                temperatura--
-//                            }
-//                    )
-//                }
             }
         }
         Column(
@@ -694,26 +674,6 @@ fun mostrarControladorClima(temperatura: String, humedad: String) {
                 Column {
                     Text("${humedad} %", color = Color.White, fontWeight = FontWeight.Medium)
                 }
-//                Column {
-//                    Icon(
-//                        imageVector = Icons.Filled.KeyboardArrowUp,
-//                        contentDescription = null,
-//                        tint = Color.White,
-//                        modifier = Modifier
-//                        .clickable {
-//                            humedad++
-//                        }
-//                    )
-//                    Icon(
-//                        imageVector = Icons.Filled.KeyboardArrowDown,
-//                        contentDescription = null,
-//                        tint = Color.White,
-//                        modifier = Modifier
-//                            .clickable {
-//                                humedad--
-//                            }
-//                    )
-//                }
             }
         }
     }
