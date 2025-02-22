@@ -128,18 +128,30 @@ fun ConfiguracionScreen(
                         inicioViewModel
                     )
                 }
-//
-//                "Controlador Clima" -> {
-//                    ConfiguracionControladorClima(navigateToInicio, auth, inicioViewModel)
-//                }
-//
-//                "Medidor de Consumo de Agua" -> {
-//                    ConfiguracionMedidorConsumoAgua(navigateToInicio, auth, inicioViewModel)
-//                }
-//
-//                "Medidor de gas" -> {
-//                    ConfiguracionMedidorGas(navigateToInicio, auth, inicioViewModel)
-//                }
+
+                "Controlador Clima" -> {
+                    ConfiguracionControladorClima(
+                        navigateToInicio,
+                        auth,
+                        inicioViewModel
+                    )
+                }
+
+                "Medidor Consumo Agua" -> {
+                    ConfiguracionMedidorConsumoAgua(
+                        navigateToInicio,
+                        auth,
+                        inicioViewModel
+                    )
+                }
+
+                "Medidor Gas" -> {
+                    ConfiguracionMedidorGas(
+                        navigateToInicio,
+                        auth,
+                        inicioViewModel
+                    )
+                }
 
                 else -> {
                     Text(text = "Configuración no disponible para este dispositivo")
@@ -768,184 +780,176 @@ fun ConfiguracionControladorIluminacion(
         }
     }
 }
-//
-////Monitoreo:
-//
-//@Composable
-//fun ConfiguracionControladorClima(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var grados by remember { mutableStateOf(0.00) }
-//    var humedad by remember { mutableStateOf(0.00) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "controladorclima"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Controlador de Clima")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        val monitoreo = ControladorClima(
-//            "",
-//            userId = auth.getCurrentUser()?.uid,
-//            nombre,
-//            "Monitoreo",
-//            ubicacion,
-//            R.drawable.imgcontroladorclima,
-//            grados,
-//            humedad
-//        )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                inicioViewModel.addDispositivo(
-//                    ControladorClima(
-//                        id = "",
-//                        userId = auth.getCurrentUser()?.uid,
-//                        nombre,
-//                        "Monitoreo",
-//                        ubicacion,
-//                        R.drawable.imgcontroladorclima,
-//                        grados,
-//                        humedad
-//                    )
-//                )
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-//
-//@Composable
-//fun ConfiguracionMedidorConsumoAgua(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var litros by rememberSaveable { mutableStateOf(0.00) }
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "consumoagua"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = "Configuración del Medidor de Consumo de Agua")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        val monitoreo =
-//            MedidorConsumoAgua(
-//                "",
-//                userId = auth.getCurrentUser()?.uid,
-//                nombre,
-//                "Monitoreo",
-//                ubicacion,
-//                R.drawable.imgconsumoagua,
-//                litros
-//            )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                RepositoryList.addDispositivos(null)
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
-//
-//@Composable
-//fun ConfiguracionMedidorGas(
-//    navigateToInicio: () -> Unit,
-//    auth: AuthManager,
-//    inicioViewModel: InicioViewModel
-//) {
-//    var nombre by remember { mutableStateOf("") }
-//    var ubicacion by remember { mutableStateOf("") }
-//    var m3State by remember { mutableStateOf(0.00) }
-//    var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
-//
-//    TipoDispositivoCreado.tipoDispositivoCreado = "medidorgas"
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//
-//        Text(text = "Configuración del Medidor de Gas")
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = nombre,
-//            onValueChange = { nombre = it },
-//            label = { Text("Nombre") }
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        OutlinedTextField(
-//            modifier = Modifier.fillMaxWidth(),
-//            value = ubicacion,
-//            onValueChange = { ubicacion = it },
-//            label = { Text("Ubicacion") }
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
-//        val monitoreo = MedidorGas(
-//            "",
-//            userId = auth.getCurrentUser()?.uid,
-//            nombre,
-//            "Monitoreo",
-//            ubicacion,
-//            R.drawable.imgconsumogas,
-//            m3toString.toDouble()
-//        )
-//        Button(
-//            onClick = {
-//                navigateToInicio()
-//                RepositoryList.addDispositivos(null)
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Actualizar")
-//        }
-//    }
-//}
+
+//Monitoreo:
+
+@Composable
+fun ConfiguracionControladorClima(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var grados by remember { mutableStateOf(0.00) }
+    var humedad by remember { mutableStateOf(0.00) }
+
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Controlador de Clima")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        val monitoreo = ControladorClima(
+            null,
+            userId = auth.getCurrentUser()?.uid,
+            nombre,
+            "Monitoreo",
+            ubicacion,
+            R.drawable.imgcontroladorclima,
+            grados,
+            humedad
+        )
+        Button(
+            onClick = {
+                inicioViewModel.addControladorClima(
+                    monitoreo
+                )
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
+
+@Composable
+fun ConfiguracionMedidorConsumoAgua(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var litros by rememberSaveable { mutableStateOf(0.00) }
+
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Configuración del Medidor de Consumo de Agua")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val monitoreo =
+            MedidorConsumoAgua(
+                null,
+                userId = auth.getCurrentUser()?.uid,
+                nombre,
+                "Monitoreo",
+                ubicacion,
+                R.drawable.imgconsumoagua,
+                litros
+            )
+        Button(
+            onClick = {
+                inicioViewModel.addMedidorConsumoAgua(
+                    monitoreo
+                )
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
+
+@Composable
+fun ConfiguracionMedidorGas(
+    navigateToInicio: () -> Unit,
+    auth: AuthManager,
+    inicioViewModel: InicioViewModel
+) {
+    var nombre by remember { mutableStateOf("") }
+    var ubicacion by remember { mutableStateOf("") }
+    var m3State by remember { mutableStateOf(0.00) }
+    var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
+
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(text = "Configuración del Medidor de Gas")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = ubicacion,
+            onValueChange = { ubicacion = it },
+            label = { Text("Ubicacion") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        val monitoreo = MedidorGas(
+            null,
+            userId = auth.getCurrentUser()?.uid,
+            nombre,
+            "Monitoreo",
+            ubicacion,
+            R.drawable.imgconsumogas,
+            m3toString.toDouble()
+        )
+        Button(
+            onClick = {
+                inicioViewModel.addMedidorGas(
+                    monitoreo
+                )
+                navigateToInicio()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar")
+        }
+    }
+}
 
 

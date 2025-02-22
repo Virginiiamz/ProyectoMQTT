@@ -328,6 +328,69 @@ fun InicioScreen(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
+                items(uiState.controladorClima) { dispositivo ->
+                    mqttService.subscribe("grados") {
+                        valor1 = it
+                    }
+                    mqttService.subscribe("humedad") {
+                        valor2 = it
+                    }
+
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "controladorclima", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                items(uiState.medidorConsumoAgua) { dispositivo ->
+                    mqttService.subscribe("agua") {
+                        valor1 = it
+                        valor2 = ""
+                    }
+
+
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "medidorconsumoagua", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                items(uiState.medidorGas) { dispositivo ->
+                    mqttService.subscribe("gas") {
+                        valor1 = it
+                        valor2 = ""
+                    }
+
+                    dispositivo.id?.let { id ->
+                        dispositivo.nombre?.let { nombre ->
+                            dispositivo.imagen?.let { imagen ->
+                                dispositivo.ubicacion?.let { ubicacion ->
+                                    mostrarInformacionDispositivos(
+                                        id, "medidorgas", nombre,
+                                        imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         } else {
             LazyVerticalGrid(

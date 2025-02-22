@@ -31,21 +31,29 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                                                 firestoreManager.getActuadorValvula().collect { actuadorValvula ->
                                                     firestoreManager.getCerraduraElectronica().collect { cerraduraElectronica ->
                                                         firestoreManager.getControladorIluminacion().collect { controladorIluminacion ->
-                                                            _uiState.update { uiState ->
-                                                                uiState.copy(
-                                                                    sensorTemperatura = sensorTemperatura,
-                                                                    sensorLuz = sensorLuz,
-                                                                    sensorMovimiento = sensorMovimiento,
-                                                                    sensorVibracion = sensorVibracion,
-                                                                    sensorNivelAgua = sensorNivelAgua,
-                                                                    sensorPresion = sensorPresion,
-                                                                    sensorApertura = sensorApertura,
-                                                                    sensorCalidadAire = sensorCalidadAire,
-                                                                    actuadorValvula = actuadorValvula,
-                                                                    cerraduraElectronica = cerraduraElectronica,
-                                                                    controladorIluminacion = controladorIluminacion,
-
-                                                                )
+                                                            firestoreManager.getControladorClima().collect { controladorClima ->
+                                                                firestoreManager.getMedidorConsumoAgua().collect { medidorConsumoAgua ->
+                                                                     firestoreManager.getMedidorGas().collect { medidorGas ->
+                                                                        _uiState.update { uiState ->
+                                                                            uiState.copy(
+                                                                                sensorTemperatura = sensorTemperatura,
+                                                                                sensorLuz = sensorLuz,
+                                                                                sensorMovimiento = sensorMovimiento,
+                                                                                sensorVibracion = sensorVibracion,
+                                                                                sensorNivelAgua = sensorNivelAgua,
+                                                                                sensorPresion = sensorPresion,
+                                                                                sensorApertura = sensorApertura,
+                                                                                sensorCalidadAire = sensorCalidadAire,
+                                                                                actuadorValvula = actuadorValvula,
+                                                                                cerraduraElectronica = cerraduraElectronica,
+                                                                                controladorIluminacion = controladorIluminacion,
+                                                                                controladorClima = controladorClima,
+                                                                                medidorConsumoAgua = medidorConsumoAgua,
+                                                                                medidorGas = medidorGas,
+                                                                                )
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -128,6 +136,24 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
         }
     }
 
+    fun addControladorClima(controladorClima: ControladorClima) {
+        viewModelScope.launch {
+            firestoreManager.addControladorClima(controladorClima)
+        }
+    }
+
+    fun addMedidorConsumoAgua(medidorConsumoAgua: MedidorConsumoAgua) {
+        viewModelScope.launch {
+            firestoreManager.addMedidorConsumoAgua(medidorConsumoAgua)
+        }
+    }
+
+    fun addMedidorGas(medidorGas: MedidorGas) {
+        viewModelScope.launch {
+            firestoreManager.addMedidorGas(medidorGas)
+        }
+    }
+
     fun deleteDispositivoById(dispositivoId: String, tipoDispositivo: String) {
         viewModelScope.launch {
             when (tipoDispositivo) {
@@ -168,9 +194,9 @@ data class UiState(
     val actuadorValvula: List<ActuadorValvula> = emptyList(),
     val cerraduraElectronica: List<CerraduraElectronica> = emptyList(),
     val controladorIluminacion: List<ControladorIluminacion> = emptyList(),
-//    val controladorClima: List<ControladorClima> = emptyList(),
-//   val medidorConsumoAgua: List<MedidorConsumoAgua> = emptyList(),
-//    val medidorGas: List<MedidorGas> = emptyList()
+    val controladorClima: List<ControladorClima> = emptyList(),
+    val medidorConsumoAgua: List<MedidorConsumoAgua> = emptyList(),
+    val medidorGas: List<MedidorGas> = emptyList()
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :

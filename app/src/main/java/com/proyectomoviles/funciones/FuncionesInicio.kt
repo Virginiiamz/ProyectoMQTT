@@ -168,6 +168,9 @@ fun mostrarInformacionDispositivos(
                     "actuadorvalvula" -> mostrarActuadorValvula(valor1)
                     "cerraduraelectronica" -> mostrarActuadorCerradura(valor1)
                     "controladoriluminacion" ->mostrarControladorIluminacion(valor1)
+                    "controladorclima" -> mostrarControladorClima(valor1, valor2)
+                    "consumoagua" -> mostrarConsumoAgua(valor1)
+                    "medidorgas" -> mostrarConsumoGas(valor1)
                 }
             }
         }
@@ -627,9 +630,9 @@ fun mostrarControladorIluminacion(estado:String) {
 }
 
 @Composable
-fun mostrarControladorClima(ContClima: ControladorClima) {
-    var temperatura by remember { mutableStateOf(ContClima.temperatura) }
-    var humedad by remember { mutableStateOf(ContClima.humedad) }
+fun mostrarControladorClima(temperatura: String, humedad: String) {
+    var temperatura by remember { mutableStateOf(temperatura) }
+    var humedad by remember { mutableStateOf(humedad) }
 
     Row(
         modifier = Modifier
@@ -719,7 +722,8 @@ fun mostrarControladorClima(ContClima: ControladorClima) {
 }
 
 @Composable
-fun mostrarConsumoAgua(MedAgua: MedidorConsumoAgua) {
+fun mostrarConsumoAgua(litros: String) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -737,14 +741,14 @@ fun mostrarConsumoAgua(MedAgua: MedidorConsumoAgua) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${MedAgua.litros} L", color = Color.White, fontWeight = FontWeight.Medium)
+            Text("${litros} L", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
     }
 }
 
 @Composable
-fun mostrarConsumoGas(ConsGas: MedidorGas) {
+fun mostrarConsumoGas(m3toString: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -762,7 +766,7 @@ fun mostrarConsumoGas(ConsGas: MedidorGas) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${ConsGas.metroscubicos} m3", color = Color.White, fontWeight = FontWeight.Medium)
+            Text("${m3toString} m3", color = Color.White, fontWeight = FontWeight.Medium)
         }
 
     }
