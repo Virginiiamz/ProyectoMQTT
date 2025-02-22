@@ -631,8 +631,6 @@ fun mostrarControladorIluminacion(estado:String) {
 
 @Composable
 fun mostrarControladorClima(temperatura: String, humedad: String) {
-    var temperatura by remember { mutableStateOf(temperatura) }
-    var humedad by remember { mutableStateOf(humedad) }
 
     Row(
         modifier = Modifier

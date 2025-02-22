@@ -55,6 +55,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
         const val COLLECTION_ACTUADORVALVULA = "actuadores_valvula"
         const val COLLECTION_ACTUADORCERRADURAELECTRONICA = "actuadores_cerradura_electronica"
         const val COLLECTION_ACTUADORCONTROLADORILUMINACION = "actuadores_controlador_iluminacion"
+        const val COLLECTION_MONITOREOCONTROLADORCLIMA = "monitoreo_controlador_clima"
 
     }
 
@@ -477,7 +478,7 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
 
     // MONITOREO
     fun getControladorClima(): Flow<List<ControladorClima>> {
-        return firestore.collection(COLLECTION_MONITOREO)
+        return firestore.collection(COLLECTION_MONITOREOCONTROLADORCLIMA)
             .whereEqualTo("userId", userId)
             .snapshots()
             .map { qs ->
@@ -499,18 +500,17 @@ class FirestoreManager(auth: AuthManager, context: android.content.Context) {
     }
 
     suspend fun addControladorClima(controladorClima: ControladorClima) {
-        firestore.collection(COLLECTION_MONITOREO).add(controladorClima).await()
-    }
+        val db = FirebaseFirestore.getInstance()
+        val sensoresRef = db.collection(COLLECTION_MONITOREOCONTROLADORCLIMA)
 
-    suspend fun updateControladorClima(controladorClima: ControladorClima) {
-        val controladorClimaRef = controladorClima.id?.let {
-            firestore.collection(COLLECTION_MONITOREO).document(it)
-        }
-        controladorClimaRef?.set(controladorClima)?.await()
+        val documentReference = sensoresRef.add(controladorClima).await()
+        val sensorId = documentReference.id
+
+        documentReference.update("id", sensorId).await()
     }
 
     suspend fun deleteControladorClimaById(controladorClimaId: String) {
-        firestore.collection(COLLECTION_MONITOREO).document(controladorClimaId).delete().await()
+        firestore.collection(COLLECTION_MONITOREOCONTROLADORCLIMA).document(controladorClimaId).delete().await()
     }
 
     fun getMedidorConsumoAgua(): Flow<List<MedidorConsumoAgua>> {

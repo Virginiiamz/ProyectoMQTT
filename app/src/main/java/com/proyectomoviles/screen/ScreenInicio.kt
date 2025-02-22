@@ -329,10 +329,10 @@ fun InicioScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                 }
                 items(uiState.controladorClima) { dispositivo ->
-                    mqttService.subscribe("grados") {
+                    mqttService.subscribe("controladorclima") {
                         valor1 = it
                     }
-                    mqttService.subscribe("humedad") {
+                    mqttService.subscribe("controladorclima") {
                         valor2 = it
                     }
 

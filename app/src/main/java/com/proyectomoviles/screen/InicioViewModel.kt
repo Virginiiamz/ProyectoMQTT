@@ -26,8 +26,7 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                             firestoreManager.getSensorNivelAgua().collect { sensorNivelAgua ->
                                 firestoreManager.getSensorPresion().collect { sensorPresion ->
                                     firestoreManager.getSensorApertura().collect { sensorApertura ->
-                                        firestoreManager.getSensorCalidadAire()
-                                            .collect { sensorCalidadAire ->
+                                        firestoreManager.getSensorCalidadAire().collect { sensorCalidadAire ->
                                                 firestoreManager.getActuadorValvula().collect { actuadorValvula ->
                                                     firestoreManager.getCerraduraElectronica().collect { cerraduraElectronica ->
                                                         firestoreManager.getControladorIluminacion().collect { controladorIluminacion ->
@@ -161,22 +160,22 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
                 "sensortemperatura" -> firestoreManager.deleteSensorTemperaturaById(dispositivoId)
                 "sensormovimiento" -> firestoreManager.deleteSensorMovimientoById(dispositivoId)
                 "sensorvibracion" -> firestoreManager.deleteSensorVibracionById(dispositivoId)
-                "SensorNivelAgua" -> firestoreManager.deleteSensorNivelAguaById(dispositivoId)
-                "SensorPresion" -> firestoreManager.deleteSensorPresionById(dispositivoId)
-                "SensorApertura" -> firestoreManager.deleteSensorAperturaById(dispositivoId)
-                "SensorCalidadAire" -> firestoreManager.deleteSensorCalidadAireById(dispositivoId)
-                "ActuadorValvula" -> firestoreManager.deleteActuadorValvulaById(dispositivoId)
-                "CerraduraElectronica" -> firestoreManager.deleteCerraduraElectronicaById(
+                "sensornivelagua" -> firestoreManager.deleteSensorNivelAguaById(dispositivoId)
+                "sensorpresion" -> firestoreManager.deleteSensorPresionById(dispositivoId)
+                "sensorapertura" -> firestoreManager.deleteSensorAperturaById(dispositivoId)
+                "sensorcalidadaire" -> firestoreManager.deleteSensorCalidadAireById(dispositivoId)
+                "actuadorvalvula" -> firestoreManager.deleteActuadorValvulaById(dispositivoId)
+                "cerraduraelectronica" -> firestoreManager.deleteCerraduraElectronicaById(
                     dispositivoId
                 )
 
-                "ControladorIluminacion" -> firestoreManager.deleteControladorIluminacionById(
+                "controladoriluminacion" -> firestoreManager.deleteControladorIluminacionById(
                     dispositivoId
                 )
 
-                "ControladorClima" -> firestoreManager.deleteControladorClimaById(dispositivoId)
-                "MedidorConsumoAgua" -> firestoreManager.deleteMedidorConsumoAguaById(dispositivoId)
-                "MedidorGas" -> firestoreManager.deleteMedidorGasById(dispositivoId)
+                "controladorclima" -> firestoreManager.deleteControladorClimaById(dispositivoId)
+                "medidorconsumoagua" -> firestoreManager.deleteMedidorConsumoAguaById(dispositivoId)
+                "medidorgas" -> firestoreManager.deleteMedidorGasById(dispositivoId)
             }
         }
     }
