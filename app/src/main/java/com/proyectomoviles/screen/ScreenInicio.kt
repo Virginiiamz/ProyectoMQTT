@@ -351,7 +351,7 @@ fun InicioScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                 }
                 items(uiState.medidorConsumoAgua) { dispositivo ->
-                    mqttService.subscribe("agua") {
+                    mqttService.subscribe("medidorconsumoagua") {
                         valor1 = it
                         valor2 = ""
                     }
@@ -372,7 +372,7 @@ fun InicioScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                 }
                 items(uiState.medidorGas) { dispositivo ->
-                    mqttService.subscribe("gas") {
+                    mqttService.subscribe("medidorgas") {
                         valor1 = it
                         valor2 = ""
                     }
