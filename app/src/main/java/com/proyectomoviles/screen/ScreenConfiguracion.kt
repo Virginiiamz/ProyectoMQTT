@@ -1,6 +1,8 @@
 package com.proyectomoviles.screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material3.*
 import com.proyectomoviles.R
 import androidx.compose.runtime.Composable
@@ -40,11 +42,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.WebSocket
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfiguracionScreen(
     tipoDispositivo: String,
     dispositivo: Dispositivo?,
     navigateToInicio: () -> Unit,
+    onLogout: () -> Unit,
     mqttService: MqttService,
     auth: AuthManager,
     firestore: FirestoreManager
@@ -53,6 +57,19 @@ fun ConfiguracionScreen(
     val inicioViewModel = viewModel(InicioViewModel::class.java, factory = factory)
     val uiState by inicioViewModel.uiState.collectAsState()
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Configuración") },
+                actions = {
+                    IconButton(onClick = onLogout) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.ExitToApp,
+                            contentDescription = "Cerrar sesión"
+                        )
+                    }
+                }
+            )
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -189,6 +206,7 @@ fun ConfiguracionSensorTemperatura(
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+
             modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
