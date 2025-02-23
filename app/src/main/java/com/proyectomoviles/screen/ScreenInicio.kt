@@ -39,6 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,15 +49,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.proyectomoviles.R
 import com.proyectomoviles.data.AuthManager
 import com.proyectomoviles.data.FirestoreManager
+import com.proyectomoviles.dispositivos.Dispositivo
+import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.funciones.mostrarInformacionDispositivos
 import com.proyectomoviles.services.MqttService
 
@@ -79,6 +85,10 @@ fun InicioScreen(
 
     var valor1 by rememberSaveable { mutableStateOf("") }
     var valor2 by rememberSaveable { mutableStateOf("") }
+
+    var contadorSensores by remember { mutableStateOf(0) }
+    var contadorActuadores by remember { mutableStateOf(0) }
+    var contadorMonitoreo by remember { mutableStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -157,18 +167,33 @@ fun InicioScreen(
             if (uiState.sensorPresion.isNotEmpty() || uiState.sensorApertura.isNotEmpty() ||
                 uiState.sensorTemperatura.isNotEmpty() || uiState.sensorLuz.isNotEmpty() ||
                 uiState.sensorMovimiento.isNotEmpty() || uiState.sensorVibracion.isNotEmpty() ||
-                uiState.sensorNivelAgua.isNotEmpty() || uiState.sensorCalidadAire.isNotEmpty()
+                uiState.sensorNivelAgua.isNotEmpty() || uiState.sensorCalidadAire.isNotEmpty() ||
+                uiState.actuadorValvula.isNotEmpty() || uiState.cerraduraElectronica.isNotEmpty() ||
+                uiState.controladorIluminacion.isNotEmpty() || uiState.medidorConsumoAgua.isNotEmpty() ||
+                uiState.medidorGas.isNotEmpty() || uiState.controladorClima.isNotEmpty()
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     item {
-                        Text("Sensores")
+                        Text(
+                            "Sensores", style = TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            ), modifier = Modifier.padding(top = 18.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
 
+                    // Resto de los items de sensores (sin padding extra)
                     items(uiState.sensorTemperatura) { dispositivo ->
-                        mqttService.subscribe("grados") { valor1 = it }
-                        mqttService.subscribe("humedad") { valor2 = it }
+                        contadorSensores++
+                        mqttService.subscribe("shellies/consumo/emeter/0/power") {
+                            valor1 = it
+                        }
+                        mqttService.subscribe("shellies/consumo/emeter/0/power") {
+                            valor2 = it
+                        }
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
@@ -185,8 +210,8 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
-                    // Resto de los items de sensores (sin padding extra)
                     items(uiState.sensorLuz) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensorluz") {
                             valor1 = it
                             valor2 = ""
@@ -206,7 +231,9 @@ fun InicioScreen(
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                     }
+
                     items(uiState.sensorMovimiento) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensormovimiento") {
                             valor1 = it
                             valor2 = ""
@@ -217,8 +244,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "sensormovimiento", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "sensormovimiento",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -227,6 +261,7 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     items(uiState.sensorVibracion) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensorvibracion") {
                             valor1 = it
                             valor2 = ""
@@ -237,8 +272,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "sensorvibracion", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "sensorvibracion",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -248,6 +290,7 @@ fun InicioScreen(
                     }
 
                     items(uiState.sensorNivelAgua) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensornivelagua") {
                             valor1 = it
                             valor2 = ""
@@ -258,8 +301,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "sensornivelagua", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "sensornivelagua",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -268,6 +318,7 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     items(uiState.sensorPresion) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensorpresion") {
                             valor1 = it
                             valor2 = ""
@@ -278,8 +329,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "sensorpresion", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "sensorpresion",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -288,6 +346,7 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     items(uiState.sensorApertura) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensorapertura") {
                             valor1 = it
                             valor2 = ""
@@ -298,8 +357,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "sensorapertura", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "sensorapertura",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -309,6 +375,7 @@ fun InicioScreen(
                     }
 
                     items(uiState.sensorCalidadAire) { dispositivo ->
+                        contadorSensores++
                         mqttService.subscribe("sensorcalidadaire") {
                             valor1 = it
                             valor2 = ""
@@ -319,8 +386,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "sensorcalidadaire", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "sensorcalidadaire",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -329,7 +403,18 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
+                    item {
+                        Text(
+                            "Actuadores", style = TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            ), modifier = Modifier.padding(top = 18.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
                     items(uiState.actuadorValvula) { dispositivo ->
+                        contadorActuadores++
                         mqttService.subscribe("actuadorvalvula") {
                             valor1 = it
                             valor2 = ""
@@ -340,8 +425,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "actuadorvalvula", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "actuadorvalvula",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -351,6 +443,7 @@ fun InicioScreen(
                     }
 
                     items(uiState.cerraduraElectronica) { dispositivo ->
+                        contadorActuadores++
                         mqttService.subscribe("cerraduraelectronica") {
                             valor1 = it
                             valor2 = ""
@@ -361,8 +454,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "cerraduraelectronica", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "cerraduraelectronica",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -372,6 +472,7 @@ fun InicioScreen(
                     }
 
                     items(uiState.controladorIluminacion) { dispositivo ->
+                        contadorActuadores++
                         mqttService.subscribe("controladoriluminacion") {
                             valor1 = it
                             valor2 = ""
@@ -382,8 +483,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "controladoriluminacion", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "controladoriluminacion",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -391,7 +499,18 @@ fun InicioScreen(
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                     }
+
+                    item {
+                        Text(
+                            "Monitoreo", style = TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            ), modifier = Modifier.padding(top = 18.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                     items(uiState.controladorClima) { dispositivo ->
+                        contadorMonitoreo++
                         mqttService.subscribe("controladorclima") {
                             valor1 = it
                         }
@@ -404,8 +523,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "controladorclima", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "controladorclima",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -414,6 +540,7 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     items(uiState.medidorConsumoAgua) { dispositivo ->
+                        contadorMonitoreo++
                         mqttService.subscribe("medidorconsumoagua") {
                             valor1 = it
                             valor2 = ""
@@ -425,8 +552,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "medidorconsumoagua", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "medidorconsumoagua",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -435,6 +569,7 @@ fun InicioScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     items(uiState.medidorGas) { dispositivo ->
+                        contadorMonitoreo++
                         mqttService.subscribe("medidorgas") {
                             valor1 = it
                             valor2 = ""
@@ -445,8 +580,15 @@ fun InicioScreen(
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
                                         mostrarInformacionDispositivos(
-                                            id, "medidorgas", nombre,
-                                            imagen, ubicacion, valor1, valor2, inicioViewModel, navigateToInicio
+                                            id,
+                                            "medidorgas",
+                                            nombre,
+                                            imagen,
+                                            ubicacion,
+                                            valor1,
+                                            valor2,
+                                            inicioViewModel,
+                                            navigateToInicio
                                         )
                                     }
                                 }
@@ -454,68 +596,71 @@ fun InicioScreen(
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                     }
-
                 }
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(1),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item {
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(100.dp)
-                                .padding(16.dp),
-                            elevation = CardDefaults.elevatedCardElevation(12.dp),
-                            shape = RoundedCornerShape(8.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = Color.LightGray,
-                                contentColor = Color.Black
-                            )
+            }
+        }
+        if (contadorSensores == 0 && contadorMonitoreo == 0 && contadorActuadores == 0) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(6.dp, top = 60.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .padding(16.dp),
+                        elevation = CardDefaults.elevatedCardElevation(12.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.LightGray,
+                            contentColor = Color.Black
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text("No hay dispositivos vinculados.", textAlign = TextAlign.Center)
-                            }
+                            Text(
+                                "No hay dispositivos vinculados.",
+                                textAlign = TextAlign.Center
+                            )
                         }
                     }
                 }
             }
         }
+    }
 
-        // El AlertDialog se muestra por encima de todo cuando se activa
-        if (uiState.showLogoutDialog) {
-            AlertDialog(
-                onDismissRequest = { inicioViewModel.dismissShowLogoutDialog() },
-                title = { Text("Cerrar sesión") },
-                text = { Text("¿Estás seguro de que quieres salir?") },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            auth.signOut()
-                            inicioViewModel.dismissShowLogoutDialog()
-                            navigateToLogin()
-                        }
-                    ) {
-                        Text("Confirmar")
+    // El AlertDialog se muestra por encima de todo cuando se activa
+    if (uiState.showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = { inicioViewModel.dismissShowLogoutDialog() },
+            title = { Text("Cerrar sesión") },
+            text = { Text("¿Estás seguro de que quieres salir?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        auth.signOut()
+                        inicioViewModel.dismissShowLogoutDialog()
+                        navigateToLogin()
                     }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = { inicioViewModel.dismissShowLogoutDialog() }
-                    ) {
-                        Text("Cancelar")
-                    }
+                ) {
+                    Text("Confirmar")
                 }
-            )
-        }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { inicioViewModel.dismissShowLogoutDialog() }
+                ) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }
 

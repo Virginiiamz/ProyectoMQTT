@@ -49,7 +49,6 @@ import com.proyectomoviles.dispositivos.SensorNivelAgua
 import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
-import com.proyectomoviles.funciones.mostrarImagenByDispositivo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

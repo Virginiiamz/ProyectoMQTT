@@ -169,7 +169,7 @@ fun mostrarInformacionDispositivos(
                     "cerraduraelectronica" -> mostrarActuadorCerradura(valor1)
                     "controladoriluminacion" ->mostrarControladorIluminacion(valor1)
                     "controladorclima" -> mostrarControladorClima(valor1, valor2)
-                    "consumoagua" -> mostrarConsumoAgua(valor1)
+                    "medidorconsumoagua" -> mostrarConsumoAgua(valor1)
                     "medidorgas" -> mostrarConsumoGas(valor1)
                 }
             }
