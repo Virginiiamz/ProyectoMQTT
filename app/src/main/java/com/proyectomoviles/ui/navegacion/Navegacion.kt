@@ -57,12 +57,18 @@ fun Navegacion(auth: AuthManager, mqttService: MqttService) {
         }
 
         composable<Inicio> { backStatEntry ->
-            val dispositivo = backStatEntry.toRoute<Inicio>()
-            InicioScreen({navController.navigate(Elementos)}, {navController.navigate(Inicio)}, mqttService, firestore)
-//                navController.navigate(Elementos)
-//                {navController.navigate(Inicio)}
-
-//            }
+            InicioScreen(
+                navigateToElementos = { navController.navigate(Elementos) },
+                navigateToInicio = { navController.navigate(Inicio) },
+                navigateToLogin = {
+                    navController.navigate(Login) {
+                        popUpTo(Inicio) { inclusive = true } // Limpia la pila
+                    }
+                },
+                mqttService = mqttService,
+                firestoreManager = firestore,
+                auth = auth // Añade el authManager aquí
+            )
         }
         composable<Elementos> { backStackEntry ->
 //            Navegacion a la pantalla Elementos

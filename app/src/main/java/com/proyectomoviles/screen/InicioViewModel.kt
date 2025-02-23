@@ -179,6 +179,14 @@ class InicioViewModel(val firestoreManager: FirestoreManager) : ViewModel() {
             }
         }
     }
+
+    fun onLogoutSelected() {
+        _uiState.update { it.copy(showLogoutDialog = true) }
+    }
+
+    fun dismissShowLogoutDialog() {
+        _uiState.update { it.copy(showLogoutDialog = false) }
+    }
 }
 
 data class UiState(
@@ -195,7 +203,8 @@ data class UiState(
     val controladorIluminacion: List<ControladorIluminacion> = emptyList(),
     val controladorClima: List<ControladorClima> = emptyList(),
     val medidorConsumoAgua: List<MedidorConsumoAgua> = emptyList(),
-    val medidorGas: List<MedidorGas> = emptyList()
+    val medidorGas: List<MedidorGas> = emptyList(),
+    val showLogoutDialog: Boolean = false
 )
 
 class InicioViewModelFactory(private val firestoreManager: FirestoreManager) :
