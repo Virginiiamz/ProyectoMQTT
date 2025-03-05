@@ -3,6 +3,7 @@ package com.proyectomoviles.dispositivos
 data class ActuadorValvulaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -12,6 +13,7 @@ data class ActuadorValvulaDB(
 data class CerraduraElectronicaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -21,6 +23,7 @@ data class CerraduraElectronicaDB(
 data class ControladorIluminacionDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,

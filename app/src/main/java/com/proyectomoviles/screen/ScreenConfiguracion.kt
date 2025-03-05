@@ -187,6 +187,7 @@ fun ConfiguracionSensorTemperatura(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
     var humedad by rememberSaveable { mutableStateOf(0.00) }
@@ -206,6 +207,12 @@ fun ConfiguracionSensorTemperatura(
             label = { Text("Nombre") }
         )
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
 
             modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
@@ -216,6 +223,7 @@ fun ConfiguracionSensorTemperatura(
             id = null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
+            token,
             "SensorTemperatura",
             ubicacion,
             R.drawable.imgsensortermometro,
@@ -242,6 +250,7 @@ fun ConfiguracionSensorLuz(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var encendido by rememberSaveable { mutableStateOf(false) }
 
@@ -260,6 +269,12 @@ fun ConfiguracionSensorLuz(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -273,6 +288,7 @@ fun ConfiguracionSensorLuz(
             null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
+            token,
             "SensorLuz",
             ubicacion,
             R.drawable.imgsensorluz,
@@ -299,6 +315,7 @@ fun ConfiguracionSensorMovimiento(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
 
@@ -317,6 +334,12 @@ fun ConfiguracionSensorMovimiento(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -326,6 +349,7 @@ fun ConfiguracionSensorMovimiento(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "SensorMovimiento",
                 ubicacion,
                 R.drawable.imgsensormovimiento,
@@ -352,6 +376,7 @@ fun ConfiguracionSensorVibracion(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by remember { mutableStateOf(false) }
 
@@ -370,6 +395,12 @@ fun ConfiguracionSensorVibracion(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -379,6 +410,7 @@ fun ConfiguracionSensorVibracion(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "SensoVibracionr",
                 ubicacion,
                 R.drawable.imgsensorvibracion,
@@ -405,6 +437,7 @@ fun ConfiguracionSensorNivelAgua(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by remember { mutableStateOf(0.00) }
 
@@ -423,6 +456,12 @@ fun ConfiguracionSensorNivelAgua(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -432,6 +471,7 @@ fun ConfiguracionSensorNivelAgua(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "SensorNivelAgua",
                 ubicacion,
                 R.drawable.imgsensornivelagua,
@@ -458,6 +498,7 @@ fun ConfiguracionSensorPresion(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var presion by remember { mutableStateOf(0.00) }
 
@@ -475,6 +516,12 @@ fun ConfiguracionSensorPresion(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -484,6 +531,7 @@ fun ConfiguracionSensorPresion(
                 null, // tiene que ser nulo
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "SensorPresion",
                 ubicacion,
                 R.drawable.imgsensorpresion,
@@ -509,6 +557,7 @@ fun ConfiguracionSensorApertura(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
 
@@ -527,6 +576,12 @@ fun ConfiguracionSensorApertura(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -541,6 +596,7 @@ fun ConfiguracionSensorApertura(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "SensorApertura",
                 ubicacion,
                 R.drawable.imgsensorapertura,
@@ -566,6 +622,7 @@ fun ConfiguracionSensorCalidadAire(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var calidad by remember { mutableStateOf("") }
 
@@ -585,6 +642,12 @@ fun ConfiguracionSensorCalidadAire(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -595,6 +658,7 @@ fun ConfiguracionSensorCalidadAire(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "SensorCalidadAire",
                 ubicacion,
                 R.drawable.imgsensorcalidadaire,
@@ -625,10 +689,9 @@ fun ConfiguracionActuadorValvula(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
-
-    TipoDispositivoCreado.tipoDispositivoCreado = "actuadorvalvula"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -642,6 +705,12 @@ fun ConfiguracionActuadorValvula(
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -659,6 +728,7 @@ fun ConfiguracionActuadorValvula(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "ActuadorValvula",
                 ubicacion,
                 R.drawable.imgactuadorvalvula,
@@ -688,10 +758,10 @@ fun ConfiguracionCerraduraElectronica(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
 
-    TipoDispositivoCreado.tipoDispositivoCreado = "cerraduraelectronica"
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -708,6 +778,12 @@ fun ConfiguracionCerraduraElectronica(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -721,6 +797,7 @@ fun ConfiguracionCerraduraElectronica(
             null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
+            token,
             "Actuador",
             ubicacion,
             R.drawable.imgcerraduraelectronica,
@@ -749,10 +826,10 @@ fun ConfiguracionControladorIluminacion(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var estado by rememberSaveable { mutableStateOf(false) }
 
-    TipoDispositivoCreado.tipoDispositivoCreado = "controladoriluminacion"
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -765,6 +842,12 @@ fun ConfiguracionControladorIluminacion(
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -781,6 +864,7 @@ fun ConfiguracionControladorIluminacion(
             null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
+            token,
             "Actuador",
             ubicacion,
             R.drawable.imgcontroladorluz,
@@ -808,6 +892,7 @@ fun ConfiguracionControladorClima(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
     var humedad by remember { mutableStateOf(0.00) }
@@ -828,6 +913,12 @@ fun ConfiguracionControladorClima(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -836,6 +927,7 @@ fun ConfiguracionControladorClima(
             null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
+            token,
             "Monitoreo",
             ubicacion,
             R.drawable.imgcontroladorclima,
@@ -863,6 +955,7 @@ fun ConfiguracionMedidorConsumoAgua(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var litros by rememberSaveable { mutableStateOf(0.00) }
 
@@ -883,6 +976,13 @@ fun ConfiguracionMedidorConsumoAgua(
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -894,6 +994,7 @@ fun ConfiguracionMedidorConsumoAgua(
                 null,
                 userId = auth.getCurrentUser()?.uid,
                 nombre,
+                token,
                 "Monitoreo",
                 ubicacion,
                 R.drawable.imgconsumoagua,
@@ -920,6 +1021,7 @@ fun ConfiguracionMedidorGas(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var m3State by remember { mutableStateOf(0.00) }
     var m3toString by remember { mutableStateOf(m3State.toString()) } //Xq el OutlinedTextField necesita un string para q funcione
@@ -942,6 +1044,13 @@ fun ConfiguracionMedidorGas(
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = token,
+            onValueChange = { token = it },
+            label = { Text("Token") }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = ubicacion,
             onValueChange = { ubicacion = it },
             label = { Text("Ubicacion") }
@@ -951,6 +1060,7 @@ fun ConfiguracionMedidorGas(
             null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
+            token,
             "Monitoreo",
             ubicacion,
             R.drawable.imgconsumogas,

@@ -3,6 +3,7 @@ package com.proyectomoviles.dispositivos
 data class ControladorClimaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -13,6 +14,7 @@ data class ControladorClimaDB(
 data class MedidorConsumoAguaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -22,6 +24,7 @@ data class MedidorConsumoAguaDB(
 data class MedidorGasDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,

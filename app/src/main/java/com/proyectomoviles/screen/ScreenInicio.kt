@@ -188,11 +188,15 @@ fun InicioScreen(
                     // Resto de los items de sensores (sin padding extra)
                     items(uiState.sensorTemperatura) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("shellies/consumo/emeter/0/power") {
-                            valor1 = it
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                            }
                         }
-                        mqttService.subscribe("shellies/consumo/emeter/0/power") {
-                            valor2 = it
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor2 = it
+                            }
                         }
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
@@ -212,10 +216,13 @@ fun InicioScreen(
 
                     items(uiState.sensorLuz) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensorluz") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
+
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
@@ -234,9 +241,11 @@ fun InicioScreen(
 
                     items(uiState.sensorMovimiento) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensormovimiento") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -262,9 +271,11 @@ fun InicioScreen(
                     }
                     items(uiState.sensorVibracion) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensorvibracion") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -291,9 +302,11 @@ fun InicioScreen(
 
                     items(uiState.sensorNivelAgua) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensornivelagua") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -319,9 +332,11 @@ fun InicioScreen(
                     }
                     items(uiState.sensorPresion) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensorpresion") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -347,9 +362,11 @@ fun InicioScreen(
                     }
                     items(uiState.sensorApertura) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensorapertura") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -376,9 +393,11 @@ fun InicioScreen(
 
                     items(uiState.sensorCalidadAire) { dispositivo ->
                         contadorSensores++
-                        mqttService.subscribe("sensorcalidadaire") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -415,9 +434,11 @@ fun InicioScreen(
 
                     items(uiState.actuadorValvula) { dispositivo ->
                         contadorActuadores++
-                        mqttService.subscribe("actuadorvalvula") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -444,9 +465,11 @@ fun InicioScreen(
 
                     items(uiState.cerraduraElectronica) { dispositivo ->
                         contadorActuadores++
-                        mqttService.subscribe("cerraduraelectronica") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -473,9 +496,11 @@ fun InicioScreen(
 
                     items(uiState.controladorIluminacion) { dispositivo ->
                         contadorActuadores++
-                        mqttService.subscribe("controladoriluminacion") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -511,11 +536,15 @@ fun InicioScreen(
                     }
                     items(uiState.controladorClima) { dispositivo ->
                         contadorMonitoreo++
-                        mqttService.subscribe("controladorclima") {
-                            valor1 = it
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                            }
                         }
-                        mqttService.subscribe("controladorclima") {
-                            valor2 = it
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor2 = it
+                            }
                         }
 
                         dispositivo.id?.let { id ->
@@ -541,9 +570,11 @@ fun InicioScreen(
                     }
                     items(uiState.medidorConsumoAgua) { dispositivo ->
                         contadorMonitoreo++
-                        mqttService.subscribe("medidorconsumoagua") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
 
@@ -570,9 +601,11 @@ fun InicioScreen(
                     }
                     items(uiState.medidorGas) { dispositivo ->
                         contadorMonitoreo++
-                        mqttService.subscribe("medidorgas") {
-                            valor1 = it
-                            valor2 = ""
+                        dispositivo.token?.let {
+                            mqttService.subscribe(it) {
+                                valor1 = it
+                                valor2 = ""
+                            }
                         }
 
                         dispositivo.id?.let { id ->

@@ -146,20 +146,20 @@ fun DispositivoCard(nombreDispositivo: String, imagen: Int, onNavigateToConfigur
 
 fun listaElementos(): List<Dispositivo> {
     val listaDispositivo = listOf(
-        SensorTemperatura(null ,null,"Sensor Temperatura", "Sensor", "", R.drawable.imgsensortermometro,0.00, 0.00),
-        SensorMovimiento(null ,null,"Sensor Movimiento", "Sensor", "",R.drawable.imgsensormovimiento, false),
-        SensorVibracion(null ,null,"Sensor Vibración", "Sensor", "",R.drawable.imgsensorvibracion, false),
-        SensorNivelAgua(null ,null,"Sensor Nivel de Agua", "Sensor", "", R.drawable.imgsensornivelagua,0.00),
-        SensorLuz(null ,null,"Sensor de luz", "Sensor", "", R.drawable.imgsensorluz, false),
-        SensorPresion(null ,null,"Sensor de Presión", "Sensor", "",R.drawable.imgsensorpresion, 0.00),
-        SensorApertura(null ,null,"Sensor de Apertura", "Sensor", "", R.drawable.imgsensorapertura, false),
-        SensorCalidadAire(null ,null,"Sensor de Calidad del Aire", "Sensor", "", R.drawable.imgsensorcalidadaire,""),
-        ActuadorValvula(null ,null,"Actuador Valvula", "Actuador", "", R.drawable.imgactuadorvalvula,false),
-        ControladorClima(null ,null,"Controlador Clima", "Monitoreo", "", R.drawable.imgcontroladorclima, 0.00, 0.00),
-        MedidorConsumoAgua(null ,null,"Medidor de Consumo de Agua", "Monitoreo", "", R.drawable.imgconsumoagua, 0.00),
-        CerraduraElectronica(null ,null,"Cerradura Electrónica", "Monitoreo", "", R.drawable.imgcerraduraelectronica, false),
-        MedidorGas(null ,null,"Medidor de gas", "Monitoreo", "", R.drawable.imgconsumogas, 0.00),
-        ControladorIluminacion(null ,null,"Controlador Iluminación", "Actuador", "", R.drawable.imgcontroladorluz, false),
+        SensorTemperatura(null ,null,"Sensor Temperatura","", "Sensor", "", R.drawable.imgsensortermometro,0.00, 0.00),
+        SensorMovimiento(null ,null,"Sensor Movimiento", "","Sensor", "",R.drawable.imgsensormovimiento, false),
+        SensorVibracion(null ,null,"Sensor Vibración", "","Sensor", "",R.drawable.imgsensorvibracion, false),
+        SensorNivelAgua(null ,null,"Sensor Nivel de Agua", "","Sensor", "", R.drawable.imgsensornivelagua,0.00),
+        SensorLuz(null ,null,"Sensor de luz", "","Sensor", "", R.drawable.imgsensorluz, false),
+        SensorPresion(null ,null,"Sensor de Presión", "","Sensor", "",R.drawable.imgsensorpresion, 0.00),
+        SensorApertura(null ,null,"Sensor de Apertura", "","Sensor", "", R.drawable.imgsensorapertura, false),
+        SensorCalidadAire(null ,null,"Sensor de Calidad del Aire","", "Sensor", "", R.drawable.imgsensorcalidadaire,""),
+        ActuadorValvula(null ,null,"Actuador Valvula", "","Actuador", "", R.drawable.imgactuadorvalvula,false),
+        ControladorClima(null ,null,"Controlador Clima", "","Monitoreo", "", R.drawable.imgcontroladorclima, 0.00, 0.00),
+        MedidorConsumoAgua(null ,null,"Medidor de Consumo de Agua","", "Monitoreo", "", R.drawable.imgconsumoagua, 0.00),
+        CerraduraElectronica(null ,null,"Cerradura Electrónica", "","Monitoreo", "", R.drawable.imgcerraduraelectronica, false),
+        MedidorGas(null ,null,"Medidor de gas", "","Monitoreo", "", R.drawable.imgconsumogas, 0.00),
+        ControladorIluminacion(null ,null,"Controlador Iluminación","", "Actuador", "", R.drawable.imgcontroladorluz, false),
     )
     return listaDispositivo
 }

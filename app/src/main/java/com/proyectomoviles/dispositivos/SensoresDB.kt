@@ -3,6 +3,7 @@ package com.proyectomoviles.dispositivos
 data class SensorLuzDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -12,6 +13,7 @@ data class SensorLuzDB(
 data class SensorTemperaturaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -22,6 +24,7 @@ data class SensorTemperaturaDB(
 data class SensorMovimientoDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -31,6 +34,7 @@ data class SensorMovimientoDB(
 data class SensorVibracionDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -40,6 +44,7 @@ data class SensorVibracionDB(
 data class SensorNivelAguaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -48,6 +53,7 @@ data class SensorNivelAguaDB(
 data class SensorPresionDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -57,6 +63,7 @@ data class SensorPresionDB(
 data class SensorAperturaDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
@@ -66,6 +73,7 @@ data class SensorAperturaDB(
 data class SensorCalidadAireDB(
     var userId: String = "",
     val nombre: String = "",
+    val token: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,
