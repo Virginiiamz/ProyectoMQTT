@@ -106,6 +106,7 @@ fun ConfiguracionScreen(
                 "Sensor Presión" -> {
                     ConfiguracionSensorPresion(navigateToInicio, auth, inicioViewModel)
                 }
+
                 "Sensor Apertura" -> {
                     ConfiguracionSensorApertura(
                         navigateToInicio,
@@ -187,7 +188,8 @@ fun ConfiguracionSensorTemperatura(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
-    var token by remember { mutableStateOf("") }
+    var tokenGrados by remember { mutableStateOf("") }
+    var tokenHumedad by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by rememberSaveable { mutableStateOf(0.00) }
     var humedad by rememberSaveable { mutableStateOf(0.00) }
@@ -208,9 +210,15 @@ fun ConfiguracionSensorTemperatura(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = token,
-            onValueChange = { token = it },
-            label = { Text("Token") }
+            value = tokenGrados,
+            onValueChange = { tokenGrados = it },
+            label = { Text("Token Grados") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = tokenHumedad,
+            onValueChange = { tokenHumedad = it },
+            label = { Text("Token Humedad") }
         )
         OutlinedTextField(
 
@@ -223,7 +231,8 @@ fun ConfiguracionSensorTemperatura(
             id = null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
-            token,
+            tokenGrados,
+            tokenHumedad,
             "SensorTemperatura",
             ubicacion,
             R.drawable.imgsensortermometro,
@@ -678,6 +687,7 @@ fun ConfiguracionSensorCalidadAire(
         }
     }
 }
+
 //
 ////ACTUADORES:
 //
@@ -737,8 +747,9 @@ fun ConfiguracionActuadorValvula(
         Button(
             onClick = {
                 mqttService.publish("actuadorvalvula", estado.toString())
-                inicioViewModel.addActuadorValvula(actuador
-                    )
+                inicioViewModel.addActuadorValvula(
+                    actuador
+                )
                 navigateToInicio()
 
 
@@ -892,7 +903,8 @@ fun ConfiguracionControladorClima(
     inicioViewModel: InicioViewModel
 ) {
     var nombre by remember { mutableStateOf("") }
-    var token by remember { mutableStateOf("") }
+    var tokenGrados by remember { mutableStateOf("") }
+    var tokenHumedad by remember { mutableStateOf("") }
     var ubicacion by remember { mutableStateOf("") }
     var grados by remember { mutableStateOf(0.00) }
     var humedad by remember { mutableStateOf(0.00) }
@@ -913,9 +925,15 @@ fun ConfiguracionControladorClima(
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = token,
-            onValueChange = { token = it },
-            label = { Text("Token") }
+            value = tokenGrados,
+            onValueChange = { tokenGrados = it },
+            label = { Text("Token Grados") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = tokenHumedad,
+            onValueChange = { tokenHumedad = it },
+            label = { Text("Token Humedad") }
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -927,7 +945,8 @@ fun ConfiguracionControladorClima(
             null,
             userId = auth.getCurrentUser()?.uid,
             nombre,
-            token,
+            tokenGrados,
+            tokenHumedad,
             "Monitoreo",
             ubicacion,
             R.drawable.imgcontroladorclima,

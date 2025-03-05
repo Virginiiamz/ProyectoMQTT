@@ -13,7 +13,8 @@ data class SensorLuzDB(
 data class SensorTemperaturaDB(
     var userId: String = "",
     val nombre: String = "",
-    val token: String = "",
+    val tokenGrados: String = "",
+    val tokenHumedad: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,

@@ -190,12 +190,14 @@ fun InicioScreen(
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        dispositivo.token?.let { token ->
-                                            mostrarInformacionDispositivos(
-                                                id, "sensortemperatura", nombre,
-                                                imagen, ubicacion, token,
-                                                inicioViewModel, mqttService, navigateToInicio
-                                            )
+                                        dispositivo.tokenGrados?.let { tokenGrados ->
+                                            dispositivo.tokenHumedad?.let { tokenHumedad ->
+                                                mostrarInformacionDispositivos(
+                                                    id, "sensortemperatura", nombre,
+                                                    imagen, ubicacion, tokenGrados, tokenHumedad,
+                                                    inicioViewModel, mqttService, navigateToInicio
+                                                )
+                                            }
                                         }
 
                                     }
@@ -215,7 +217,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensorluz", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -237,7 +239,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensormovimiento", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -258,7 +260,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensorvibracion", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -280,7 +282,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensornivelagua", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -301,7 +303,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensorpresion", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -322,7 +324,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensorapertura", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -344,7 +346,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "sensorcalidadaire", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -376,7 +378,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "actuadorvalvula", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -398,7 +400,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "cerraduraelectronica", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -420,7 +422,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "controladoriluminacion", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -448,12 +450,14 @@ fun InicioScreen(
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        dispositivo.token?.let { token ->
-                                            mostrarInformacionDispositivos(
-                                                id, "controladorclima", nombre,
-                                                imagen, ubicacion, token,
-                                                inicioViewModel, mqttService, navigateToInicio
-                                            )
+                                        dispositivo.tokenGrados?.let { tokenGrados ->
+                                            dispositivo.tokenHumedad?.let { tokenHumedad ->
+                                                mostrarInformacionDispositivos(
+                                                    id, "controladorclima", nombre,
+                                                    imagen, ubicacion, tokenGrados, tokenHumedad,
+                                                    inicioViewModel, mqttService, navigateToInicio
+                                                )
+                                            }
                                         }
 
                                     }
@@ -472,7 +476,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "medidorconsumoagua", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }
@@ -493,7 +497,7 @@ fun InicioScreen(
                                         dispositivo.token?.let { token ->
                                             mostrarInformacionDispositivos(
                                                 id, "medidorgas", nombre,
-                                                imagen, ubicacion, token,
+                                                imagen, ubicacion, token, token,
                                                 inicioViewModel, mqttService, navigateToInicio
                                             )
                                         }

@@ -3,7 +3,8 @@ package com.proyectomoviles.dispositivos
 data class ControladorClimaDB(
     var userId: String = "",
     val nombre: String = "",
-    val token: String = "",
+    val tokenGrados: String = "",
+    val tokenHumedad: String = "",
     val tipo: String = "",
     val ubicacion: String = "",
     val imagen: Int = 0,

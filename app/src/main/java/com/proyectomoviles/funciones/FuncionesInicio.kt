@@ -68,7 +68,8 @@ fun mostrarInformacionDispositivos(
     nombre: String,
     imagen: Int,
     ubicacion: String,
-    token: String,
+    token1: String,
+    token2: String,
     inicioViewModel: InicioViewModel,
     mqttService: MqttService,
     navigateToInicio: () -> Unit
@@ -144,14 +145,6 @@ fun mostrarInformacionDispositivos(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        token,
-                        modifier = Modifier.padding(start = 6.dp),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(
-                        Modifier.height(1.dp)
-                    )
-                    Text(
                         nombre,
                         modifier = Modifier.padding(start = 6.dp),
                         textAlign = TextAlign.Center
@@ -168,20 +161,20 @@ fun mostrarInformacionDispositivos(
 
             Column {
                 when (tipoDispositivo) {
-                    "sensortemperatura" -> mostrarSensorTemperatura(token, mqttService)
-                    "sensorluz" -> mostrarSensorLuz(token, mqttService)
-                    "sensormovimiento" -> mostrarSensorMovimiento(token, mqttService)
-                    "sensorvibracion" -> mostrarSensorVibracion(token, mqttService)
-                    "sensornivelagua" -> mostrarSensorNivelAgua(token, mqttService)
-                    "sensorpresion" -> mostrarSensorPresion(token, mqttService)
-                    "sensorapertura" -> mostrarSensorApertura(token, mqttService)
-                    "sensorcalidadaire" -> mostrarSensorCalidadAire(token, mqttService)
-                    "actuadorvalvula" -> mostrarActuadorValvula(token, mqttService)
-                    "cerraduraelectronica" -> mostrarActuadorCerradura(token, mqttService)
-                    "controladoriluminacion" ->mostrarControladorIluminacion(token, mqttService)
-                    "controladorclima" -> mostrarControladorClima(token, mqttService)
-                    "medidorconsumoagua" -> mostrarConsumoAgua(token, mqttService)
-                    "medidorgas" -> mostrarConsumoGas(token, mqttService)
+                    "sensortemperatura" -> mostrarSensorTemperatura(token1, token2, mqttService)
+                    "sensorluz" -> mostrarSensorLuz(token1, mqttService)
+                    "sensormovimiento" -> mostrarSensorMovimiento(token1, mqttService)
+                    "sensorvibracion" -> mostrarSensorVibracion(token1, mqttService)
+                    "sensornivelagua" -> mostrarSensorNivelAgua(token1, mqttService)
+                    "sensorpresion" -> mostrarSensorPresion(token1, mqttService)
+                    "sensorapertura" -> mostrarSensorApertura(token1, mqttService)
+                    "sensorcalidadaire" -> mostrarSensorCalidadAire(token1, mqttService)
+                    "actuadorvalvula" -> mostrarActuadorValvula(token1, mqttService)
+                    "cerraduraelectronica" -> mostrarActuadorCerradura(token1, mqttService)
+                    "controladoriluminacion" -> mostrarControladorIluminacion(token1, mqttService)
+                    "controladorclima" -> mostrarControladorClima(token1, token2, mqttService)
+                    "medidorconsumoagua" -> mostrarConsumoAgua(token1, mqttService)
+                    "medidorgas" -> mostrarConsumoGas(token1, mqttService)
                 }
             }
         }
@@ -190,13 +183,16 @@ fun mostrarInformacionDispositivos(
 }
 
 @Composable
-fun mostrarSensorTemperatura(token: String, mqttService: MqttService) {
+fun mostrarSensorTemperatura(token1: String, token2: String, mqttService: MqttService) {
 
     var grados by remember { mutableDoubleStateOf(0.0) }
     var humedad by remember { mutableDoubleStateOf(0.0) }
 
-    mqttService.subscribe(token) {
+    mqttService.subscribe(token1) {
         grados = it.toDouble()
+    }
+
+    mqttService.subscribe(token2) {
         humedad = it.toDouble()
     }
 
@@ -716,12 +712,15 @@ fun mostrarControladorIluminacion(token: String, mqttService: MqttService) {
 }
 
 @Composable
-fun mostrarControladorClima(token: String, mqttService: MqttService) {
+fun mostrarControladorClima(token1: String, token2: String, mqttService: MqttService) {
     var grados by remember { mutableDoubleStateOf(0.0) }
     var humedad by remember { mutableDoubleStateOf(0.0) }
 
-    mqttService.subscribe(token) {
+    mqttService.subscribe(token1) {
         grados = it.toDouble()
+    }
+
+    mqttService.subscribe(token2) {
         humedad = it.toDouble()
     }
 
