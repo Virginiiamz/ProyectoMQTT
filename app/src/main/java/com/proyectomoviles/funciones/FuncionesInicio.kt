@@ -29,6 +29,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,6 +57,7 @@ import com.proyectomoviles.dispositivos.SensorPresion
 import com.proyectomoviles.dispositivos.SensorTemperatura
 import com.proyectomoviles.dispositivos.SensorVibracion
 import com.proyectomoviles.screen.InicioViewModel
+import com.proyectomoviles.services.MqttService
 import com.proyectomoviles.ui.theme.Naranja
 import com.proyectomoviles.ui.theme.Purple40
 
@@ -65,9 +68,9 @@ fun mostrarInformacionDispositivos(
     nombre: String,
     imagen: Int,
     ubicacion: String,
-    valor1: String,
-    valor2: String,
+    token: String,
     inicioViewModel: InicioViewModel,
+    mqttService: MqttService,
     navigateToInicio: () -> Unit
 ) {
     var mostrarDialogo by remember { mutableStateOf(false) }
@@ -141,6 +144,14 @@ fun mostrarInformacionDispositivos(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
+                        token,
+                        modifier = Modifier.padding(start = 6.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(
+                        Modifier.height(1.dp)
+                    )
+                    Text(
                         nombre,
                         modifier = Modifier.padding(start = 6.dp),
                         textAlign = TextAlign.Center
@@ -157,20 +168,20 @@ fun mostrarInformacionDispositivos(
 
             Column {
                 when (tipoDispositivo) {
-                    "sensortemperatura" -> mostrarSensorTemperatura(valor1, valor2)
-                    "sensorluz" -> mostrarSensorLuz(valor1)
-                    "sensormovimiento" -> mostrarSensorMovimiento(valor1)
-                    "sensorvibracion" -> mostrarSensorVibracion(valor1)
-                    "sensornivelagua" -> mostrarSensorNivelAgua(valor1)
-                    "sensorpresion" -> mostrarSensorPresion(valor1)
-                    "sensorapertura" -> mostrarSensorApertura(valor1)
-                    "sensorcalidadaire" -> mostrarSensorCalidadAire(valor1)
-                    "actuadorvalvula" -> mostrarActuadorValvula(valor1)
-                    "cerraduraelectronica" -> mostrarActuadorCerradura(valor1)
-                    "controladoriluminacion" ->mostrarControladorIluminacion(valor1)
-                    "controladorclima" -> mostrarControladorClima(valor1, valor2)
-                    "medidorconsumoagua" -> mostrarConsumoAgua(valor1)
-                    "medidorgas" -> mostrarConsumoGas(valor1)
+                    "sensortemperatura" -> mostrarSensorTemperatura(token, mqttService)
+                    "sensorluz" -> mostrarSensorLuz(token, mqttService)
+                    "sensormovimiento" -> mostrarSensorMovimiento(token, mqttService)
+                    "sensorvibracion" -> mostrarSensorVibracion(token, mqttService)
+                    "sensornivelagua" -> mostrarSensorNivelAgua(token, mqttService)
+                    "sensorpresion" -> mostrarSensorPresion(token, mqttService)
+                    "sensorapertura" -> mostrarSensorApertura(token, mqttService)
+                    "sensorcalidadaire" -> mostrarSensorCalidadAire(token, mqttService)
+                    "actuadorvalvula" -> mostrarActuadorValvula(token, mqttService)
+                    "cerraduraelectronica" -> mostrarActuadorCerradura(token, mqttService)
+                    "controladoriluminacion" ->mostrarControladorIluminacion(token, mqttService)
+                    "controladorclima" -> mostrarControladorClima(token, mqttService)
+                    "medidorconsumoagua" -> mostrarConsumoAgua(token, mqttService)
+                    "medidorgas" -> mostrarConsumoGas(token, mqttService)
                 }
             }
         }
@@ -179,7 +190,16 @@ fun mostrarInformacionDispositivos(
 }
 
 @Composable
-fun mostrarSensorTemperatura(grados: String, humedad: String) {
+fun mostrarSensorTemperatura(token: String, mqttService: MqttService) {
+
+    var grados by remember { mutableDoubleStateOf(0.0) }
+    var humedad by remember { mutableDoubleStateOf(0.0) }
+
+    mqttService.subscribe(token) {
+        grados = it.toDouble()
+        humedad = it.toDouble()
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -214,7 +234,14 @@ fun mostrarSensorTemperatura(grados: String, humedad: String) {
 
 
 @Composable
-fun mostrarSensorMovimiento(estado: String) {
+fun mostrarSensorMovimiento(token: String, mqttService: MqttService) {
+
+    var estado by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        estado = it
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -264,7 +291,13 @@ fun mostrarSensorMovimiento(estado: String) {
 }
 
 @Composable
-fun mostrarSensorVibracion(estado: String) {
+fun mostrarSensorVibracion(token: String, mqttService: MqttService) {
+    var estado by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        estado = it
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -314,7 +347,13 @@ fun mostrarSensorVibracion(estado: String) {
 }
 
 @Composable
-fun mostrarSensorNivelAgua(litros: String) {
+fun mostrarSensorNivelAgua(token: String, mqttService: MqttService) {
+    var litros by remember { mutableDoubleStateOf(0.0) }
+
+    mqttService.subscribe(token) {
+        litros = it.toDouble()
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -339,7 +378,14 @@ fun mostrarSensorNivelAgua(litros: String) {
 }
 
 @Composable
-fun mostrarSensorLuz(encendido: String) {
+fun mostrarSensorLuz(token: String, mqttService: MqttService) {
+
+    var encendido by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        encendido = it
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -381,7 +427,14 @@ fun mostrarSensorLuz(encendido: String) {
 }
 
 @Composable
-fun mostrarSensorPresion(presion: String) {
+fun mostrarSensorPresion(token: String, mqttService: MqttService) {
+
+    var presion by remember { mutableDoubleStateOf(0.0) }
+
+    mqttService.subscribe(token) {
+        presion = it.toDouble()
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -406,7 +459,14 @@ fun mostrarSensorPresion(presion: String) {
 }
 
 @Composable
-fun mostrarSensorApertura(estado: String) {
+fun mostrarSensorApertura(token: String, mqttService: MqttService) {
+
+    var estado by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        estado = it
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -448,7 +508,14 @@ fun mostrarSensorApertura(estado: String) {
 }
 
 @Composable
-fun mostrarSensorCalidadAire(tipoCalidad: String) {
+fun mostrarSensorCalidadAire(token: String, mqttService: MqttService) {
+
+    var tipoCalidad by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        tipoCalidad = it
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -519,7 +586,14 @@ fun mostrarSensorCalidadAire(tipoCalidad: String) {
 }
 
 @Composable
-fun mostrarActuadorValvula(estado: String) {
+fun mostrarActuadorValvula(token: String, mqttService: MqttService) {
+
+    var estado by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        estado = it
+    }
+
     var estadoActuador by remember { mutableStateOf(estado.toBoolean()) }
     Row(
         modifier = Modifier
@@ -556,7 +630,13 @@ fun mostrarActuadorValvula(estado: String) {
 }
 
 @Composable
-fun mostrarActuadorCerradura(estado: String) {
+fun mostrarActuadorCerradura(token: String, mqttService: MqttService) {
+    var estado by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        estado = it
+    }
+
     var estadoCerradura by remember { mutableStateOf(estado.toBoolean()) }
     Row(
         modifier = Modifier
@@ -593,7 +673,13 @@ fun mostrarActuadorCerradura(estado: String) {
 }
 
 @Composable
-fun mostrarControladorIluminacion(estado:String) {
+fun mostrarControladorIluminacion(token: String, mqttService: MqttService) {
+    var estado by remember { mutableStateOf("") }
+
+    mqttService.subscribe(token) {
+        estado = it
+    }
+
     var estadoiluminacion by remember { mutableStateOf(estado.toBoolean()) }
     Row(
         modifier = Modifier
@@ -630,7 +716,14 @@ fun mostrarControladorIluminacion(estado:String) {
 }
 
 @Composable
-fun mostrarControladorClima(temperatura: String, humedad: String) {
+fun mostrarControladorClima(token: String, mqttService: MqttService) {
+    var grados by remember { mutableDoubleStateOf(0.0) }
+    var humedad by remember { mutableDoubleStateOf(0.0) }
+
+    mqttService.subscribe(token) {
+        grados = it.toDouble()
+        humedad = it.toDouble()
+    }
 
     Row(
         modifier = Modifier
@@ -653,7 +746,7 @@ fun mostrarControladorClima(temperatura: String, humedad: String) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text("${temperatura} Cº", color = Color.White, fontWeight = FontWeight.Medium)
+                    Text("${grados} Cº", color = Color.White, fontWeight = FontWeight.Medium)
                 }
             }
         }
@@ -680,7 +773,13 @@ fun mostrarControladorClima(temperatura: String, humedad: String) {
 }
 
 @Composable
-fun mostrarConsumoAgua(litros: String) {
+fun mostrarConsumoAgua(token: String, mqttService: MqttService) {
+    var litros by remember { mutableDoubleStateOf(0.0) }
+
+
+    mqttService.subscribe(token) {
+        litros = it.toDouble()
+    }
 
     Row(
         modifier = Modifier
@@ -706,7 +805,14 @@ fun mostrarConsumoAgua(litros: String) {
 }
 
 @Composable
-fun mostrarConsumoGas(m3toString: String) {
+fun mostrarConsumoGas(token: String, mqttService: MqttService) {
+
+    var m3toString by remember { mutableDoubleStateOf(0.0) }
+
+    mqttService.subscribe(token) {
+        m3toString = it.toDouble()
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

@@ -83,9 +83,6 @@ fun InicioScreen(
     val user = auth.getCurrentUser()
     val context = LocalContext.current
 
-    var valor1 by rememberSaveable { mutableStateOf("") }
-    var valor2 by rememberSaveable { mutableStateOf("") }
-
     var contadorSensores by remember { mutableStateOf(0) }
     var contadorActuadores by remember { mutableStateOf(0) }
     var contadorMonitoreo by remember { mutableStateOf(0) }
@@ -188,25 +185,19 @@ fun InicioScreen(
                     // Resto de los items de sensores (sin padding extra)
                     items(uiState.sensorTemperatura) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                            }
-                        }
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor2 = it
-                            }
-                        }
+
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id, "sensortemperatura", nombre,
-                                            imagen, ubicacion, valor1, valor2,
-                                            inicioViewModel, navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensortemperatura", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -216,22 +207,19 @@ fun InicioScreen(
 
                     items(uiState.sensorLuz) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id, "sensorluz", nombre,
-                                            imagen, ubicacion, valor1, valor2,
-                                            inicioViewModel, navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensorluz", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -241,28 +229,19 @@ fun InicioScreen(
 
                     items(uiState.sensorMovimiento) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "sensormovimiento",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensormovimiento", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -271,28 +250,19 @@ fun InicioScreen(
                     }
                     items(uiState.sensorVibracion) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "sensorvibracion",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensorvibracion", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -302,28 +272,19 @@ fun InicioScreen(
 
                     items(uiState.sensorNivelAgua) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "sensornivelagua",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensornivelagua", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -332,28 +293,19 @@ fun InicioScreen(
                     }
                     items(uiState.sensorPresion) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "sensorpresion",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensorpresion", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -362,28 +314,19 @@ fun InicioScreen(
                     }
                     items(uiState.sensorApertura) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "sensorapertura",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensorapertura", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -393,28 +336,19 @@ fun InicioScreen(
 
                     items(uiState.sensorCalidadAire) { dispositivo ->
                         contadorSensores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "sensorcalidadaire",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "sensorcalidadaire", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -434,28 +368,19 @@ fun InicioScreen(
 
                     items(uiState.actuadorValvula) { dispositivo ->
                         contadorActuadores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "actuadorvalvula",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "actuadorvalvula", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -465,28 +390,19 @@ fun InicioScreen(
 
                     items(uiState.cerraduraElectronica) { dispositivo ->
                         contadorActuadores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "cerraduraelectronica",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "cerraduraelectronica", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -496,28 +412,19 @@ fun InicioScreen(
 
                     items(uiState.controladorIluminacion) { dispositivo ->
                         contadorActuadores++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "controladoriluminacion",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "controladoriluminacion", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -536,32 +443,19 @@ fun InicioScreen(
                     }
                     items(uiState.controladorClima) { dispositivo ->
                         contadorMonitoreo++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                            }
-                        }
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor2 = it
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "controladorclima",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "controladorclima", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -570,29 +464,19 @@ fun InicioScreen(
                     }
                     items(uiState.medidorConsumoAgua) { dispositivo ->
                         contadorMonitoreo++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
-
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "medidorconsumoagua",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "medidorconsumoagua", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
@@ -601,28 +485,19 @@ fun InicioScreen(
                     }
                     items(uiState.medidorGas) { dispositivo ->
                         contadorMonitoreo++
-                        dispositivo.token?.let {
-                            mqttService.subscribe(it) {
-                                valor1 = it
-                                valor2 = ""
-                            }
-                        }
 
                         dispositivo.id?.let { id ->
                             dispositivo.nombre?.let { nombre ->
                                 dispositivo.imagen?.let { imagen ->
                                     dispositivo.ubicacion?.let { ubicacion ->
-                                        mostrarInformacionDispositivos(
-                                            id,
-                                            "medidorgas",
-                                            nombre,
-                                            imagen,
-                                            ubicacion,
-                                            valor1,
-                                            valor2,
-                                            inicioViewModel,
-                                            navigateToInicio
-                                        )
+                                        dispositivo.token?.let { token ->
+                                            mostrarInformacionDispositivos(
+                                                id, "medidorgas", nombre,
+                                                imagen, ubicacion, token,
+                                                inicioViewModel, mqttService, navigateToInicio
+                                            )
+                                        }
+
                                     }
                                 }
                             }
